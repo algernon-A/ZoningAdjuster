@@ -1,5 +1,4 @@
-﻿using ColossalFramework;
-using ICities;
+﻿using ICities;
 using ZoningAdjuster.MessageBox;
 
 
@@ -22,7 +21,10 @@ namespace ZoningAdjuster
 			// Check to see that Harmony 2 was properly loaded.
 			if (!Patcher.Patched)
 			{
-				// Harmony 2 wasn't loaded; display warning notification and exit.
+				// Harmony 2 wasn't loaded.
+				Logging.Error("Harmony patches not applied; aborting");
+
+				// Display warning message.
 				ListMessageBox harmonyBox = MessageBoxBase.ShowModal<ListMessageBox>();
 
 				// Key text items.
