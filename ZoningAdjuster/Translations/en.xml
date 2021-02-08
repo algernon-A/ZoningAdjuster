@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Language UniqueName="en" ReadableName="English">
+  <Translations>
+    <Translation ID="ZMD_NAME" String="Zoning Adjuster" />
+    <Translation ID="ZMD_DESC" String="Allows zoning of 8- and 24- meter wide roads to align with regular-width roads and adds the ability to offset zoning start positions along roads." />"
+    <Translation ID="ZMD_OPT_KEY" String="Modifier key" />"
+    <Translation ID="ZMD_OPT_ZOK" String="Zoning offset modifier key" />"
+    <Translation ID="ZMD_SHIFT" String="Shift" />"
+    <Translation ID="ZMD_CTRL" String="Control" />"
+    <Translation ID="ZMD_ALT" String="Alt" />"
+    <Translation ID="TRN_CHOICE" String="Set language" />
+    <Translation ID="TRN_SYS" String="Use system language" />
+    <Translation ID="MES_CLS" String="Close" />
+    <Translation ID="ZAM_ERR_FAT" String="This means that the mod is not able to operate, and has shut down." />
+    <Translation ID="ZAM_ERR_HAR" String="Zoning Adjuster was unable to complete its required Harmony patches." />
+    <Translation ID="ERR_HAR0" String="Harmony patching error" />
+    <Translation ID="ERR_HAR1" String="Possible causes of this problem include:" />
+    <Translation ID="ERR_HAR2" String="The required Harmony 2 mod dependency was not installed" />
+    <Translation ID="ERR_HAR3" String="An old and/or broken mod is preventing Harmony 2 from operating properly" />
+  </Translations>
+</Language>
