@@ -11,6 +11,7 @@
     <Translation ID="TRN_CHOICE" String="Set language" />
     <Translation ID="TRN_SYS" String="Use system language" />
     <Translation ID="MES_CLS" String="Close" />
+    <Translation ID="MES_PAGE" String="Please refer to the mod's Steam Workshop page for further information." />
     <Translation ID="ZAM_ERR_FAT" String="This means that the mod is not able to operate, and has shut down." />
     <Translation ID="ZAM_ERR_HAR" String="Zoning Adjuster was unable to complete its required Harmony patches." />
     <Translation ID="ERR_HAR0" String="Harmony patching error" />

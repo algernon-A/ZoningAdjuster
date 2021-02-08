@@ -20,7 +20,7 @@ namespace ZoningAdjuster
 			base.OnLevelLoaded(mode);
 
 			// Check to see that Harmony 2 was properly loaded.
-			if (Patcher.Patched)
+			if (!Patcher.Patched)
 			{
 				// Harmony 2 wasn't loaded; display warning notification and exit.
 				ListMessageBox harmonyBox = MessageBoxBase.ShowModal<ListMessageBox>();
