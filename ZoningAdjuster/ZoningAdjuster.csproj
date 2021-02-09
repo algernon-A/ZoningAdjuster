@@ -76,6 +76,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\24m roads.png" />
+    <Content Include="Images\8-16-24m roads.jpg" />
+    <Content Include="Images\8m roads.jpg" />
+    <Content Include="Images\Offset.jpg" />
     <Content Include="Images\PreviewImage.png" />
     <Content Include="License.txt" />
     <Content Include="Translations\en.xml" />
