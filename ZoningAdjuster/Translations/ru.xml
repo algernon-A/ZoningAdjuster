@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Language UniqueName="ru" ReadableName="Русский">
+  <Translations>
+    <Translation ID="ZMD_NAME" String="Zoning Adjuster" />
+    <Translation ID="ZMD_DESC" String="Позволяет зонировать дороги шириной 8 и 24 метра для выравнивания с дорогами обычной ширины и добавляет возможность смещения начальных позиций зонирования вдоль дорог." />"
+    <Translation ID="ZMD_OPT_KEY" String="Клавиша-модификатор" />"
+    <Translation ID="ZMD_OPT_ZOK" String="Клавиша-модификатор смещения зонирования" />"
+    <Translation ID="ZMD_SHIFT" String="Shift" />"
+    <Translation ID="ZMD_CTRL" String="Control" />"
+    <Translation ID="ZMD_ALT" String="Alt" />"
+    <Translation ID="TRN_CHOICE" String="Установить язык" />
+    <Translation ID="TRN_SYS" String="Использ. системный" />
+    <Translation ID="MES_CLS" String="Закрыть" />
+    <Translation ID="MES_PAGE" String="Пожалуйста, обратитесь к странице мода в Steam Workshop для получения дополнительной информации." />
+    <Translation ID="ZAM_ERR_FAT" String="Это означает, что мод не может работать и отключился." />
+    <Translation ID="ZAM_ERR_HAR" String="Zoning Adjuster не смог завершить необходимые исправления Harmony." />
+    <Translation ID="ERR_HAR0" String="Ошибка исправления Harmony" />
+    <Translation ID="ERR_HAR1" String="Возможные причины этой проблемы включают:" />
+    <Translation ID="ERR_HAR2" String="Требуемый мод Harmony 2 не был установлен" />
+    <Translation ID="ERR_HAR3" String="Старый и/или сломанный мод мешает правильной работе Harmony 2" />
+  </Translations>
+</Language>
