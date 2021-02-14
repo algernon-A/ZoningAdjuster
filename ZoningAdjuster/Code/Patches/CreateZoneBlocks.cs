@@ -284,24 +284,34 @@ namespace ZoningAdjuster
             // Maximum extent of zonning from road, in metres.
             const float MaxExtent = 32f;
 
-            // Minimum half-width to use for calculations.
-            float minHalfWidth = 4f;
+            // Calculated half-width to use.
+            float minHalfWidth = info.m_halfWidth;
 
+            if (minHalfWidth <= 4f)
+            {
+                // Minimum of 4.
+                minHalfWidth = 4f;
+            }
+            else if (minHalfWidth < 8f)
+            {
+                // If half-width is between 4 and 8, push out to 8.
+                minHalfWidth = 8f;
+            }
 
             // Local reference.
             ZoneManager zoneManager = Singleton<ZoneManager>.instance;
 
             // Distance of zoning block extent from centre of road.
-            float maxDistance = Mathf.Max(minHalfWidth, info.m_halfWidth) + MaxExtent;
+            float maxDistance = minHalfWidth + MaxExtent;
             int distance = Mathf.RoundToInt(maxDistance);
 
             // Distance from start of segment to start zoning (in metres).
             float startOffset = 0f;
 
-            // Modify starting offset accoring to road half-width and settings.
-            if (info.m_halfWidth % 8 != 0)
+            // Modify starting offset accoring to calculated half-width and settings.
+            if (minHalfWidth % 8 != 0)
             {
-                // Road halfwidth is not a multiple of eight; offset by 4m, or 0m if shiftOffset is set.
+                // Calculated halfwidth is not a multiple of eight; offset by 4m, or 0m if shiftOffset is set.
                 if (!UIThreading.shiftOffset)
                 {
                     startOffset = 4f;
@@ -309,7 +319,7 @@ namespace ZoningAdjuster
             }
             else
             {
-                // Road halfwidth is a multiple of eight; default offset is zero, or 4m if shiftOffset is set.
+                // Calculated halfwidth is a multiple of eight; default offset is zero, or 4m if shiftOffset is set.
                 if (UIThreading.shiftOffset)
                 {
                     startOffset = 4f;
