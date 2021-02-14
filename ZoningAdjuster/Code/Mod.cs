@@ -14,8 +14,8 @@ namespace ZoningAdjuster
         // Internal and private name and version components.
         internal static string ModName => "Zoning Adjuster";
         internal static string Version => BaseVersion + " " + Beta;
-        internal static string Beta => "DEV 1";
-        private static string BaseVersion => "0.1";
+        internal static string Beta => "";
+        private static string BaseVersion => "0.2";
 
 
         /// <summary>

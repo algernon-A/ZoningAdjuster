@@ -1,1 +1,3 @@
-﻿- Align zoning for roads with halfwidths of between 4 and 8 to 8m halfwidth (specifically for vanilla gravel road)
+﻿Version 0.2 -
+
+- Align zoning for roads with halfwidths of between 4 and 8 to 8m halfwidth (specifically for vanilla gravel road)
