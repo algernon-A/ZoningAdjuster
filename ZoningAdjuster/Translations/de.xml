@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Language UniqueName="de" ReadableName="Deutsch">
+  <Translations>
+    <Translation ID="ZMD_NAME" String="Zoning Adjuster" />
+    <Translation ID="ZMD_DESC" String="Ermöglicht es Gebiete entlang von 8 und 24 Meter breiten Straßen anzulegen, die den normal-breiten Straßen angeglichen sind. Außerdem kann der Versatz des Rasters entlang der Straße angepasst werden." />
+    <Translation ID="ZMD_OPT_KEY" String="Anpassungstaste" />
+    <Translation ID="ZMD_OPT_ZOK" String="Taste zum Anpassen des Raster-Versatzes" />
+    <Translation ID="ZMD_SHIFT" String="Umschalt" />
+    <Translation ID="ZMD_CTRL" String="Strg" />
+    <Translation ID="ZMD_ALT" String="Alt" />
+    <Translation ID="TRN_CHOICE" String="Sprache" />
+    <Translation ID="TRN_SYS" String="Systemsprache verwenden" />
+    <Translation ID="MES_CLS" String="Schließen" />
+    <Translation ID="MES_PAGE" String="Bitte besuche die Steam Workshop-Seite für weitere Informationen." />
+    <Translation ID="ZAM_ERR_FAT" String="Das bedeutet, dass der Mod nicht lauffähig ist, und sich selbst deaktivieren muss." />
+    <Translation ID="ZAM_ERR_HAR" String="Zoning Adjuster konnte seine benötigten Harmony Patches nicht anwenden." />
+    <Translation ID="ERR_HAR0" String="Harmony Patching Fehler" />
+    <Translation ID="ERR_HAR1" String="Mögliche Ursachen für dieses Problem:" />
+    <Translation ID="ERR_HAR2" String="Der benötigte Mod Harmony 2 war nicht installiert" />
+    <Translation ID="ERR_HAR3" String="Ein alter oder defekter Mod verhindert die korrekte Funktion von Harmony 2" />
+  </Translations>
+</Language>
