@@ -86,6 +86,7 @@
     <Content Include="Translations\de.xml" />
     <Content Include="Translations\en.xml" />
     <Content Include="Translations\ru.xml" />
+    <Content Include="Translations\zh.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -93,7 +94,9 @@
 del "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\$(TargetFileName)"
 xcopy /y "$(TargetPath)" "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)"
 del "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\CitiesHarmony.API.dll"
-xcopy /y "$(SolutionDir)packages\CitiesHarmony.API.1.0.6\lib\net35\CitiesHarmony.API.dll" "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)"
+
+xcopy /y "$(SolutionDir)packages\CitiesHarmony.API.2.0.0\lib\net35\CitiesHarmony.API.dll" "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)"
+$(ProjectName)"
 mkdir "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\Translations"
 del "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\Translations\*.xml"
 xcopy /y "$(SolutionDir)\$(ProjectName)\Translations\" "$(LOCALAPPDATA)\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\Translations" /s /e</PostBuildEvent>

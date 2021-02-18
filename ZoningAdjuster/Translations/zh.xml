@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Language UniqueName="zh" ReadableName="中文">
+  <Translations>
+    <Translation ID="ZMD_NAME" String="區域分配調節器" />
+    <Translation ID="ZMD_DESC" String="允許對8米和24米寬的道路進行區域分配，以與標準寬度的道路對齊並增加了抵消沿道路區域分配的開始位置功能。" />"
+    <Translation ID="ZMD_OPT_KEY" String="編輯鍵位" />"
+    <Translation ID="ZMD_OPT_ZOK" String="編輯區域分配偏移鍵位" />"
+    <Translation ID="ZMD_SHIFT" String="Shift" />"
+    <Translation ID="ZMD_CTRL" String="Control" />"
+    <Translation ID="ZMD_ALT" String="Alt" />"
+    <Translation ID="TRN_CHOICE" String="語言設置" />
+    <Translation ID="TRN_SYS" String="使用遊戲默認語言" />
+    <Translation ID="MES_CLS" String="關閉" />
+    <Translation ID="MES_PAGE" String="請參閱模組(Mod)在Steam工作坊的頁面以獲得更多資訊。" />
+    <Translation ID="ZAM_ERR_FAT" String="這意味著模組(Mod)將無法正常使用，並且已關閉。" />
+    <Translation ID="ZAM_ERR_HAR" String="”區域分配調節器“無法完成因為它須要 “Harmony” 擴展文檔。" />
+    <Translation ID="ERR_HAR0" String="“Harmony” 擴展文檔錯誤" />
+    <Translation ID="ERR_HAR1" String="此問題有可能包括的原因：" />
+    <Translation ID="ERR_HAR2" String="“Harmony 2” 擴展文檔模組(Mod)沒有訂閱。" />
+    <Translation ID="ERR_HAR3" String="一些老的或壞的模組(Mod)導致 “Harmony 2” 擴展文檔模組(Mod)無法正常運轉。" />
+  </Translations>
+</Language>
