@@ -62,6 +62,11 @@
     <Compile Include="Code\Mod.cs" />
     <Compile Include="Code\Notifications\ListMessageBox.cs" />
     <Compile Include="Code\Notifications\MessageBoxBase.cs" />
+    <Compile Include="Code\PanelButton.cs" />
+    <Compile Include="Code\Patches\CalculateImplementation2.cs" />
+    <Compile Include="Code\Utils\ModUtils.cs" />
+    <Compile Include="Code\Utils\Textures.cs" />
+    <Compile Include="Code\Utils\TextureUtils.cs" />
     <Compile Include="Code\Utils\UIControls.cs" />
     <Compile Include="Code\Patches\CreateZoneBlocks.cs" />
     <Compile Include="Code\Patches\Patcher.cs" />
@@ -83,6 +88,7 @@
     <Content Include="Images\Offset.jpg" />
     <Content Include="Images\PreviewImage.png" />
     <Content Include="License.txt" />
+    <Content Include="Resources\ToolButton.png" />
     <Content Include="Translations\de.xml" />
     <Content Include="Translations\en.xml" />
     <Content Include="Translations\ru.xml" />
@@ -94,11 +100,13 @@
 del "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\$(TargetFileName)"
 xcopy /y "$(TargetPath)" "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)"
 del "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\CitiesHarmony.API.dll"
-
 xcopy /y "$(SolutionDir)packages\CitiesHarmony.API.2.0.0\lib\net35\CitiesHarmony.API.dll" "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)"
 $(ProjectName)"
 mkdir "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\Translations"
 del "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\Translations\*.xml"
-xcopy /y "$(SolutionDir)\$(ProjectName)\Translations\" "$(LOCALAPPDATA)\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\Translations" /s /e</PostBuildEvent>
+xcopy /y "$(SolutionDir)\$(ProjectName)\Translations\" "$(LOCALAPPDATA)\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\Translations" /s /e
+mkdir "$(LOCALAPPDATA)\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\Resources"
+del "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\Resources\*"
+xcopy /y "$(ProjectDir)\Resources\" "$(LOCALAPPDATA)\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\Resources" /s /e</PostBuildEvent>
   </PropertyGroup>
 </Project>

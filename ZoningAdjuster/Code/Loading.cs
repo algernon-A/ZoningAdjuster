@@ -39,6 +39,10 @@ namespace ZoningAdjuster
 				// Don't do anything further.
 				return;
 			}
+
+
+			// Add panel button.
+			ZoningAdjusterButton.CreateButton();
 		}
 	}
 }

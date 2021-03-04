@@ -13,6 +13,8 @@ namespace ZoningAdjuster
     [HarmonyPatch("CreateZoneBlocks")]
     public static class ZoneBlockPatch
     {
+        internal static float setback = 0f;
+
         private const float MIN_HALFWIDTH_TINY_CURVE = 6f;
         //private const float MIN_HALFWIDTH_TINY_STRAIGHT = 4f;
 
@@ -302,7 +304,7 @@ namespace ZoningAdjuster
             ZoneManager zoneManager = Singleton<ZoneManager>.instance;
 
             // Distance of zoning block extent from centre of road.
-            float maxDistance = minHalfWidth + MaxExtent;
+            float maxDistance = minHalfWidth + MaxExtent + setback;
             int distance = Mathf.RoundToInt(maxDistance);
 
             // Distance from start of segment to start zoning (in metres).
