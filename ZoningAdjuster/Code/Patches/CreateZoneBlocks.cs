@@ -63,7 +63,7 @@ namespace ZoningAdjuster
         {
 #pragma warning disable IDE0018 // Inline variable declaration
 
-            // TODO: Basically game code with some NExT2 modifications.  Could do with a good refactor, and possible replacement with Transpiler.
+            // TODO: Basically game code with some NExT2 modifications and some Zoning Adjuster modifications.  Could do with a good refactor, and possible replacement with Transpiler.
 
             var minHalfWidth = MIN_HALFWIDTH_TINY_CURVE;
 
@@ -75,20 +75,23 @@ namespace ZoningAdjuster
 
 
             float num = startDirection.x * endDirection.x + startDirection.z * endDirection.z;
-            float num2 = Mathf.Max(minHalfWidth, info.m_halfWidth); // minHalfWidth here.
-            float num3 = 32f;
-            int distance = Mathf.RoundToInt(num2);
+
+
+            // Distance of zoning block extent from edge of road.
+            float halfWidth = Mathf.Max(minHalfWidth, info.m_halfWidth); // num2; minHalfWidth here.
+            float blockEndDistance = 32f + setback; // num3;
+            int distance = Mathf.RoundToInt(halfWidth);
 
             float num4 = VectorUtils.LengthXZ(endPosition - startPosition);
             bool flag2 = startDirection.x * endDirection.z - startDirection.z * endDirection.x > 0f;
             bool flag3 = num < -0.8f || num4 > 50f;
             if (flag2)
             {
-                num2 = -num2;
-                num3 = -num3;
+                halfWidth = -halfWidth;
+                blockEndDistance = -blockEndDistance;
             }
-            Vector3 vector = startPosition - new Vector3(startDirection.z, 0f, -startDirection.x) * num2;
-            Vector3 vector2 = endPosition + new Vector3(endDirection.z, 0f, -endDirection.x) * num2;
+            Vector3 vector = startPosition - new Vector3(startDirection.z, 0f, -startDirection.x) * halfWidth;
+            Vector3 vector2 = endPosition + new Vector3(endDirection.z, 0f, -endDirection.x) * halfWidth;
             Vector3 vector3;
             Vector3 vector4;
             NetSegment.CalculateMiddlePoints(vector, startDirection, vector2, endDirection, true, true, out vector3, out vector4);
@@ -119,7 +122,7 @@ namespace ZoningAdjuster
             if (num8 != 0)
             {
                 float angle = (!flag2) ? Mathf.Atan2(vector5.x, -vector5.z) : Mathf.Atan2(-vector5.x, vector5.z);
-                Vector3 position3 = vector + new Vector3(vector5.x * num9 - vector5.z * num3, 0f, vector5.z * num9 + vector5.x * num3);
+                Vector3 position3 = vector + new Vector3(vector5.x * num9 - vector5.z * blockEndDistance, 0f, vector5.z * num9 + vector5.x * blockEndDistance);
                 if (flag2)
                 {
                     Singleton<ZoneManager>.instance.CreateBlock(
@@ -151,7 +154,7 @@ namespace ZoningAdjuster
                 if (num8 != 0)
                 {
                     float angle2 = (!flag2) ? Mathf.Atan2(vector5.x, -vector5.z) : Mathf.Atan2(-vector5.x, vector5.z);
-                    Vector3 position4 = vector4 + new Vector3(vector5.x * num9 - vector5.z * num3, 0f, vector5.z * num9 + vector5.x * num3);
+                    Vector3 position4 = vector4 + new Vector3(vector5.x * num9 - vector5.z * blockEndDistance, 0f, vector5.z * num9 + vector5.x * blockEndDistance);
                     if (flag2)
                     {
                         Singleton<ZoneManager>.instance.CreateBlock(
@@ -176,8 +179,8 @@ namespace ZoningAdjuster
                     }
                 }
             }
-            Vector3 vector6 = startPosition + new Vector3(startDirection.z, 0f, -startDirection.x) * num2;
-            Vector3 vector7 = endPosition - new Vector3(endDirection.z, 0f, -endDirection.x) * num2;
+            Vector3 vector6 = startPosition + new Vector3(startDirection.z, 0f, -startDirection.x) * halfWidth;
+            Vector3 vector7 = endPosition - new Vector3(endDirection.z, 0f, -endDirection.x) * halfWidth;
             Vector3 b;
             Vector3 c;
             NetSegment.CalculateMiddlePoints(vector6, startDirection, vector7, endDirection, true, true, out b, out c);
@@ -212,7 +215,7 @@ namespace ZoningAdjuster
             if (num12 != 0)
             {
                 float angle3 = (!flag2) ? Mathf.Atan2(-vector12.x, vector12.z) : Mathf.Atan2(vector12.x, -vector12.z);
-                Vector3 position5 = vector6 + new Vector3(vector12.x * num13 + vector12.z * num3, 0f, vector12.z * num13 - vector12.x * num3);
+                Vector3 position5 = vector6 + new Vector3(vector12.x * num13 + vector12.z * blockEndDistance, 0f, vector12.z * num13 - vector12.x * blockEndDistance);
                 if (flag2)
                 {
                     Singleton<ZoneManager>.instance.CreateBlock(
@@ -242,7 +245,7 @@ namespace ZoningAdjuster
             if (num12 != 0)
             {
                 float angle4 = (!flag2) ? Mathf.Atan2(-vector12.x, vector12.z) : Mathf.Atan2(vector12.x, -vector12.z);
-                Vector3 position6 = vector8 + new Vector3(vector12.x * num13 + vector12.z * num3, 0f, vector12.z * num13 - vector12.x * num3);
+                Vector3 position6 = vector8 + new Vector3(vector12.x * num13 + vector12.z * blockEndDistance, 0f, vector12.z * num13 - vector12.x * blockEndDistance);
                 if (flag2)
                 {
                     Singleton<ZoneManager>.instance.CreateBlock(
