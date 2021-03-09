@@ -16,7 +16,7 @@ namespace ZoningAdjuster
             {
                 if (toolButtonSprites == null)
                 {
-                    toolButtonSprites = TextureUtils.LoadSpriteAtlas("ToolButton");
+                    toolButtonSprites = TextureUtils.LoadSpriteAtlas("uui_zoning_adjuster");
                 }
 
                 return toolButtonSprites;

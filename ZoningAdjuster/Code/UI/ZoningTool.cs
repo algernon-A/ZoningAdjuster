@@ -10,6 +10,10 @@ namespace ZoningAdjuster
 	/// </summary>
 	public class ZoningTool : DefaultTool
 	{
+		// Record previous tool state.
+		bool prevRenderZones;
+
+
 		/// <summary>
 		/// Instance reference.
 		/// </summary>
@@ -23,9 +27,9 @@ namespace ZoningAdjuster
 		protected override void Awake()
 		{
 			base.Awake();
-			//lightCursor = FileUtils.LoadCursor("bob_cursor_light.png");
-			//darkCursor = FileUtils.LoadCursor("bob_cursor_dark.png");
-			//m_cursor = darkCursor;
+
+			// Set default cursor.
+			m_cursor = TextureUtils.LoadCursor("ZAcursor.png");
 		}
 
 		// Ignore anything except segments.
@@ -73,7 +77,11 @@ namespace ZoningAdjuster
 			base.OnEnable();
 
 			// Show zone grids when tool is active.
+			prevRenderZones = Singleton<TerrainManager>.instance.RenderZones;
 			Singleton<TerrainManager>.instance.RenderZones = true;
+
+			// Set button state to indicate tool is active.
+			ZoningAdjusterButton.Instance.ToolActive = true;
 		}
 
 
@@ -83,11 +91,13 @@ namespace ZoningAdjuster
 		protected override void OnDisable()
 		{
 			base.OnDisable();
-			ToolCursor = null;
+			//m_cursor = null;
 
+			// Restore zone grid showing to previous state.
+			Singleton<TerrainManager>.instance.RenderZones = prevRenderZones;
 
-			// Stop showing zone grids.
-			Singleton<TerrainManager>.instance.RenderZones = false;
+			// Set panel button state to indicate tool no longer active.
+			ZoningAdjusterButton.Instance.ToolActive = false;
 		}
 
 

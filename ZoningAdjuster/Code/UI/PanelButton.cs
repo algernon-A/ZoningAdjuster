@@ -11,15 +11,36 @@ namespace ZoningAdjuster
         // Button size.
         private const float ButtonSize = 36f;
 
+
+        // Flag.
+        internal bool panelClick = false;
+
         // Components.
         private ToolControlPanel zoningOptionsPanel;
+
+
 
         // Instance reference.
         public static ZoningAdjusterButton Instance { get; private set; }
 
-
-        // Flag.
-        internal bool panelClick = false;
+        
+        /// <summary>
+        /// Sets the button state to indicate when the tool is active.
+        /// </summary>
+        public bool ToolActive
+        {
+            set
+            {
+                if (value)
+                {
+                    normalFgSprite = "hovered";
+                }
+                else
+                {
+                    normalFgSprite = "normal";
+                }
+            }
+        }
 
 
         /// <summary>
@@ -40,7 +61,10 @@ namespace ZoningAdjuster
 
             // Appearance and effects.
             atlas = Textures.ToolButtonSprites;
-            normalFgSprite = focusedFgSprite = hoveredFgSprite = disabledBgSprite = "normal";
+            normalFgSprite = "normal";
+            focusedFgSprite = "focused";
+            hoveredFgSprite = "hovered";
+            disabledBgSprite = "disabled";
             tooltip = Translations.Translate("ZMD_NAME");
             playAudioEvents = true;
 

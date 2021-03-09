@@ -1,7 +1,8 @@
 ﻿using System.IO;
 using System.Collections.Generic;
-using ColossalFramework.UI;
 using UnityEngine;
+using ColossalFramework;
+using ColossalFramework.UI;
 
 
 namespace ZoningAdjuster
@@ -29,7 +30,7 @@ namespace ZoningAdjuster
 			newAtlas.material.mainTexture = newTexture;
 
 			// Setup sprites.
-			string[] spriteNames = new string[] { "normal" };
+			string[] spriteNames = new string[] { "pressed", "hovered", "normal", "disabled" };
 			int numSprites = spriteNames.Length;
 			float spriteWidth = 1f / spriteNames.Length;
 
@@ -53,20 +54,7 @@ namespace ZoningAdjuster
 		/// <summary>
 		/// Returns the "ingame" atlas.
 		/// </summary>
-		internal static UITextureAtlas InGameAtlas
-		{
-			get
-			{
-				// If we haven't already got a reference, we need to get one.
-				if (inGameAtlas == null)
-				{
-					inGameAtlas = GetTextureAtlas("ingame");
-				}
-
-				return inGameAtlas;
-			}
-		}
-		private static UITextureAtlas inGameAtlas;
+		internal static UITextureAtlas InGameAtlas => GetTextureAtlas("ingame");
 
 
 		/// <summary>
@@ -97,6 +85,22 @@ namespace ZoningAdjuster
 
 			// IF we got here, we couldn't find the specified atlas.
 			return null;
+		}
+
+
+		/// <summary>
+		/// Loads a cursor texture.
+		/// </summary>
+		/// <param name="cursorName">Cursor texture file name</param>
+		/// <returns>New cursor</returns>
+		internal static CursorInfo LoadCursor(string cursorName)
+		{
+			CursorInfo cursor = ScriptableObject.CreateInstance<CursorInfo>();
+
+			cursor.m_texture = LoadTexture(cursorName);
+			cursor.m_hotspot = new Vector2(5f, 0f);
+
+			return cursor;
 		}
 
 

@@ -90,7 +90,8 @@
     <Content Include="Images\Offset.jpg" />
     <Content Include="Images\PreviewImage.png" />
     <Content Include="License.txt" />
-    <Content Include="Resources\ToolButton.png" />
+    <Content Include="Resources\uui_zoning_adjuster.png" />
+    <Content Include="Resources\ZAcursor.png" />
     <Content Include="Translations\de.xml" />
     <Content Include="Translations\en.xml" />
     <Content Include="Translations\ru.xml" />
