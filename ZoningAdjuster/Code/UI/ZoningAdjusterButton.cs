@@ -1,5 +1,4 @@
 ﻿using ColossalFramework.UI;
-using System;
 using UnityEngine;
 
 /* Inspired by Node Contoller by kian.zarrin, which in turn was "A lot of copy-pasting from Crossings mod by Spectra and Roundabout Mod by Strad." */
@@ -11,13 +10,8 @@ namespace ZoningAdjuster
         // Button size.
         private const float ButtonSize = 36f;
 
-
-        // Flag.
-        internal bool panelClick = false;
-
-        // Components.
-        private ToolControlPanel zoningOptionsPanel;
-
+        // Previous tool.
+        private ToolBase previousTool;
 
 
         // Instance reference.
@@ -27,17 +21,21 @@ namespace ZoningAdjuster
         /// <summary>
         /// Sets the button state to indicate when the tool is active.
         /// </summary>
-        public bool ToolActive
+        public static bool ToolActive
         {
             set
             {
-                if (value)
+                // Null check - tool may be created before button is initialised.
+                //if (Instance != null)
                 {
-                    normalFgSprite = "hovered";
-                }
-                else
-                {
-                    normalFgSprite = "normal";
+                    if (value)
+                    {
+                        Instance.normalFgSprite = "hovered";
+                    }
+                    else
+                    {
+                        Instance.normalFgSprite = "normal";
+                    }
                 }
             }
         }
@@ -61,48 +59,64 @@ namespace ZoningAdjuster
 
             // Appearance and effects.
             atlas = Textures.ToolButtonSprites;
-            normalFgSprite = "normal";
             focusedFgSprite = "focused";
             hoveredFgSprite = "hovered";
             disabledBgSprite = "disabled";
             tooltip = Translations.Translate("ZMD_NAME");
             playAudioEvents = true;
 
-            // Create panel - attach directly to button, so visibility and position are consistent.
-            zoningOptionsPanel = Instance.AddUIComponent(typeof(ToolControlPanel)) as ToolControlPanel;
-            zoningOptionsPanel.Setup();
+            // Normal sprite is focused if the tool is active, normal otherwise - tool may have been activated before button is initialized.
+            normalFgSprite = ToolsModifierControl.toolController.CurrentTool == ZoningTool.Instance ? "focused" : "normal";
 
             // Event handler.
             eventClicked += (control, clickEvent) =>
             {
-                if (panelClick)
+                // Activate zoning tool if it isn't already; if already active, deactivate it by selecting the previously active tool instead.
+                if (ToolsModifierControl.toolController.CurrentTool != ZoningTool.Instance)
                 {
-                    panelClick = false;
+                    // Record previous tool.
+                    previousTool = ToolsModifierControl.toolController.CurrentTool;
+                    ToolsModifierControl.toolController.CurrentTool = ZoningTool.Instance;
+
+                    // Create zoning settings panel if it isn't already created.
+                    ZoningSettingsPanel.Create();
                 }
                 else
                 {
-                    zoningOptionsPanel.isVisible = !zoningOptionsPanel.isVisible;
-                    if (zoningOptionsPanel.isVisible)
-                    {
-                        zoningOptionsPanel.BringToFront();
-
-                        ToolsModifierControl.toolController.CurrentTool = ZoningTool.Instance;
-                    }
-                    else
-                    {
-
-                        // Deactivate zoning tool by activating the default tool instead.
-                        ToolsModifierControl.SetTool<DefaultTool>();
-                    }
+                    ToolsModifierControl.toolController.CurrentTool = previousTool;
                 }
             };
+
+            // Set initial visibility state and add event hook.
+            VisibilityChanged(null, isVisible);
+            eventVisibilityChanged += VisibilityChanged;
+        }
+
+
+        /// <summary>
+        /// Visibility changed event handler, to toggle visibility of panel.
+        /// </summary>
+        /// <param name="control">Calling component (unused)</param>
+        /// <param name="isVisible">New visibility state</param>
+        public static void VisibilityChanged(UIComponent control, bool isVisible)
+        {
+            Logging.Message("panel button visibility changed");
+            // Toggle zoning settings panel state accordingly.
+            if (isVisible)
+            {
+                ZoningSettingsPanel.Create();
+            }
+            else
+            {
+                ZoningSettingsPanel.Close();
+            }
         }
 
 
         /// <summary>
         /// Creates the button and attaches it to the roads option panel.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Button instance</returns>
         internal static ZoningAdjusterButton CreateButton()
         {
             return RoadsOptionPanel().AddUIComponent<ZoningAdjusterButton>();

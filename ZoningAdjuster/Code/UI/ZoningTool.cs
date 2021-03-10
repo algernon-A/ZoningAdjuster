@@ -10,8 +10,8 @@ namespace ZoningAdjuster
 	/// </summary>
 	public class ZoningTool : DefaultTool
 	{
-		// Record previous tool state.
-		bool prevRenderZones;
+		// Previous tool state.
+		private bool prevRenderZones;
 
 
 		/// <summary>
@@ -81,7 +81,7 @@ namespace ZoningAdjuster
 			Singleton<TerrainManager>.instance.RenderZones = true;
 
 			// Set button state to indicate tool is active.
-			ZoningAdjusterButton.Instance.ToolActive = true;
+			ZoningAdjusterButton.ToolActive = true;
 		}
 
 
@@ -91,13 +91,12 @@ namespace ZoningAdjuster
 		protected override void OnDisable()
 		{
 			base.OnDisable();
-			//m_cursor = null;
 
 			// Restore zone grid showing to previous state.
 			Singleton<TerrainManager>.instance.RenderZones = prevRenderZones;
 
 			// Set panel button state to indicate tool no longer active.
-			ZoningAdjusterButton.Instance.ToolActive = false;
+			ZoningAdjusterButton.ToolActive = false;
 		}
 
 
@@ -111,7 +110,7 @@ namespace ZoningAdjuster
 			// Check for escape key.
 			if (e.type == EventType.keyDown && e.keyCode == KeyCode.Escape)
 			{
-				// Escape key pressed - disable tool.
+				// Escape key pressed - revert to default tool.
 				e.Use();
 				ToolsModifierControl.SetTool<DefaultTool>();
 			}

@@ -62,9 +62,9 @@
     <Compile Include="Code\Mod.cs" />
     <Compile Include="Code\Notifications\ListMessageBox.cs" />
     <Compile Include="Code\Notifications\MessageBoxBase.cs" />
-    <Compile Include="Code\UI\PanelButton.cs" />
+    <Compile Include="Code\UI\ZoningAdjusterButton.cs" />
     <Compile Include="Code\Patches\CalculateImplementation2.cs" />
-    <Compile Include="Code\UI\ToolControlPanel.cs" />
+    <Compile Include="Code\UI\ZoningSettingsPanel.cs" />
     <Compile Include="Code\Utils\ModUtils.cs" />
     <Compile Include="Code\Utils\Textures.cs" />
     <Compile Include="Code\Utils\TextureUtils.cs" />

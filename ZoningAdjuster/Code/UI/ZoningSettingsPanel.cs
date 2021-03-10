@@ -1,13 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using ColossalFramework.UI;
 
 
 namespace ZoningAdjuster
 {
     /// <summary>
-    /// The control panel for the zoning adapter tool.
+    /// The zoning settings panel.
     /// </summary>
-    public class ToolControlPanel : UIPanel
+    public class ZoningSettingsPanel : UIPanel
     {
         // Layout constants.
         const float Margin = 8f;
@@ -21,17 +22,87 @@ namespace ZoningAdjuster
         const float PanelHeight = SliderPanelY + SliderPanelHeight + Margin;
 
         // Panel components.
-        private UILabel setbackDepthLabel;
+        private readonly UILabel setbackDepthLabel;
+
+        // Last position.
+        private static float lastX = -1, lastY;
+
+        // Instance references.
+        private static GameObject uiGameObject;
+        private static ZoningSettingsPanel panel;
+        internal static ZoningSettingsPanel Panel => panel;
+
+
+        /// <summary>
+        /// Creates the panel object in-game and displays it.
+        /// </summary>
+        internal static void Create()
+        {
+            try
+            {
+                Logging.Message("creating ZoningSettingsPanel");
+
+                // If no GameObject instance already set, create one.
+                if (uiGameObject == null)
+                {
+                    // Give it a unique name for easy finding with ModTools.
+                    uiGameObject = new GameObject("ZoningSettingsPanel");
+                    uiGameObject.transform.parent = UIView.GetAView().transform;
+
+                    // Create new panel instance and add it to GameObject.
+                    panel = uiGameObject.AddComponent<ZoningSettingsPanel>();
+                    panel.transform.parent = uiGameObject.transform.parent;
+                }
+            }
+            catch (Exception e)
+            {
+                Logging.LogException(e, "exception creating ZoningSettingsPanel");
+            }
+        }
+
+
+        /// <summary>
+        /// Closes the panel by destroying the object (removing any ongoing UI overhead).
+        /// </summary>
+        internal static void Close()
+        {
+            // Don't do anything if no panel.
+            if (panel == null )
+            {
+                return;
+            }
+
+            // Store current position.
+            lastX = Panel.absolutePosition.x;
+            lastY = Panel.absolutePosition.y;
+
+            // Destroy game objects.
+            GameObject.Destroy(panel);
+            GameObject.Destroy(uiGameObject);
+
+            // Let the garbage collector do its work (and also let us know that we've closed the object).
+            panel = null;
+            uiGameObject = null;
+        }
+
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        public void Setup()
+        public ZoningSettingsPanel()
         {
-            name = "ZoningOptionsPanel";
             autoSize = false;
             size = new Vector2(PanelWidth, PanelHeight);
-            relativePosition = new Vector2(0f, -PanelHeight - Margin);
+
+            // Restore previous position if we had one (lastX isn't negative), otherwise position it in default position above panel button.
+            if (lastX < 0)
+            {
+                absolutePosition = new Vector2(ZoningAdjusterButton.Instance.absolutePosition.x, ZoningAdjusterButton.Instance.absolutePosition.y - PanelHeight - Margin);
+            }
+            else
+            {
+                absolutePosition = new Vector2(lastX, lastY);
+            }
 
             // Appearance.
             atlas = TextureUtils.InGameAtlas;
@@ -115,14 +186,8 @@ namespace ZoningAdjuster
                 setbackDepthLabel.text = ZoneBlockPatch.setback.ToString() + "m";
             };
 
-            // Sart hidden.
-            Hide();
-
-            // Stop clicks on panel triggering parent button click events (because using the events doesn't work).
-            eventClicked += (control, clickEvent) =>
-            {
-                ZoningAdjusterButton.Instance.panelClick = true;
-            };
+            // Bring to front.
+            BringToFront();
         }
     }
 }
