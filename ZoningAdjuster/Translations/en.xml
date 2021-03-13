@@ -3,7 +3,7 @@
   <Translations>
     <Translation ID="ZMD_NAME" String="Zoning Adjuster" />
     <Translation ID="ZMD_DESC" String="Allows zoning of 8- and 24- meter wide roads to align with regular-width roads and adds the ability to offset zoning start positions along roads." />"
-    <Translation ID="ZMD_PNL_POZ" String="Preserve older zoning" />"
+    <Translation ID="ZMD_PNL_POZ" String="Prioritize older roads" />"
     <Translation ID="ZMD_PNL_SBK" String="Zoning setback" />"
     <Translation ID="ZMD_OPT_KEY" String="Modifier key" />"
     <Translation ID="ZMD_OPT_ZOK" String="Zoning offset modifier key" />"
