@@ -26,7 +26,7 @@ namespace ZoningAdjuster
             set
             {
                 // Null check - tool may be created before button is initialised.
-                //if (Instance != null)
+                if (Instance != null)
                 {
                     if (value)
                     {
