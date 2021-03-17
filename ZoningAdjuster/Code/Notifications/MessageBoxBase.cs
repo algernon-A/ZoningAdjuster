@@ -20,7 +20,7 @@ namespace ZoningAdjuster.MessageBox
         protected const float ButtonHeight = 45f;
         protected const float Padding = 16f;
         protected const float ButtonSpacing = 25f;
-        protected const float MaxContentHeight = 500f;
+        protected const float MaxContentHeight = 400f;
 
         // Reference constants.
         private const int DefaultButton = 1;
@@ -111,6 +111,7 @@ namespace ZoningAdjuster.MessageBox
         public MessageBoxBase()
         {
             // Basic setup.
+            autoSize = false;
             isVisible = true;
             canFocus = true;
             isInteractive = true;
@@ -361,6 +362,7 @@ namespace ZoningAdjuster.MessageBox
         private void ChildResized()
         {
             // Resize main panel, allowing for scrollbar width if scrollbar is visible.
+            height = mainPanel.height + TitleBarHeight + ButtonHeight;
             mainPanel.width = width - (mainPanel?.verticalScrollbar?.width ?? 0) - 3f;
         }
     }
