@@ -1,3 +1,10 @@
-﻿Version 0.2 -
+﻿Version 0.3 -
+
+- Add zoning tool for adding, resetting, and removing zoning from any road
+- Add option for variable zoning setback from road
+- Add option to give priority to zoning attached to older roads
+
+
+Version 0.2 -
 
 - Align zoning for roads with halfwidths of between 4 and 8 to 8m halfwidth (specifically for vanilla gravel road)

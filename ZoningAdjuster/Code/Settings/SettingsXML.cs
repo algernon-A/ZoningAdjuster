@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Xml.Serialization;
+using System.ComponentModel;
 
 
 namespace ZoningAdjuster
@@ -17,6 +18,13 @@ namespace ZoningAdjuster
         // Version.
         [XmlAttribute("Version")]
         public int version = 0;
+
+        [XmlElement("WhatsNewVersion")]
+        public string WhatsNewVersion { get => ModSettings.whatsNewVersion; set => ModSettings.whatsNewVersion = value; }
+
+        [XmlElement("WhatsNewBetaVersion")]
+        [DefaultValue(0)]
+        public int WhatsNewBetaVersion { get => ModSettings.whatsNewBetaVersion; set => ModSettings.whatsNewBetaVersion = value; }
 
         // Language.
         [XmlElement("Language")]

@@ -14,10 +14,10 @@ namespace ZoningAdjuster.MessageBox
     public abstract class MessageBoxBase : UIPanel
     {
         // Layout constants.
-        protected const float Width = 573f;
+        protected const float Width = 600f;
         protected const float Height = 200f;
-        protected const float TitleBarHeight = 42f;
-        protected const float ButtonHeight = 47f;
+        protected const float TitleBarHeight = 40f;
+        protected const float ButtonHeight = 45f;
         protected const float Padding = 16f;
         protected const float ButtonSpacing = 25f;
         protected const float MaxContentHeight = 500f;
@@ -36,6 +36,7 @@ namespace ZoningAdjuster.MessageBox
         // Accessors.
         public string Title { get => title.text; set => title.text = value; }
         public UIScrollablePanel ScrollableContent => mainPanel;
+        protected float ContentWidth => ScrollableContent.width - ScrollableContent.autoLayoutPadding.left - ScrollableContent.autoLayoutPadding.right;
         public void Close() => CloseModal(this);
 
 
@@ -245,7 +246,7 @@ namespace ZoningAdjuster.MessageBox
             closeButton.hoveredBgSprite = "buttonclosehover";
             closeButton.pressedBgSprite = "buttonclosepressed";
             closeButton.size = new Vector2(32f, 32f);
-            closeButton.relativePosition = new Vector2(527f, 4f);
+            closeButton.relativePosition = new Vector2(Width - 36f, 4f);
 
             // Event handler - resize.
             titleBar.eventSizeChanged += (component, newSize) =>
@@ -359,17 +360,8 @@ namespace ZoningAdjuster.MessageBox
         /// </summary>
         private void ChildResized()
         {
-            try
-            {
-                mainPanel.FitChildrenVertically();
-            }
-            catch
-            {
-                Logging.Error("ChildResized exception");
-            }
-
             // Resize main panel, allowing for scrollbar width if scrollbar is visible.
-            mainPanel.width = mainPanel.verticalScrollbar?.isVisible == true ? Width - mainPanel.verticalScrollbar.width - 3f : Width;
+            mainPanel.width = width - (mainPanel?.verticalScrollbar?.width ?? 0) - 3f;
         }
     }
 }

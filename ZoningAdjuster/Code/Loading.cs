@@ -45,6 +45,9 @@ namespace ZoningAdjuster
 
 			// Add panel button.
 			ZoningAdjusterButton.CreateButton();
+
+			// Display update notification.
+			WhatsNew.ShowWhatsNew();
 		}
 	}
 }

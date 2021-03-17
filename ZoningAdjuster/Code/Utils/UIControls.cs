@@ -194,7 +194,7 @@ namespace ZoningAdjuster
         /// </summary>
         /// <param name="parent">Parent component</param>
         /// <param name="scrollPanel">Panel to scroll</param>
-        /// <returns></returns>
+        /// <returns>New vertical scrollbar linked to the specified scrollable panel, immediately to the right</returns>
         public static UIScrollbar AddScrollbar(UIComponent parent, UIScrollablePanel scrollPanel)
         {
             // Basic setup.
@@ -205,7 +205,11 @@ namespace ZoningAdjuster
             newScrollbar.value = 0;
             newScrollbar.incrementAmount = 50f;
             newScrollbar.autoHide = true;
+
+            // Location and size.
             newScrollbar.width = 10f;
+            newScrollbar.relativePosition = new Vector2(scrollPanel.relativePosition.x + scrollPanel.width, scrollPanel.relativePosition.y);
+            newScrollbar.height = scrollPanel.height;
 
             // Tracking sprite.
             UISlicedSprite trackSprite = newScrollbar.AddUIComponent<UISlicedSprite>();
@@ -226,17 +230,10 @@ namespace ZoningAdjuster
             thumbSprite.spriteName = "ScrollbarThumb";
             newScrollbar.thumbObject = thumbSprite;
 
-            // Event handler - scroll panel.
-            newScrollbar.eventValueChanged += (component, value) => scrollPanel.scrollPosition = new Vector2(0, value);
-
-            // Event handler - mouse wheel (scrollbar and panel).
-            parent.eventMouseWheel += (component, mouseEvent) => newScrollbar.value -= mouseEvent.wheelDelta * newScrollbar.incrementAmount;
-            scrollPanel.eventMouseWheel += (component, mouseEvent) => newScrollbar.value -= mouseEvent.wheelDelta * newScrollbar.incrementAmount;
-
             // Event handler to handle resize of scroll panel.
             scrollPanel.eventSizeChanged += (component, newSize) =>
             {
-                newScrollbar.relativePosition += new Vector3(scrollPanel.width, 0);
+                newScrollbar.relativePosition = new Vector2(scrollPanel.relativePosition.x + scrollPanel.width, scrollPanel.relativePosition.y);
                 newScrollbar.height = scrollPanel.height;
             };
 
