@@ -6,7 +6,8 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-namespace PloppableRICO.MessageBox
+
+namespace ZoningAdjuster.MessageBox
 {
     /// <summary>
     /// Base class for displaying modal message boxes.
@@ -211,8 +212,9 @@ namespace PloppableRICO.MessageBox
             // Set height.
             height = titleBar.height + mainPanel.height + buttonPanel.height + (Padding * 2f);
 
-            // Position main panel under title bar.
+            // Position main panel under title bar and set width.
             mainPanel.relativePosition = new Vector2(0, titleBar.height);
+            mainPanel.width = width - (mainPanel?.verticalScrollbar?.width ?? 0) - 3f;
 
             // Position button panel under main panel.
             buttonPanel.relativePosition = new Vector2(0, titleBar.height + mainPanel.height + Padding);
