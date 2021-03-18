@@ -122,7 +122,7 @@ namespace ZoningAdjuster
             dragHandle.target = this;
 
             // Controls.
-            UICheckBox zoneAgeCheck = UIControls.LabelledCheckBox(this, Margin, CheckY, Translations.Translate("ZMD_PNL_POZ"));
+            UICheckBox zoneAgeCheck = UIControls.LabelledCheckBox(this, Margin, CheckY, Translations.Translate("ZMD_PNL_POZ"), tooltip: Translations.Translate("ZMD_PNL_POZ_TIP"));
             zoneAgeCheck.isChecked = CalcImpl2Patch.preserveOldZones;
             zoneAgeCheck.eventCheckChanged += (control, isChecked) => CalcImpl2Patch.preserveOldZones = isChecked;
 
@@ -141,6 +141,7 @@ namespace ZoningAdjuster
             sliderPanel.color = new Color32(206, 206, 206, 255);
             sliderPanel.size = new Vector2(this.width - (Margin * 2), SliderPanelHeight);
             sliderPanel.relativePosition = new Vector2(Margin, SliderPanelY);
+            sliderPanel.tooltip = Translations.Translate("ZMD_PNL_SBK_TIP");
 
             // Setback slider value label.
             setbackDepthLabel = sliderPanel.AddUIComponent<UILabel>();

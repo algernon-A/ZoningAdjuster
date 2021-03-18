@@ -15,14 +15,14 @@ namespace ZoningAdjuster
         {
             new WhatsNewMessage
             {
-                version = new Version("0.3.0.0"),
+                version = new Version("1.0.0.0"),
                 versionHeader = "",
                 messageKeys = true,
                 messages = new string[]
                 {
-                    "ZMD_030_0",
-                    "ZMD_030_1",
-                    "ZMD_030_2"
+                    "ZMD_100_0",
+                    "ZMD_100_1",
+                    "ZMD_100_2"
                 }
             }
         };

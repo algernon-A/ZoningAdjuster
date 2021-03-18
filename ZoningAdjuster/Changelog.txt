@@ -1,4 +1,4 @@
-﻿Version 0.3 -
+﻿Version 1.0 -
 
 - Add zoning tool for adding, resetting, and removing zoning from any road
 - Add option for variable zoning setback from road
