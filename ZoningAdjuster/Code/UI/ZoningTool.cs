@@ -128,8 +128,8 @@ namespace ZoningAdjuster
 				// We have a hovered network; set the cursor to the light cursor.
 				//m_cursor = lightCursor;
 
-				// Check for mousedown events with button zero.
-				if (e.type == EventType.MouseDown && e.button == 0)
+				// Check for mousedown events.
+				if (e.type == EventType.MouseDown)
 				{
 					// Got one; use the event.
 					UIInput.MouseUsed();
@@ -148,8 +148,8 @@ namespace ZoningAdjuster
 						RemoveZoneBlock(ref segment.m_blockEndLeft);
 						RemoveZoneBlock(ref segment.m_blockEndRight);
 
-						// Replace with new zone blocks if control key isn't held down.
-						if (!Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.RightControl))
+						// Replace with new zone blocks if the button click was with the primary mouse button.
+						if (e.button == 0)
 						{
 							roadAI.CreateZoneBlocks(segmentID, ref netManager.m_segments.m_buffer[segmentID]);
 						}
