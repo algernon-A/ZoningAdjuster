@@ -114,6 +114,13 @@ namespace ZoningAdjuster
             titleLabel.textAlignment = UIHorizontalAlignment.Center;
             titleLabel.width = PanelWidth;
 
+            // Icon sprite.
+            UISprite titleSprite = this.AddUIComponent<UISprite>();
+            titleSprite.size = new Vector2(24f, 24f);
+            titleSprite.relativePosition = new Vector2(4f, 5f);
+            titleSprite.atlas = Textures.ToolButtonSprites;
+            titleSprite.spriteName = "normal";
+
             // Drag bar.
             UIDragHandle dragHandle = AddUIComponent<UIDragHandle>();
             dragHandle.width = this.width;
