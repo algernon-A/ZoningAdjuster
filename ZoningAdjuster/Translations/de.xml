@@ -12,8 +12,8 @@
     <Translation ID="TRN_SYS" String="Systemsprache verwenden" />
     <Translation ID="MES_CLS" String="Schließen" />
     <Translation ID="MES_PAGE" String="Bitte besuche die Steam Workshop-Seite für weitere Informationen." />
-    <Translation ID="ZAM_ERR_FAT" String="Das bedeutet, dass der Mod nicht lauffähig ist, und sich selbst deaktivieren muss." />
-    <Translation ID="ZAM_ERR_HAR" String="Zoning Adjuster konnte seine benötigten Harmony Patches nicht anwenden." />
+    <Translation ID="ZMD_ERR_FAT" String="Das bedeutet, dass der Mod nicht lauffähig ist, und sich selbst deaktivieren muss." />
+    <Translation ID="ZMD_ERR_HAR" String="Zoning Adjuster konnte seine benötigten Harmony Patches nicht anwenden." />
     <Translation ID="ERR_HAR0" String="Harmony Patching Fehler" />
     <Translation ID="ERR_HAR1" String="Mögliche Ursachen für dieses Problem:" />
     <Translation ID="ERR_HAR2" String="Der benötigte Mod Harmony 2 war nicht installiert" />

@@ -15,13 +15,16 @@
     <Translation ID="MES_CLS" String="Close" />
     <Translation ID="MES_DSA" String="Don't show again" />
     <Translation ID="MES_PAGE" String="Please refer to the mod's Steam Workshop page for further information." />
-    <Translation ID="ZAM_ERR_FAT" String="This means that the mod is not able to operate, and has shut down." />
-    <Translation ID="ZAM_ERR_HAR" String="Zoning Adjuster was unable to complete its required Harmony patches." />
+    <Translation ID="ZMD_ERR_FAT" String="This means that the mod is not able to operate, and has shut down." />
+    <Translation ID="ZMD_ERR_HAR" String="Zoning Adjuster was unable to complete its required Harmony patches." />
     <Translation ID="ERR_HAR0" String="Harmony patching error" />
     <Translation ID="ERR_HAR1" String="Possible causes of this problem include:" />
     <Translation ID="ERR_HAR2" String="The required Harmony 2 mod dependency was not installed" />
     <Translation ID="ERR_HAR3" String="An old and/or broken mod is preventing Harmony 2 from operating properly" />
-    <Translation ID="ERR_HAR3" String="An old and/or broken mod is preventing Harmony 2 from operating properly" />
+    <Translation ID="ERR_CON0" String="Mod conflict detected!" />
+    <Translation ID="ERR_CON1" String="The conflicting mods are:" />
+    <Translation ID="ZMD_ERR_CON0" String="Zoning Adjuster detected a conflict with at least one other mod." />
+    <Translation ID="ZMD_ERR_CON1" String="These mods must be removed before Zoning Adjuster can operate." />
     <Translation ID="ZMD_030_0" String="New zoning tool for adding, resetting, and removing zoning for any road" />
     <Translation ID="ZMD_030_1" String="Zoning tool option: variable zoning setback from road" />
     <Translation ID="ZMD_030_2" String="Zoning tool option: prioritize zoning by age of road (so zoning for new roads doesn't disrupt zoning attached to existing roads)" />

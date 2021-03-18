@@ -12,8 +12,8 @@
     <Translation ID="TRN_SYS" String="使用遊戲默認語言" />
     <Translation ID="MES_CLS" String="關閉" />
     <Translation ID="MES_PAGE" String="請參閱模組(Mod)在Steam工作坊的頁面以獲得更多資訊。" />
-    <Translation ID="ZAM_ERR_FAT" String="這意味著模組(Mod)將無法正常使用，並且已關閉。" />
-    <Translation ID="ZAM_ERR_HAR" String="”區域分配調節器“無法完成因為它須要 “Harmony” 擴展文檔。" />
+    <Translation ID="ZMD_ERR_FAT" String="這意味著模組(Mod)將無法正常使用，並且已關閉。" />
+    <Translation ID="ZMD_ERR_HAR" String="”區域分配調節器“無法完成因為它須要 “Harmony” 擴展文檔。" />
     <Translation ID="ERR_HAR0" String="“Harmony” 擴展文檔錯誤" />
     <Translation ID="ERR_HAR1" String="此問題有可能包括的原因：" />
     <Translation ID="ERR_HAR2" String="“Harmony 2” 擴展文檔模組(Mod)沒有訂閱。" />
