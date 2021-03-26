@@ -1,4 +1,9 @@
-﻿Version 1.0 -
+﻿Version 1.0.1 -
+
+- Limit zoning removal with tool to right-click only
+
+
+Version 1.0 -
 
 - Add zoning tool for adding, resetting, and removing zoning from any road
 - Add option for variable zoning setback from road

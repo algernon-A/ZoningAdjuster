@@ -58,19 +58,17 @@ namespace ZoningAdjuster
         {
             // Get last notified version and current mod version.
             Version whatsNewVersion = new Version(ModSettings.whatsNewVersion);
-            Version modVersion = Assembly.GetExecutingAssembly().GetName().Version;
+            WhatsNewMessage latestMessage = WhatsNewMessages[0];
 
-            // Don't show notification if we're already up to (or ahead of) this version AND there hasn't been a beta update.
-            if (whatsNewVersion >= modVersion && ModSettings.whatsNewBetaVersion == ZoningAdjusterMod.BetaVersion)
+            // Don't show notification if we're already up to (or ahead of) the first what's new message.
+            if (whatsNewVersion < latestMessage.version)
             {
-                return;
+                // Show messagebox.
+                WhatsNewMessageBox messageBox = MessageBoxBase.ShowModal<WhatsNewMessageBox>();
+                messageBox.Title = ZoningAdjusterMod.ModName + " " + ZoningAdjusterMod.Version;
+                messageBox.DSAButton.eventClicked += (component, clickEvent) => DontShowAgain();
+                messageBox.SetMessages(whatsNewVersion, WhatsNewMessages);
             }
-
-            // Show messagebox.
-            WhatsNewMessageBox messageBox = MessageBoxBase.ShowModal<WhatsNewMessageBox>();
-            messageBox.Title = ZoningAdjusterMod.ModName + " " + ZoningAdjusterMod.Version;
-            messageBox.DSAButton.eventClicked += (component, clickEvent) => DontShowAgain();
-            messageBox.SetMessages(whatsNewVersion, WhatsNewMessages);
         }
     }
 

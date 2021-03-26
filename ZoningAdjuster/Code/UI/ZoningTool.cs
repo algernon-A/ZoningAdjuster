@@ -129,7 +129,7 @@ namespace ZoningAdjuster
 				//m_cursor = lightCursor;
 
 				// Check for mousedown events.
-				if (e.type == EventType.MouseDown)
+				if (e.type == EventType.MouseDown && e.button == 0 || e.button == 1)
 				{
 					// Got one; use the event.
 					UIInput.MouseUsed();

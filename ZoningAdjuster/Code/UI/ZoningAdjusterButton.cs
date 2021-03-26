@@ -54,7 +54,7 @@ namespace ZoningAdjuster
             Instance = this;
 
             // Size and posiition - consistent with road tool size and position, and positioned immediately to the left of the road options tool panel.
-            relativePosition = new Vector2(-ButtonSize - 1f, 0);
+            relativePosition = new Vector2((-ButtonSize - 1f) * 2f, 0);
             size = new Vector2(ButtonSize, ButtonSize);
 
             // Appearance and effects.
