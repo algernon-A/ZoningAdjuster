@@ -32,5 +32,6 @@
     <Translation ID="ZMD_100_0" String="New zoning tool for adding, resetting, and removing zoning for any road" />
     <Translation ID="ZMD_100_1" String="Zoning tool option: variable zoning setback from road" />
     <Translation ID="ZMD_100_2" String="Zoning tool option: prioritize zoning by age of road (so zoning for new roads doesn't disrupt zoning attached to existing roads)" />
+    <Translation ID="ZMD_102_0" String="Add option to prioritize zoning of newer roads" />
   </Translations>
 </Language>

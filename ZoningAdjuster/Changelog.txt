@@ -1,4 +1,9 @@
-﻿Version 1.0.1 -
+﻿Version 1.0.2 -
+
+- Add option to give priority to zoning attached to NEWER roads
+
+
+Version 1.0.1 -
 
 - Limit zoning removal with tool to right-click only
 

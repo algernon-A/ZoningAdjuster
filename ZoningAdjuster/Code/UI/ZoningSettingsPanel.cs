@@ -15,8 +15,8 @@ namespace ZoningAdjuster
         const float PanelWidth = 230f;
         const float TitleHeight = 40f;
         const float OldCheckY = TitleHeight;
-        const float NewCheckY = OldCheckY + 25f;
-        const float SliderLabelY = NewCheckY + 30f;
+        const float NewCheckY = OldCheckY + 20f;
+        const float SliderLabelY = NewCheckY + 25f;
         const float SliderLabelHeight = 20f;
         const float SliderPanelY = SliderLabelY + SliderLabelHeight;
         const float SliderPanelHeight = 36f;

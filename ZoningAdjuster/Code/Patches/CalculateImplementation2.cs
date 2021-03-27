@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using ColossalFramework;
 using ColossalFramework.Math;
 using HarmonyLib;
 
@@ -7,19 +6,29 @@ using HarmonyLib;
 namespace ZoningAdjuster
 {
     /// <summary>
-    ///  Hamony pre-emptive prefix for adjusting zone block creation.
+    ///  Harmony pre-emptive prefix for adjusting zone block creation.
     /// </summary>
-    [HarmonyPatch(typeof(ZoneBlock))]
-    [HarmonyPatch("CalculateImplementation2")]
+    [HarmonyPatch(typeof(ZoneBlock), "CalculateImplementation2")]
     public static class CalcImpl2Patch
     {
         public static bool preserveOldZones = false;
         public static bool preserveNewZones = false;
 
 
+        /// <summary>
+        /// Harmony pre-emptive prefix for adjusting zone block creation when two zone blocks are overlapping.
+        /// </summary>
+        /// <param name="__instance">Instance reference</param>
+        /// <param name="other">Overlapping zone block</param>
+        /// <param name="valid">Zone block valid flags</param>
+        /// <param name="shared">Zone block shared flags</param>
+        /// <param name="minX">Maximum X bound</param>
+        /// <param name="minZ">Minimum Z bound</param>
+        /// <param name="maxX">Maximum X bound</param>
+        /// <param name="maxZ">Maximum Z bound</param>
+        /// <returns>ALways false (don't execute original method)</returns>
         public static bool Prefix(ref ZoneBlock __instance, ref ZoneBlock other, ref ulong valid, ref ulong shared, float minX, float minZ, float maxX, float maxZ)
         {
-
             // 92 = sqrt(64^2+64^2)
             // if the other zone block is not marked as "created" or too far away, do nothing
             if (((int)other.m_flags & ZoneBlock.FLAG_CREATED) == 0 || (double)Mathf.Abs(other.m_position.x - __instance.m_position.x) >= 92.0 || (double)Mathf.Abs(other.m_position.z - __instance.m_position.z) >= 92.0)

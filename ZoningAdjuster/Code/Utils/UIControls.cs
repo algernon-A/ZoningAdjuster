@@ -10,8 +10,6 @@ namespace ZoningAdjuster
     /// </summary>
     public static class UIControls
     {
-
-
         /// <summary>
         /// Adds a checkbox with a descriptive text label immediately to the right.
         /// </summary>
@@ -29,11 +27,10 @@ namespace ZoningAdjuster
 
             // Label.
             checkBox.label = checkBox.AddUIComponent<UILabel>();
-            checkBox.label.relativePosition = new Vector3(21f, checkBox.height / 2f);
-            checkBox.label.anchor = UIAnchorStyle.Left | UIAnchorStyle.CenterVertical;
             checkBox.label.textScale = textScale;
             checkBox.label.autoSize = true;
             checkBox.label.text = text;
+            checkBox.label.relativePosition = new Vector2(21f, (checkBox.label.height - checkBox.height) / 2f);
 
             // Dynamic width to accomodate label.
             checkBox.width = checkBox.label.width + 21f;
