@@ -14,9 +14,10 @@ namespace ZoningAdjuster
     public static class CalcImpl2Patch
     {
         public static bool preserveOldZones = false;
+        public static bool preserveNewZones = false;
 
 
-        public static bool Prefix(ZoneBlock __instance, ushort blockID, ref ZoneBlock other, ref ulong valid, ref ulong shared, float minX, float minZ, float maxX, float maxZ)
+        public static bool Prefix(ref ZoneBlock __instance, ref ZoneBlock other, ref ulong valid, ref ulong shared, float minX, float minZ, float maxX, float maxZ)
         {
 
             // 92 = sqrt(64^2+64^2)
@@ -175,9 +176,15 @@ namespace ZoningAdjuster
                                                     // TODO adapt for 8 cell zones (low priority)
                                                     if (otherColumn >= 4 && column >= 4 || otherColumn < 4 && column < 4)
                                                     {
-                                                        // CODE INSERTION
-                                                        if (preserveOldZones || (otherColumn >= 2 && column >= 2 || otherColumn < 2 && column < 2))
-                                                            // END CODE INSERTION
+                                                        if ((preserveOldZones && __instance.m_buildIndex > other.m_buildIndex) || (preserveNewZones && __instance.m_buildIndex < other.m_buildIndex))
+                                                        {
+                                                            cellIsValid = false;
+                                                        }
+                                                        else if ((preserveOldZones && __instance.m_buildIndex < other.m_buildIndex) || (preserveNewZones && __instance.m_buildIndex > other.m_buildIndex))
+                                                        {
+                                                            other.m_valid &= (ulong)~(1L << (otherRow << 3 | otherColumn));
+                                                        }
+                                                        else if (otherColumn >= 2 && column >= 2 || otherColumn < 2 && column < 2)
                                                         {
                                                             if (__instance.m_buildIndex < other.m_buildIndex)
                                                                 other.m_valid &= (ulong)~(1L << (otherRow << 3 | otherColumn));
@@ -212,11 +219,11 @@ namespace ZoningAdjuster
                             }
                             if (!cellIsValid)
                             {
-                                valid = valid & (ulong)~(1L << (row << 3 | column));
+                                valid &= (ulong)~(1L << (row << 3 | column));
                                 break;
                             }
                             if (shareCell)
-                                shared = shared | (ulong)(1L << (row << 3 | column));
+                                shared |= (ulong)(1L << (row << 3 | column));
                         }
                     }
                 }

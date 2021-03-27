@@ -14,8 +14,9 @@ namespace ZoningAdjuster
         const float Margin = 8f;
         const float PanelWidth = 230f;
         const float TitleHeight = 40f;
-        const float CheckY = TitleHeight;
-        const float SliderLabelY = CheckY + 30f;
+        const float OldCheckY = TitleHeight;
+        const float NewCheckY = OldCheckY + 25f;
+        const float SliderLabelY = NewCheckY + 30f;
         const float SliderLabelHeight = 20f;
         const float SliderPanelY = SliderLabelY + SliderLabelHeight;
         const float SliderPanelHeight = 36f;
@@ -129,9 +130,30 @@ namespace ZoningAdjuster
             dragHandle.target = this;
 
             // Controls.
-            UICheckBox zoneAgeCheck = UIControls.LabelledCheckBox(this, Margin, CheckY, Translations.Translate("ZMD_PNL_POZ"), tooltip: Translations.Translate("ZMD_PNL_POZ_TIP"));
-            zoneAgeCheck.isChecked = CalcImpl2Patch.preserveOldZones;
-            zoneAgeCheck.eventCheckChanged += (control, isChecked) => CalcImpl2Patch.preserveOldZones = isChecked;
+            UICheckBox oldAgeCheck = UIControls.LabelledCheckBox(this, Margin, OldCheckY, Translations.Translate("ZMD_PNL_POZ"), tooltip: Translations.Translate("ZMD_PNL_POZ_TIP"));
+            oldAgeCheck.isChecked = CalcImpl2Patch.preserveOldZones;
+
+            UICheckBox newAgeCheck = UIControls.LabelledCheckBox(this, Margin, NewCheckY, Translations.Translate("ZMD_PNL_PNZ"), tooltip: Translations.Translate("ZMD_PNL_PNZ_TIP"));
+            newAgeCheck.isChecked = CalcImpl2Patch.preserveOldZones;
+
+            // Checkbox event handlers.
+            oldAgeCheck.eventCheckChanged += (control, isChecked) =>
+            {
+                CalcImpl2Patch.preserveOldZones = isChecked;
+                if (isChecked && newAgeCheck.isChecked)
+                {
+                    newAgeCheck.isChecked = false;
+                }
+            };
+
+            newAgeCheck.eventCheckChanged += (control, isChecked) =>
+            {
+                CalcImpl2Patch.preserveNewZones = isChecked;
+                if (isChecked && oldAgeCheck.isChecked)
+                {
+                    oldAgeCheck.isChecked = false;
+                }
+            };
 
             // Setback slider - same appearance as Fine Road Tool's, for consistency.
             // Setback slider label.
