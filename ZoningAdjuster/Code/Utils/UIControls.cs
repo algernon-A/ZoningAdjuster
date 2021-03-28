@@ -14,26 +14,28 @@ namespace ZoningAdjuster
         /// Adds a checkbox with a descriptive text label immediately to the right.
         /// </summary>
         /// <param name="parent">Parent component</param>
-        /// <param name="text">Descriptive label text</param>
         /// <param name="xPos">Relative x position</param>
         /// <param name="yPos">Relative y position</param>
+        /// <param name="text">Descriptive label text</param>
         /// <param name="textScale">Text scale of label (default 0.8)</param>
+        /// <param name="size">Checkbox size (default 16f)</param>
         /// <param name="tooltip">Tooltip, if any</param>
         /// <returns>New UI checkbox with attached labels</returns>
-        public static UICheckBox LabelledCheckBox(UIComponent parent, float xPos, float yPos, string text, float textScale = 0.8f, string tooltip = null)
+        public static UICheckBox LabelledCheckBox(UIComponent parent, float xPos, float yPos, string text, float size = 16f, float textScale = 0.8f, string tooltip = null)
         {
             // Create base checkbox.
-            UICheckBox checkBox = AddCheckBox(parent, xPos, yPos, tooltip);
+            UICheckBox checkBox = AddCheckBox(parent, xPos, yPos, size, tooltip);
 
             // Label.
             checkBox.label = checkBox.AddUIComponent<UILabel>();
+            checkBox.label.verticalAlignment = UIVerticalAlignment.Middle;
             checkBox.label.textScale = textScale;
             checkBox.label.autoSize = true;
             checkBox.label.text = text;
-            checkBox.label.relativePosition = new Vector2(21f, (checkBox.label.height - checkBox.height) / 2f);
 
             // Dynamic width to accomodate label.
             checkBox.width = checkBox.label.width + 21f;
+            checkBox.label.relativePosition = new Vector2(21f, ((checkBox.height - checkBox.label.height) / 2f) + 1f);
 
             return checkBox;
         }
@@ -45,27 +47,28 @@ namespace ZoningAdjuster
         /// <param name="parent">Parent component</param>
         /// <param name="xPos">Relative x position</param>
         /// <param name="yPos">Relative y position</param>
+        /// <param name="size">Checkbox size (default 16f)</param>
         /// <param name="tooltip">Tooltip, if any</param>
         /// <returns>New UI checkbox *without* attached labels</returns>
-        public static UICheckBox AddCheckBox(UIComponent parent, float xPos, float yPos, string tooltip = null)
+        public static UICheckBox AddCheckBox(UIComponent parent, float xPos, float yPos, float size = 16f, string tooltip = null)
         {
             UICheckBox checkBox = parent.AddUIComponent<UICheckBox>();
 
             // Size and position.
-            checkBox.height = 16f;
-            checkBox.width = 16f;
+            checkBox.width = size;
+            checkBox.height = size;
             checkBox.clipChildren = false;
             checkBox.relativePosition = new Vector3(xPos, yPos);
 
             // Sprites.
             UISprite sprite = checkBox.AddUIComponent<UISprite>();
             sprite.spriteName = "check-unchecked";
-            sprite.size = new Vector2(16f, 16f);
+            sprite.size = new Vector2(size, size);
             sprite.relativePosition = Vector3.zero;
 
             checkBox.checkedBoxObject = sprite.AddUIComponent<UISprite>();
             ((UISprite)checkBox.checkedBoxObject).spriteName = "check-checked";
-            checkBox.checkedBoxObject.size = new Vector2(16f, 16f);
+            checkBox.checkedBoxObject.size = new Vector2(size, size);
             checkBox.checkedBoxObject.relativePosition = Vector3.zero;
 
             // Add tooltip.
