@@ -1,4 +1,9 @@
-﻿Version 1.0.2 -
+﻿Version 1.0.2.1 -
+
+- Fix initial state of 'prioritize newer road' checkbox sometimes not being set correctly
+
+
+Version 1.0.2 -
 
 - Add option to give priority to zoning attached to NEWER roads
 
