@@ -1,4 +1,6 @@
-﻿- Each zone block now 'remembers' the priority settings with which is was created
+﻿Version 1.1 -
+
+- Each newly-created zone block now remembers the priority settings it was created with (i.e. prioritizing newer or older roads) and will retain that priority regardless of any setting changes
 
 
 Version 1.0.2.1 -
