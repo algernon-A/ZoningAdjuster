@@ -37,6 +37,9 @@ namespace ZoningAdjuster
         /// </summary>
         public void OnEnabled()
         {
+            // Initialize zoneing block data.
+            new ZoneBlockData();
+
             // Apply Harmony patches via Cities Harmony.
             // Called here instead of OnCreated to allow the auto-downloader to do its work prior to launch.
             HarmonyHelper.DoOnHarmonyReady(() => Patcher.PatchAll());

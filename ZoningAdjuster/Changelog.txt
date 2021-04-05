@@ -1,4 +1,7 @@
-﻿Version 1.0.2.1 -
+﻿- Each zone block now 'remembers' the priority settings with which is was created
+
+
+Version 1.0.2.1 -
 
 - Fix initial state of 'prioritize newer road' checkbox sometimes not being set correctly
 

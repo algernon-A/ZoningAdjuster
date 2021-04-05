@@ -131,15 +131,15 @@ namespace ZoningAdjuster
 
             // Controls.
             UICheckBox oldAgeCheck = UIControls.LabelledCheckBox(this, Margin, OldCheckY, Translations.Translate("ZMD_PNL_POZ"), tooltip: Translations.Translate("ZMD_PNL_POZ_TIP"));
-            oldAgeCheck.isChecked = CalcImpl2Patch.preserveOldZones;
+            oldAgeCheck.isChecked = ZoneBlockData.preserveOldZones;
 
             UICheckBox newAgeCheck = UIControls.LabelledCheckBox(this, Margin, NewCheckY, Translations.Translate("ZMD_PNL_PNZ"), tooltip: Translations.Translate("ZMD_PNL_PNZ_TIP"));
-            newAgeCheck.isChecked = CalcImpl2Patch.preserveNewZones;
+            newAgeCheck.isChecked = ZoneBlockData.preserveNewZones;
 
             // Checkbox event handlers.
             oldAgeCheck.eventCheckChanged += (control, isChecked) =>
             {
-                CalcImpl2Patch.preserveOldZones = isChecked;
+                ZoneBlockData.preserveOldZones = isChecked;
                 if (isChecked && newAgeCheck.isChecked)
                 {
                     newAgeCheck.isChecked = false;
@@ -148,7 +148,7 @@ namespace ZoningAdjuster
 
             newAgeCheck.eventCheckChanged += (control, isChecked) =>
             {
-                CalcImpl2Patch.preserveNewZones = isChecked;
+                ZoneBlockData.preserveNewZones = isChecked;
                 if (isChecked && oldAgeCheck.isChecked)
                 {
                     oldAgeCheck.isChecked = false;

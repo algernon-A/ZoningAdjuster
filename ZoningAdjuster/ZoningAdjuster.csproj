@@ -61,6 +61,8 @@
     <Compile Include="Code\Notifications\DontShowAgainMessageBox.cs" />
     <Compile Include="Code\Notifications\WhatsNew.cs" />
     <Compile Include="Code\Notifications\WhatsNewMessageBox.cs" />
+    <Compile Include="Code\Patches\CreateBlock.cs" />
+    <Compile Include="Code\ZoneBlockData\Serializer.cs" />
     <Compile Include="Code\Settings\ModSettings.cs" />
     <Compile Include="Code\Utils\Logging.cs" />
     <Compile Include="Code\Mod.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="Code\UI\Threading.cs" />
     <Compile Include="Code\TranslationFramework\TranslationFramework.cs" />
     <Compile Include="Code\TranslationFramework\TranslationXML.cs" />
+    <Compile Include="Code\ZoneBlockData\ZoneBlockData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Code\UI\ZoningTool.cs" />
   </ItemGroup>

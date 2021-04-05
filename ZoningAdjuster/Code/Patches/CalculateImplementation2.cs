@@ -11,14 +11,13 @@ namespace ZoningAdjuster
     [HarmonyPatch(typeof(ZoneBlock), "CalculateImplementation2")]
     public static class CalcImpl2Patch
     {
-        public static bool preserveOldZones = false;
-        public static bool preserveNewZones = false;
 
 
         /// <summary>
         /// Harmony pre-emptive prefix for adjusting zone block creation when two zone blocks are overlapping.
         /// </summary>
         /// <param name="__instance">Instance reference</param>
+        /// <param name="blockID">ID of this block</param>
         /// <param name="other">Overlapping zone block</param>
         /// <param name="valid">Zone block valid flags</param>
         /// <param name="shared">Zone block shared flags</param>
@@ -27,7 +26,7 @@ namespace ZoningAdjuster
         /// <param name="maxX">Maximum X bound</param>
         /// <param name="maxZ">Maximum Z bound</param>
         /// <returns>ALways false (don't execute original method)</returns>
-        public static bool Prefix(ref ZoneBlock __instance, ref ZoneBlock other, ref ulong valid, ref ulong shared, float minX, float minZ, float maxX, float maxZ)
+        public static bool Prefix(ref ZoneBlock __instance, ushort blockID, ref ZoneBlock other, ref ulong valid, ref ulong shared, float minX, float minZ, float maxX, float maxZ)
         {
             // 92 = sqrt(64^2+64^2)
             // if the other zone block is not marked as "created" or too far away, do nothing
@@ -185,6 +184,9 @@ namespace ZoningAdjuster
                                                     // TODO adapt for 8 cell zones (low priority)
                                                     if (otherColumn >= 4 && column >= 4 || otherColumn < 4 && column < 4)
                                                     {
+                                                        bool preserveOldZones = ZoneBlockData.Instance.PreserveOlder(blockID);
+                                                        bool preserveNewZones = ZoneBlockData.Instance.PreserveNewer(blockID);
+
                                                         if ((preserveOldZones && __instance.m_buildIndex > other.m_buildIndex) || (preserveNewZones && __instance.m_buildIndex < other.m_buildIndex))
                                                         {
                                                             cellIsValid = false;
