@@ -4,9 +4,11 @@
     <Translation ID="ZMD_NAME" String="Zoning Adjuster" />
     <Translation ID="ZMD_DESC" String="Allows zoning of 8- and 24- meter wide roads to align with regular-width roads and adds the ability to offset zoning start positions along roads." />"
     <Translation ID="ZMD_PNL_POZ" String="Prioritize older roads" />"
-    <Translation ID="ZMD_PNL_POZ_TIP" String="When this is set, zoning attached to newer roads won't overwrite zoning attached to older roads" />"
+    <Translation ID="ZMD_PNL_POZ_TIP" String="Zoning attached to newer roads won't overwrite zoning attached to older roads" />"
     <Translation ID="ZMD_PNL_PNZ" String="Prioritize newer roads" />"
-    <Translation ID="ZMD_PNL_PNZ_TIP" String="When this is set, zoning attached to older roads won't overwrite zoning attached to newer roads" />"
+    <Translation ID="ZMD_PNL_PNZ_TIP" String="Zoning attached to older roads won't overwrite zoning attached to newer roads" />"
+    <Translation ID="ZMD_PNL_PVZ" String="No priority" />"
+    <Translation ID="ZMD_PNL_PVZ_TIP" String="Default game behavior" />"
     <Translation ID="ZMD_PNL_SBK" String="Zoning setback" />"
     <Translation ID="ZMD_PNL_SBK_TIP" String="Adds a gap between the road edge and the zoning grid" />"
     <Translation ID="ZMD_OPT_KEY" String="Modifier key" />"

@@ -16,7 +16,8 @@ namespace ZoningAdjuster
         const float TitleHeight = 40f;
         const float OldCheckY = TitleHeight;
         const float NewCheckY = OldCheckY + 20f;
-        const float SliderLabelY = NewCheckY + 25f;
+        const float NoCheckY = NewCheckY + 20f;
+        const float SliderLabelY = NoCheckY + 25f;
         const float SliderLabelHeight = 20f;
         const float SliderPanelY = SliderLabelY + SliderLabelHeight;
         const float SliderPanelHeight = 36f;
@@ -136,22 +137,36 @@ namespace ZoningAdjuster
             UICheckBox newAgeCheck = UIControls.LabelledCheckBox(this, Margin, NewCheckY, Translations.Translate("ZMD_PNL_PNZ"), tooltip: Translations.Translate("ZMD_PNL_PNZ_TIP"));
             newAgeCheck.isChecked = ZoneBlockData.preserveNewZones;
 
+            UICheckBox noAgeCheck = UIControls.LabelledCheckBox(this, Margin, NoCheckY, Translations.Translate("ZMD_PNL_PVZ"), tooltip: Translations.Translate("ZMD_PNL_PVZ_TIP"));
+            newAgeCheck.isChecked = !(ZoneBlockData.preserveNewZones || ZoneBlockData.preserveOldZones);
+
             // Checkbox event handlers.
             oldAgeCheck.eventCheckChanged += (control, isChecked) =>
             {
                 ZoneBlockData.preserveOldZones = isChecked;
-                if (isChecked && newAgeCheck.isChecked)
+                if (isChecked)
                 {
                     newAgeCheck.isChecked = false;
+                    noAgeCheck.isChecked = false;
                 }
             };
 
             newAgeCheck.eventCheckChanged += (control, isChecked) =>
             {
                 ZoneBlockData.preserveNewZones = isChecked;
-                if (isChecked && oldAgeCheck.isChecked)
+                if (isChecked)
                 {
                     oldAgeCheck.isChecked = false;
+                    noAgeCheck.isChecked = false;
+                }
+            };
+
+            noAgeCheck.eventCheckChanged += (control, isChecked) =>
+            {
+                if (isChecked)
+                {
+                    oldAgeCheck.isChecked = false;
+                    newAgeCheck.isChecked = false;
                 }
             };
 
