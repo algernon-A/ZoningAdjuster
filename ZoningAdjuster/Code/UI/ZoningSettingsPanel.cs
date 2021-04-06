@@ -144,29 +144,50 @@ namespace ZoningAdjuster
             oldAgeCheck.eventCheckChanged += (control, isChecked) =>
             {
                 ZoneBlockData.preserveOldZones = isChecked;
+
+                // Deselect other checkboxes if this is checked.
                 if (isChecked)
                 {
                     newAgeCheck.isChecked = false;
                     noAgeCheck.isChecked = false;
                 }
+                else if (!newAgeCheck.isChecked)
+                {
+                    // Check default checkbox if others are both unchecked.
+                    noAgeCheck.isChecked = true;
+                }
+
             };
 
             newAgeCheck.eventCheckChanged += (control, isChecked) =>
             {
                 ZoneBlockData.preserveNewZones = isChecked;
+
+                // Deselect other checkboxes if this is checked.
                 if (isChecked)
                 {
                     oldAgeCheck.isChecked = false;
                     noAgeCheck.isChecked = false;
                 }
+                else if (!oldAgeCheck.isChecked)
+                {
+                    // Check default checkbox if others are both unchecked.
+                    noAgeCheck.isChecked = true;
+                }
             };
 
             noAgeCheck.eventCheckChanged += (control, isChecked) =>
             {
+                // Deselect other checkboxes if this is checked.
                 if (isChecked)
                 {
                     oldAgeCheck.isChecked = false;
                     newAgeCheck.isChecked = false;
+                }
+                else if (!oldAgeCheck.isChecked && !newAgeCheck.isChecked)
+                {
+                    // (Re)check this checkbox if others are both unchecked.
+                    noAgeCheck.isChecked = true;
                 }
             };
 
