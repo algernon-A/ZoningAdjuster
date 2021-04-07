@@ -10,7 +10,7 @@ namespace ZoningAdjuster
     public static class Patcher
     {
         // Unique harmony identifier.
-        private const string harmonyID = "com.github.algernon-A.csl.bob";
+        private const string harmonyID = "algernon-A.csl.zoningadjuster";
 
         // Flag.
         internal static bool Patched => _patched;
