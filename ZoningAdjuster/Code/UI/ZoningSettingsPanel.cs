@@ -23,11 +23,24 @@ namespace ZoningAdjuster
         const float SliderPanelHeight = 36f;
         const float PanelHeight = SliderPanelY + SliderPanelHeight + Margin;
 
+        // Zoning age priority checkboxes.
+        private readonly string[] priorityNames =
+        {
+            "ZMD_PNL_POZ",
+            "ZMD_PNL_PNZ",
+            "ZMD_PNL_PVZ"
+        };
+        private readonly float[] priorityCheckY =
+        {
+            OldCheckY,
+            NewCheckY,
+            NoCheckY
+        };
+
+
         // Panel components.
         private readonly UILabel setbackDepthLabel;
-
-        // Last position.
-        private static float lastX = -1, lastY;
+        private readonly UICheckBox[] priorityChecks;
 
         // Instance references.
         private static GameObject uiGameObject;
@@ -74,10 +87,6 @@ namespace ZoningAdjuster
                 return;
             }
 
-            // Store current position.
-            lastX = Panel.absolutePosition.x;
-            lastY = Panel.absolutePosition.y;
-
             // Destroy game objects.
             GameObject.Destroy(panel);
             GameObject.Destroy(uiGameObject);
@@ -93,18 +102,10 @@ namespace ZoningAdjuster
         /// </summary>
         public ZoningSettingsPanel()
         {
+            // Size and position.
             autoSize = false;
             size = new Vector2(PanelWidth, PanelHeight);
-
-            // Restore previous position if we had one (lastX isn't negative), otherwise position it in default position above panel button.
-            if (lastX < 0)
-            {
-                absolutePosition = new Vector2(ZoningAdjusterButton.Instance.absolutePosition.x, ZoningAdjusterButton.Instance.absolutePosition.y - PanelHeight - Margin);
-            }
-            else
-            {
-                absolutePosition = new Vector2(lastX, lastY);
-            }
+            SetPosition();
 
             // Appearance.
             atlas = TextureUtils.InGameAtlas;
@@ -131,65 +132,15 @@ namespace ZoningAdjuster
             dragHandle.target = this;
 
             // Controls.
-            UICheckBox oldAgeCheck = UIControls.LabelledCheckBox(this, Margin, OldCheckY, Translations.Translate("ZMD_PNL_POZ"), tooltip: Translations.Translate("ZMD_PNL_POZ_TIP"));
-            oldAgeCheck.isChecked = ZoneBlockData.preserveOldZones;
-
-            UICheckBox newAgeCheck = UIControls.LabelledCheckBox(this, Margin, NewCheckY, Translations.Translate("ZMD_PNL_PNZ"), tooltip: Translations.Translate("ZMD_PNL_PNZ_TIP"));
-            newAgeCheck.isChecked = ZoneBlockData.preserveNewZones;
-
-            UICheckBox noAgeCheck = UIControls.LabelledCheckBox(this, Margin, NoCheckY, Translations.Translate("ZMD_PNL_PVZ"), tooltip: Translations.Translate("ZMD_PNL_PVZ_TIP"));
-            noAgeCheck.isChecked = !(ZoneBlockData.preserveNewZones || ZoneBlockData.preserveOldZones);
-
-            // Checkbox event handlers.
-            oldAgeCheck.eventCheckChanged += (control, isChecked) =>
+            priorityChecks = new UICheckBox[(int)PriorityIndexes.NumPriorities];
+            int currentPriority = ZoneBlockData.Instance.GetCurrentPriority();
+            for (int i = 0; i < priorityChecks.Length; ++i)
             {
-                ZoneBlockData.preserveOldZones = isChecked;
-
-                // Deselect other checkboxes if this is checked.
-                if (isChecked)
-                {
-                    newAgeCheck.isChecked = false;
-                    noAgeCheck.isChecked = false;
-                }
-                else if (!newAgeCheck.isChecked)
-                {
-                    // Check default checkbox if others are both unchecked.
-                    noAgeCheck.isChecked = true;
-                }
-
-            };
-
-            newAgeCheck.eventCheckChanged += (control, isChecked) =>
-            {
-                ZoneBlockData.preserveNewZones = isChecked;
-
-                // Deselect other checkboxes if this is checked.
-                if (isChecked)
-                {
-                    oldAgeCheck.isChecked = false;
-                    noAgeCheck.isChecked = false;
-                }
-                else if (!oldAgeCheck.isChecked)
-                {
-                    // Check default checkbox if others are both unchecked.
-                    noAgeCheck.isChecked = true;
-                }
-            };
-
-            noAgeCheck.eventCheckChanged += (control, isChecked) =>
-            {
-                // Deselect other checkboxes if this is checked.
-                if (isChecked)
-                {
-                    oldAgeCheck.isChecked = false;
-                    newAgeCheck.isChecked = false;
-                }
-                else if (!oldAgeCheck.isChecked && !newAgeCheck.isChecked)
-                {
-                    // (Re)check this checkbox if others are both unchecked.
-                    noAgeCheck.isChecked = true;
-                }
-            };
+                priorityChecks[i] = UIControls.LabelledCheckBox(this, Margin, priorityCheckY[i], Translations.Translate(priorityNames[i]), tooltip: Translations.Translate(priorityNames[i] + "_TIP"));
+                priorityChecks[i].objectUserData = i;
+                priorityChecks[i].isChecked = i == currentPriority;
+                priorityChecks[i].eventCheckChanged += PriorityCheckChanged;
+            }
 
             // Setback slider - same appearance as Fine Road Tool's, for consistency.
             // Setback slider label.
@@ -254,6 +205,85 @@ namespace ZoningAdjuster
 
             // Bring to front.
             BringToFront();
+
+            // Save new position when moved.
+            eventPositionChanged += PositionChanged;
+        }
+
+
+        /// <summary>
+        /// Sets the panel position according to previous state and mod settings.
+        /// </summary>
+        internal void SetPosition()
+        {
+            // Restore previous position if we had one ((ModSettings.panelX isn't negative), otherwise position it in default position above panel button.
+            if (ModSettings.panelX < 0)
+            {
+                absolutePosition = new Vector2(ZoningAdjusterButton.Instance.absolutePosition.x, ZoningAdjusterButton.Instance.absolutePosition.y - PanelHeight - Margin);
+            }
+            else
+            {
+                absolutePosition = new Vector2(ModSettings.panelX, ModSettings.panelY);
+            }
+        }
+
+
+        /// <summary>
+        /// Position changed event handler, to save new position
+        /// </summary>
+        /// <param name="control">Calling component (unused)</param>
+        /// <param name="position">New position (unused)</param>
+        private void PositionChanged(UIComponent control, Vector2 position)
+        {
+            ModSettings.panelX = this.absolutePosition.x;
+            ModSettings.panelY = this.absolutePosition.y;
+            ZoningModSettingsFile.SaveSettings();
+        }
+
+
+        /// <summary>
+        /// Priority check changed event handler.
+        /// </summary>
+        /// <param name="control">Calling component</param>
+        /// <param name="isChecked">New checked state</param>
+        protected virtual void PriorityCheckChanged(UIComponent control, bool isChecked)
+        {
+            // Get stored index from control user data.
+            if (control.objectUserData is int index)
+            {
+                // Deselect other checkboxes if this one has been checked.
+                if (isChecked)
+                {
+                    // Iterate through all checkboxes.
+                    for (int i = 0; i < (int)PriorityIndexes.NumPriorities; ++i)
+                    {
+                        // If it's not this checkbox, uncheck it.
+                        if (i != index)
+                        {
+                            priorityChecks[i].isChecked = false;
+                        }
+                    }
+
+                    // Set current priority.
+                    ZoneBlockData.Instance.SetCurrentPriority(index);
+                }
+                else
+                {
+                    // Checkbox has been deselected; make sure that at least one other is still selected, otherwise we re-select this one.
+                    // Iterate through all checkboxes.
+                    for (int i = 0; i < (int)PriorityIndexes.NumPriorities; ++i)
+                    {
+                        // If any are checked, we're done here; return.
+                        if (priorityChecks[i].isChecked)
+                        {
+                            return;
+                        }
+                    }
+
+                    // If we got here, no other check is selected; re-select this one.
+                    (control as UICheckBox).isChecked = true;
+                }
+            }
         }
     }
 }
