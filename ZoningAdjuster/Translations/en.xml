@@ -41,5 +41,7 @@
     <Translation ID="ZMD_110_0" String="Each newly-created zone block now remembers the priority settings it was created with (i.e. prioritizing newer or older roads) and will retain that priority regardless of any setting changes" />
     <Translation ID="ZMD_110_1" String="NOTE 1: this only applies to newly-created zone blocks" />
     <Translation ID="ZMD_110_2" String="NOTE 2: conflicting settings (e.g. a newer road prioritizing older settings next to an older road prioritizing newer settings) will lead to inconsistent results" />
+    <Translation ID="ZMD_111_0" String="Tool button is now moveable (click and drag to move)" />
+    <Translation ID="ZMD_111_1" String="Button and panel positions are saved when exiting the game" />
   </Translations>
 </Language>
