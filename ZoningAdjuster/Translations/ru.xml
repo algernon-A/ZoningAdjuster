@@ -3,9 +3,9 @@
   <Translations>
     <Translation ID="ZMD_NAME" String="Zoning Adjuster" />
     <Translation ID="ZMD_DESC" String="Позволяет зонировать дороги шириной 8 и 24 метра для выравнивания с дорогами обычной ширины и добавляет возможность смещения начальных позиций зонирования вдоль дорог." />"
-    <Translation ID="ZMD_PNL_POZ" String="Приоритетность старых дорог" />"
+    <Translation ID="ZMD_PNL_POZ" String="Приоритет старых дорог" />"
     <Translation ID="ZMD_PNL_POZ_TIP" String="Когда этот параметр установлен, зонирование, привязанное к новым дорогам, не будет перезаписывать зонирование, привязанное к старым дорогам" />"
-    <Translation ID="ZMD_PNL_PNZ" String="Приоритетность новых дорог" />"
+    <Translation ID="ZMD_PNL_PNZ" String="Приоритет новых дорог" />"
     <Translation ID="ZMD_PNL_PNZ_TIP" String="Когда этот параметр установлен, зонирование, привязанное к старым дорогам, не будет перезаписывать зонирование, привязанное к новым дорогам" />"
     <Translation ID="ZMD_PNL_SBK" String="Зонирование с отступом" />"
     <Translation ID="ZMD_PNL_SBK_TIP" String="Добавляет зазор между краем дороги и сеткой зонирования" />"
@@ -14,16 +14,16 @@
     <Translation ID="ZMD_SHIFT" String="Shift" />"
     <Translation ID="ZMD_CTRL" String="Control" />"
     <Translation ID="ZMD_ALT" String="Alt" />"
-    <Translation ID="TRN_CHOICE" String="Установить язык" />
-    <Translation ID="TRN_SYS" String="Использ. системный" />
+    <Translation ID="TRN_CHOICE" String="Выбрать язык" />
+    <Translation ID="TRN_SYS" String="Использовать язык игры" />
     <Translation ID="MES_CLS" String="Закрыть" />
     <Translation ID="MES_DSA" String="Больше не показывать" />
-    <Translation ID="MES_PAGE" String="Пожалуйста, обратитесь к странице мода в Steam Workshop для получения дополнительной информации." />
+    <Translation ID="MES_PAGE" String="Пожалуйста, перейдите на страницу мода в Steam Workshop для получения дополнительной информации." />
     <Translation ID="ZMD_ERR_FAT" String="Это означает, что мод не может работать и отключился." />
     <Translation ID="ZMD_ERR_HAR" String="Zoning Adjuster не смог завершить необходимые исправления Harmony." />
-    <Translation ID="ERR_HAR0" String="Ошибка исправления Harmony" />
-    <Translation ID="ERR_HAR1" String="Возможные причины этой проблемы включают:" />
-    <Translation ID="ERR_HAR2" String="Требуемый мод Harmony 2 не был установлен" />
+    <Translation ID="ERR_HAR0" String="Ошибка пропатчивания Harmony" />
+    <Translation ID="ERR_HAR1" String="Возможные причины этой проблемы:" />
+    <Translation ID="ERR_HAR2" String="Необходимый обязательный мод Harmony 2 не был установлен" />
     <Translation ID="ERR_HAR3" String="Старый и/или сломанный мод мешает правильной работе Harmony 2" />
     <Translation ID="ERR_CON0" String="Обнаружен конфликт модов!" />
     <Translation ID="ERR_CON1" String="Конфликтующие моды:" />
@@ -33,5 +33,10 @@
     <Translation ID="ZMD_100_1" String="Опция инструмента зонирования: переменный отступ зонирования от дороги" />
     <Translation ID="ZMD_100_2" String="Опция инструмента зонирования: приоритетное зонирование по новизне дорог (чтобы зонирование для новых дорог не нарушало зонирование, привязанное к существующим дорогам)" />
     <Translation ID="ZMD_102_0" String="Добавлена опция приоритизации зонирования новых дорог" />
+    <Translation ID="ZMD_110_0" String="Каждый вновь созданный блок зоны теперь запоминает настройки приоритета, с которыми он был создан (т.е. приоритизация новых или старых дорог), и сохраняет этот приоритет независимо от изменений настроек." />
+    <Translation ID="ZMD_110_1" String="ПРИМЕЧАНИЕ 1: это относится только к вновь созданным блокам зоны." />
+    <Translation ID="ZMD_110_2" String="ПРИМЕЧАНИЕ 2: конфликтующие настройки (например, приоритет старых дорог перед новыми рядом с дорогой, к которой применили настройку приоритета новых дорог) приведет к противоречивым результатам." />
+    <Translation ID="ZMD_111_0" String="Кнопка мода теперь подвижна (нажмите и перетащите, чтобы переместить)" />
+    <Translation ID="ZMD_111_1" String="Позиции кнопок и панелей сохраняются при выходе из игры." />
   </Translations>
 </Language>

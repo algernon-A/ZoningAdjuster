@@ -101,6 +101,7 @@
     <Content Include="Resources\ZAcursor.png" />
     <Content Include="Translations\de.xml" />
     <Content Include="Translations\en.xml" />
+    <Content Include="Translations\es.xml" />
     <Content Include="Translations\ru.xml" />
     <Content Include="Translations\zh.xml" />
   </ItemGroup>
