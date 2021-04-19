@@ -16,7 +16,7 @@ namespace ZoningAdjuster
         internal static string Version => BaseVersion + " " + Beta;
         internal static string Beta => "";
         internal static int BetaVersion => 0;
-        private static string BaseVersion => "1.1";
+        private static string BaseVersion => "1.1.1";
 
 
         /// <summary>
@@ -58,6 +58,11 @@ namespace ZoningAdjuster
             UIHelperBase keyGroup = helper.AddGroup(Translations.Translate("ZMD_OPT_KEY"));
             string[] keyOptions = new string[] { Translations.Translate("ZMD_SHIFT"), Translations.Translate("ZMD_CTRL"), Translations.Translate("ZMD_ALT") };
             UIDropDown offsetKeyDropDown = (UIDropDown)keyGroup.AddDropdown(Translations.Translate("ZMD_OPT_ZOK"), keyOptions, UIThreading.offsetModifier, (value) => { UIThreading.offsetModifier = value; ZoningModSettingsFile.SaveSettings(); });
+
+            // Reset panel and button positions.
+            UIHelperBase positionGroup = helper.AddGroup(Translations.Translate("ZMD_OPT_POS"));
+            positionGroup.AddButton(Translations.Translate("ZMD_OPT_RPP"), delegate { ModSettings.panelX = -1; ZoningSettingsPanel.Panel?.SetPosition(); ModSettings.panelX = -1; ZoningModSettingsFile.SaveSettings(); });
+            positionGroup.AddButton(Translations.Translate("ZMD_OPT_RBP"), delegate { ModSettings.buttonX = -1; ZoningAdjusterButton.Instance?.SetPosition();});
 
             // Language options.
             UIHelperBase languageGroup = helper.AddGroup(Translations.Translate("TRN_CHOICE"));

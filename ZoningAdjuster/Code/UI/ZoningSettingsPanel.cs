@@ -17,17 +17,28 @@ namespace ZoningAdjuster
         const float OldCheckY = TitleHeight;
         const float NewCheckY = OldCheckY + 20f;
         const float NoCheckY = NewCheckY + 20f;
-        const float SliderLabelY = NoCheckY + 25f;
+        const float SetbackSliderY = NoCheckY + 25f;
         const float SliderLabelHeight = 20f;
-        const float SliderPanelY = SliderLabelY + SliderLabelHeight;
         const float SliderPanelHeight = 36f;
-        const float PanelHeight = SliderPanelY + SliderPanelHeight + Margin;
+        const float PanelHeight = SetbackSliderY + SliderLabelHeight + SliderPanelHeight + Margin;
+
+        // Zoning age priority checkboxes.
+        private readonly string[] priorityNames =
+        {
+            "ZMD_PNL_POZ",
+            "ZMD_PNL_PNZ",
+            "ZMD_PNL_PVZ"
+        };
+        private readonly float[] priorityCheckY =
+        {
+            OldCheckY,
+            NewCheckY,
+            NoCheckY
+        };
+
 
         // Panel components.
-        private readonly UILabel setbackDepthLabel;
-
-        // Last position.
-        private static float lastX = -1, lastY;
+        private readonly UICheckBox[] priorityChecks;
 
         // Instance references.
         private static GameObject uiGameObject;
@@ -74,10 +85,6 @@ namespace ZoningAdjuster
                 return;
             }
 
-            // Store current position.
-            lastX = Panel.absolutePosition.x;
-            lastY = Panel.absolutePosition.y;
-
             // Destroy game objects.
             GameObject.Destroy(panel);
             GameObject.Destroy(uiGameObject);
@@ -93,18 +100,10 @@ namespace ZoningAdjuster
         /// </summary>
         public ZoningSettingsPanel()
         {
+            // Size and position.
             autoSize = false;
             size = new Vector2(PanelWidth, PanelHeight);
-
-            // Restore previous position if we had one (lastX isn't negative), otherwise position it in default position above panel button.
-            if (lastX < 0)
-            {
-                absolutePosition = new Vector2(ZoningAdjusterButton.Instance.absolutePosition.x, ZoningAdjusterButton.Instance.absolutePosition.y - PanelHeight - Margin);
-            }
-            else
-            {
-                absolutePosition = new Vector2(lastX, lastY);
-            }
+            SetPosition();
 
             // Appearance.
             atlas = TextureUtils.InGameAtlas;
@@ -131,129 +130,178 @@ namespace ZoningAdjuster
             dragHandle.target = this;
 
             // Controls.
-            UICheckBox oldAgeCheck = UIControls.LabelledCheckBox(this, Margin, OldCheckY, Translations.Translate("ZMD_PNL_POZ"), tooltip: Translations.Translate("ZMD_PNL_POZ_TIP"));
-            oldAgeCheck.isChecked = ZoneBlockData.preserveOldZones;
-
-            UICheckBox newAgeCheck = UIControls.LabelledCheckBox(this, Margin, NewCheckY, Translations.Translate("ZMD_PNL_PNZ"), tooltip: Translations.Translate("ZMD_PNL_PNZ_TIP"));
-            newAgeCheck.isChecked = ZoneBlockData.preserveNewZones;
-
-            UICheckBox noAgeCheck = UIControls.LabelledCheckBox(this, Margin, NoCheckY, Translations.Translate("ZMD_PNL_PVZ"), tooltip: Translations.Translate("ZMD_PNL_PVZ_TIP"));
-            noAgeCheck.isChecked = !(ZoneBlockData.preserveNewZones || ZoneBlockData.preserveOldZones);
-
-            // Checkbox event handlers.
-            oldAgeCheck.eventCheckChanged += (control, isChecked) =>
+            priorityChecks = new UICheckBox[(int)PriorityIndexes.NumPriorities];
+            int currentPriority = ZoneBlockData.Instance.GetCurrentPriority();
+            for (int i = 0; i < priorityChecks.Length; ++i)
             {
-                ZoneBlockData.preserveOldZones = isChecked;
+                priorityChecks[i] = UIControls.LabelledCheckBox(this, Margin, priorityCheckY[i], Translations.Translate(priorityNames[i]), tooltip: Translations.Translate(priorityNames[i] + "_TIP"));
+                priorityChecks[i].objectUserData = i;
+                priorityChecks[i].isChecked = i == currentPriority;
+                priorityChecks[i].eventCheckChanged += PriorityCheckChanged;
+            }
 
-                // Deselect other checkboxes if this is checked.
-                if (isChecked)
-                {
-                    newAgeCheck.isChecked = false;
-                    noAgeCheck.isChecked = false;
-                }
-                else if (!newAgeCheck.isChecked)
-                {
-                    // Check default checkbox if others are both unchecked.
-                    noAgeCheck.isChecked = true;
-                }
-
+            // Setback slider control - same appearance as Fine Road Tool's, for consistency.
+            UISlider setbackSlider = AddSlider("ZMD_PNL_SBK", SetbackSliderY, "ZMD_PNL_SBK_TIP");
+            setbackSlider.eventValueChanged += (control, value) =>
+            {
+                ZoneBlockPatch.setback = value;
             };
 
-            newAgeCheck.eventCheckChanged += (control, isChecked) =>
-            {
-                ZoneBlockData.preserveNewZones = isChecked;
+            // Bring to front.
+            BringToFront();
 
-                // Deselect other checkboxes if this is checked.
+            // Save new position when moved.
+            eventPositionChanged += PositionChanged;
+        }
+
+
+        /// <summary>
+        /// Sets the panel position according to previous state and mod settings.
+        /// </summary>
+        internal void SetPosition()
+        {
+            // Restore previous position if we had one ((ModSettings.panelX isn't negative), otherwise position it in default position above panel button.
+            if (ModSettings.panelX < 0)
+            {
+                absolutePosition = new Vector2(ZoningAdjusterButton.Instance.absolutePosition.x, ZoningAdjusterButton.Instance.absolutePosition.y - PanelHeight - Margin);
+            }
+            else
+            {
+                absolutePosition = new Vector2(ModSettings.panelX, ModSettings.panelY);
+            }
+        }
+
+
+        /// <summary>
+        /// Position changed event handler, to save new position
+        /// </summary>
+        /// <param name="control">Calling component (unused)</param>
+        /// <param name="position">New position (unused)</param>
+        private void PositionChanged(UIComponent control, Vector2 position)
+        {
+            ModSettings.panelX = this.absolutePosition.x;
+            ModSettings.panelY = this.absolutePosition.y;
+            ZoningModSettingsFile.SaveSettings();
+        }
+
+
+        /// <summary>
+        /// Priority check changed event handler.
+        /// </summary>
+        /// <param name="control">Calling component</param>
+        /// <param name="isChecked">New checked state</param>
+        private void PriorityCheckChanged(UIComponent control, bool isChecked)
+        {
+            // Get stored index from control user data.
+            if (control.objectUserData is int index)
+            {
+                // Deselect other checkboxes if this one has been checked.
                 if (isChecked)
                 {
-                    oldAgeCheck.isChecked = false;
-                    noAgeCheck.isChecked = false;
-                }
-                else if (!oldAgeCheck.isChecked)
-                {
-                    // Check default checkbox if others are both unchecked.
-                    noAgeCheck.isChecked = true;
-                }
-            };
+                    // Iterate through all checkboxes.
+                    for (int i = 0; i < (int)PriorityIndexes.NumPriorities; ++i)
+                    {
+                        // If it's not this checkbox, uncheck it.
+                        if (i != index)
+                        {
+                            priorityChecks[i].isChecked = false;
+                        }
+                    }
 
-            noAgeCheck.eventCheckChanged += (control, isChecked) =>
-            {
-                // Deselect other checkboxes if this is checked.
-                if (isChecked)
-                {
-                    oldAgeCheck.isChecked = false;
-                    newAgeCheck.isChecked = false;
+                    // Set current priority.
+                    ZoneBlockData.Instance.SetCurrentPriority(index);
                 }
-                else if (!oldAgeCheck.isChecked && !newAgeCheck.isChecked)
+                else
                 {
-                    // (Re)check this checkbox if others are both unchecked.
-                    noAgeCheck.isChecked = true;
-                }
-            };
+                    // Checkbox has been deselected; make sure that at least one other is still selected, otherwise we re-select this one.
+                    // Iterate through all checkboxes.
+                    for (int i = 0; i < (int)PriorityIndexes.NumPriorities; ++i)
+                    {
+                        // If any are checked, we're done here; return.
+                        if (priorityChecks[i].isChecked)
+                        {
+                            return;
+                        }
+                    }
 
-            // Setback slider - same appearance as Fine Road Tool's, for consistency.
-            // Setback slider label.
+                    // If we got here, no other check is selected; re-select this one.
+                    (control as UICheckBox).isChecked = true;
+                }
+            }
+        }
+
+        
+        /// <summary>
+        /// Adds a labelled slider control to the panel at the specified postion.
+        /// </summary>
+        /// <param name="textKey">Label translation key</param>
+        /// <param name="yPos">Relative Y position</param>
+        /// <param name="toolTipKey">Tooltip translation key</param>
+        /// <returns>New UISlider with Fine Road Tool appearance</returns>
+        private UISlider AddSlider(string textKey, float yPos, string toolTipKey)
+        {
+
+            // Slider label.
             UILabel setbackLabel = this.AddUIComponent<UILabel>();
             setbackLabel.textScale = 0.9f;
-            setbackLabel.text = Translations.Translate("ZMD_PNL_SBK");
-            setbackLabel.relativePosition = new Vector2(Margin, SliderLabelY);
+            setbackLabel.text = Translations.Translate(textKey);
+            setbackLabel.relativePosition = new Vector2(Margin, yPos);
             setbackLabel.SendToBack();
 
-            // Setback slider panel.
+            // Slider panel.
             UIPanel sliderPanel = this.AddUIComponent<UIPanel>();
             sliderPanel.atlas = TextureUtils.InGameAtlas;
             sliderPanel.backgroundSprite = "GenericPanel";
             sliderPanel.color = new Color32(206, 206, 206, 255);
             sliderPanel.size = new Vector2(this.width - (Margin * 2), SliderPanelHeight);
-            sliderPanel.relativePosition = new Vector2(Margin, SliderPanelY);
-            sliderPanel.tooltip = Translations.Translate("ZMD_PNL_SBK_TIP");
+            sliderPanel.relativePosition = new Vector2(Margin, yPos + SliderLabelHeight);
+            sliderPanel.tooltip = Translations.Translate(toolTipKey);
 
-            // Setback slider value label.
-            setbackDepthLabel = sliderPanel.AddUIComponent<UILabel>();
-            setbackDepthLabel.atlas = TextureUtils.InGameAtlas;
-            setbackDepthLabel.backgroundSprite = "TextFieldPanel";
-            setbackDepthLabel.verticalAlignment = UIVerticalAlignment.Bottom;
-            setbackDepthLabel.textAlignment = UIHorizontalAlignment.Center;
-            setbackDepthLabel.textScale = 0.7f;
-            setbackDepthLabel.text = ZoneBlockPatch.setback.ToString() + "m";
-            setbackDepthLabel.autoSize = false;
-            setbackDepthLabel.color = new Color32(91, 97, 106, 255);
-            setbackDepthLabel.size = new Vector2(38, 15);
-            setbackDepthLabel.relativePosition = new Vector2(sliderPanel.width - setbackDepthLabel.width - Margin, 10f);
+            // Slider value label.
+            UILabel valueLabel = sliderPanel.AddUIComponent<UILabel>();
+            valueLabel.atlas = TextureUtils.InGameAtlas;
+            valueLabel.backgroundSprite = "TextFieldPanel";
+            valueLabel.verticalAlignment = UIVerticalAlignment.Bottom;
+            valueLabel.textAlignment = UIHorizontalAlignment.Center;
+            valueLabel.textScale = 0.7f;
+            valueLabel.text = ZoneBlockPatch.setback.ToString() + "m";
+            valueLabel.autoSize = false;
+            valueLabel.color = new Color32(91, 97, 106, 255);
+            valueLabel.size = new Vector2(38, 15);
+            valueLabel.relativePosition = new Vector2(sliderPanel.width - valueLabel.width - Margin, 10f);
 
-            // Setback slider control - same appearance as Fine Road Tool's, for consistency.
-            UISlider setbackSlider = sliderPanel.AddUIComponent<UISlider>();
-            setbackSlider.name = "ZoningSetbackSlider";
-            setbackSlider.size = new Vector2(sliderPanel.width - setbackDepthLabel.width - (Margin * 3), 18f);
-            setbackSlider.relativePosition = new Vector2(Margin, Margin);
+            // Slider control - same appearance as Fine Road Tool's, for consistency.
+            UISlider newSlider = sliderPanel.AddUIComponent<UISlider>();
+            newSlider.name = "ZoningSetbackSlider";
+            newSlider.size = new Vector2(sliderPanel.width - valueLabel.width - (Margin * 3), 18f);
+            newSlider.relativePosition = new Vector2(Margin, Margin);
 
             // Setback slider track.
-            UISlicedSprite sliderSprite = setbackSlider.AddUIComponent<UISlicedSprite>();
+            UISlicedSprite sliderSprite = newSlider.AddUIComponent<UISlicedSprite>();
             sliderSprite.atlas = TextureUtils.InGameAtlas;
             sliderSprite.spriteName = "BudgetSlider";
-            sliderSprite.size = new Vector2(setbackSlider.width, 9f);
+            sliderSprite.size = new Vector2(newSlider.width, 9f);
             sliderSprite.relativePosition = new Vector2(0f, 4f);
 
             // Setback slider thumb.
-            UISlicedSprite sliderThumb = setbackSlider.AddUIComponent<UISlicedSprite>();
+            UISlicedSprite sliderThumb = newSlider.AddUIComponent<UISlicedSprite>();
             sliderThumb.atlas = TextureUtils.InGameAtlas;
             sliderThumb.spriteName = "SliderBudget";
-            setbackSlider.thumbObject = sliderThumb;
+            newSlider.thumbObject = sliderThumb;
 
             // Setback slider values.
-            setbackSlider.stepSize = 0.5f;
-            setbackSlider.minValue = 0f;
-            setbackSlider.maxValue = 8f;
-            setbackSlider.value = 0f;
+            newSlider.stepSize = 0.5f;
+            newSlider.minValue = 0f;
+            newSlider.maxValue = 8f;
+            newSlider.value = 0f;
 
-            setbackSlider.eventValueChanged += (control, value) =>
+            // Event handler to update value.
+            newSlider.eventValueChanged += (control, value) =>
             {
-                ZoneBlockPatch.setback = value;
-                setbackDepthLabel.text = ZoneBlockPatch.setback.ToString() + "m";
+                valueLabel.text = value.ToString() + "m";
             };
 
-            // Bring to front.
-            BringToFront();
+            return newSlider;
         }
     }
 }

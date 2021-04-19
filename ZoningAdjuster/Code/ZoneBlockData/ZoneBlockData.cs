@@ -3,7 +3,16 @@
 
 namespace ZoningAdjuster
 {
+    // Zoning priority indexes.
+    public enum PriorityIndexes
+    {
+        Older = 0,
+        Newer,
+        None,
+        NumPriorities
+    };
 
+    // Zoning data flags.
     public enum ZoningAdjusterFlags
     {
         None = 0x0,
@@ -17,8 +26,8 @@ namespace ZoningAdjuster
     internal class ZoneBlockData
     {
         // Current build settings.
-        public static bool preserveOldZones = false;
-        public static bool preserveNewZones = false;
+        private bool preserveOldZones = false;
+        private bool preserveNewZones = false;
 
         // Instance reference.
         internal static ZoneBlockData Instance => instance;
@@ -27,6 +36,56 @@ namespace ZoningAdjuster
         // Zone block flag array.
         internal byte[] ZoneBlockFlags => zoneBlockFlags;
         private readonly byte[] zoneBlockFlags;
+
+
+        // Gets current preserved state as index.
+
+        // Sets current preserved state by index.
+
+
+        /// <summary>
+        /// Gets the current prority state as an index.
+        /// </summary>
+        /// <returns>Current priority state index</returns>
+        internal int GetCurrentPriority()
+        {
+            if (preserveOldZones)
+            {
+                return (int)PriorityIndexes.Older;
+            }
+            else if (preserveNewZones)
+            {
+                return (int)PriorityIndexes.Newer;
+            }
+            else
+            {
+                return (int)PriorityIndexes.None;
+            }
+        }
+
+
+        /// <summary>
+        /// Sets the current prority state to an index.
+        /// </summary>
+        /// <returns>Current priority state index</returns>
+        internal void SetCurrentPriority(int index)
+        {
+            switch (index)
+            {
+                case (int)PriorityIndexes.Older:
+                    preserveOldZones = true;
+                    preserveNewZones = false;
+                    break;
+                case (int)PriorityIndexes.Newer:
+                    preserveOldZones = false;
+                    preserveNewZones = true;
+                    break;
+                default:
+                    preserveOldZones = false;
+                    preserveNewZones = false;
+                    break;
+            }
+        }
 
 
         /// <summary>

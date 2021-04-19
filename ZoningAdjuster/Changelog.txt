@@ -1,4 +1,10 @@
-﻿Version 1.1 -
+﻿Version 1.1.1 -
+
+- Tool button is now moveable
+- Button and panel positions are retained after restart
+
+
+Version 1.1 -
 
 - Each newly-created zone block now remembers the priority settings it was created with (i.e. prioritizing newer or older roads) and will retain that priority regardless of any setting changes
 

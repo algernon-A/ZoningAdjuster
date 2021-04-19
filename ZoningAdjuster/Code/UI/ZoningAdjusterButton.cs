@@ -15,7 +15,7 @@ namespace ZoningAdjuster
 
 
         // Instance reference.
-        public static ZoningAdjusterButton Instance { get; private set; }
+        internal static ZoningAdjusterButton Instance { get; private set; }
 
         
         /// <summary>
@@ -47,15 +47,17 @@ namespace ZoningAdjuster
         /// </summary>
         public override void Start()
         {
+            Logging.Message("ZoningAdjusterButton start");
+
             base.Start();
 
             // Instance.
             name = "ZoningAdjusterButton";
             Instance = this;
 
-            // Size and posiition - consistent with road tool size and position, and positioned immediately to the left of the road options tool panel.
-            relativePosition = new Vector2((-ButtonSize - 1f) * 2f, 0);
+            // Size and posiition - consistent with road tool size and position, and positioned immediately to the left of the road options tool panel by default.
             size = new Vector2(ButtonSize, ButtonSize);
+            SetPosition();
 
             // Appearance and effects.
             atlas = Textures.ToolButtonSprites;
@@ -90,26 +92,15 @@ namespace ZoningAdjuster
             // Set initial visibility state and add event hook.
             VisibilityChanged(null, isVisible);
             eventVisibilityChanged += VisibilityChanged;
-        }
 
+            // Add drag handle.
+            UIDragHandle dragHandle = this.AddUIComponent<UIDragHandle>();
+            dragHandle.target = this;
+            dragHandle.relativePosition = Vector3.zero;
+            dragHandle.size = this.size;
 
-        /// <summary>
-        /// Visibility changed event handler, to toggle visibility of panel.
-        /// </summary>
-        /// <param name="control">Calling component (unused)</param>
-        /// <param name="isVisible">New visibility state</param>
-        public static void VisibilityChanged(UIComponent control, bool isVisible)
-        {
-            Logging.Message("panel button visibility changed");
-            // Toggle zoning settings panel state accordingly.
-            if (isVisible)
-            {
-                ZoningSettingsPanel.Create();
-            }
-            else
-            {
-                ZoningSettingsPanel.Close();
-            }
+            // Save new position when moved.
+            eventPositionChanged += PositionChanged;
         }
 
 
@@ -120,6 +111,23 @@ namespace ZoningAdjuster
         internal static ZoningAdjusterButton CreateButton()
         {
             return RoadsOptionPanel().AddUIComponent<ZoningAdjusterButton>();
+        }
+
+
+        /// <summary>
+        /// Sets the button position according to previous state and mod settings.
+        /// </summary>
+        internal void SetPosition()
+        {
+            // Restore previous position if we had one (ModSettings.buttonX isn't negative), otherwise position it in default position above panel button.
+            if (ModSettings.buttonX < 0)
+            {
+                relativePosition = new Vector2((-ButtonSize - 1f) * 2f, 0);
+            }
+            else
+            {
+                absolutePosition = new Vector2(ModSettings.buttonX, ModSettings.buttonY);
+            }
         }
 
 
@@ -139,6 +147,40 @@ namespace ZoningAdjuster
             }
 
             return null;
+        }
+
+
+        /// <summary>
+        /// Visibility changed event handler, to toggle visibility of panel.
+        /// </summary>
+        /// <param name="control">Calling component (unused)</param>
+        /// <param name="isVisible">New visibility state</param>
+        private static void VisibilityChanged(UIComponent control, bool isVisible)
+        {
+            Logging.Message("panel button visibility changed");
+            // Toggle zoning settings panel state accordingly.
+            if (isVisible)
+            {
+                ZoningSettingsPanel.Create();
+            }
+            else
+            {
+                ZoningSettingsPanel.Close();
+            }
+        }
+
+
+        /// <summary>
+        /// Position changed event handler, to save new position
+        /// </summary>
+        /// <param name="control">Calling component (unused)</param>
+        /// <param name="position">New position (unused)</param>
+        private void PositionChanged(UIComponent control, Vector2 position)
+        {
+            Logging.Message("setting button position");
+            ModSettings.buttonX = this.absolutePosition.x;
+            ModSettings.buttonY = this.absolutePosition.y;
+            ZoningModSettingsFile.SaveSettings();
         }
     }
 }

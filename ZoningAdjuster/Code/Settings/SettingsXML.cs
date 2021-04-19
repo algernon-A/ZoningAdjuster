@@ -31,9 +31,23 @@ namespace ZoningAdjuster
         public string Language { get => Translations.Language; set => Translations.Language = value; }
 
 
-        // Panel position.
+        // Offset hotkey/
         [XmlElement("OffsetKey")]
         public int OffsetModifier { get => UIThreading.offsetModifier; set => UIThreading.offsetModifier = value; }
+
+        // Panel postion.
+        [XmlElement("PanelX")]
+        public float PanelX { get => ModSettings.panelX; set => ModSettings.panelX = value; }
+
+        // Panel postion.
+        [XmlElement("PanelY")]
+        public float PanelY { get => ModSettings.panelY; set => ModSettings.panelY = value; }
+
+        // Button postion.
+        [XmlElement("ButtonX")]
+        public float ButtonX { get => ModSettings.buttonX; set => ModSettings.buttonX = value; }
+        [XmlElement("ButtonY")]
+        public float ButtonY { get => ModSettings.buttonY; set => ModSettings.buttonY = value; }
 
 
         /// <summary>

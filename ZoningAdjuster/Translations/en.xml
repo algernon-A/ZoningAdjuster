@@ -13,6 +13,9 @@
     <Translation ID="ZMD_PNL_SBK_TIP" String="Adds a gap between the road edge and the zoning grid" />"
     <Translation ID="ZMD_OPT_KEY" String="Modifier key" />"
     <Translation ID="ZMD_OPT_ZOK" String="Zoning offset modifier key" />"
+    <Translation ID="ZMD_OPT_POS" String="Panel and button locations" />"
+    <Translation ID="ZMD_OPT_RPP" String="Reset panel position" />"
+    <Translation ID="ZMD_OPT_RBP" String="Reset button position" />"
     <Translation ID="ZMD_SHIFT" String="Shift" />"
     <Translation ID="ZMD_CTRL" String="Control" />"
     <Translation ID="ZMD_ALT" String="Alt" />"
@@ -38,5 +41,7 @@
     <Translation ID="ZMD_110_0" String="Each newly-created zone block now remembers the priority settings it was created with (i.e. prioritizing newer or older roads) and will retain that priority regardless of any setting changes" />
     <Translation ID="ZMD_110_1" String="NOTE 1: this only applies to newly-created zone blocks" />
     <Translation ID="ZMD_110_2" String="NOTE 2: conflicting settings (e.g. a newer road prioritizing older settings next to an older road prioritizing newer settings) will lead to inconsistent results" />
+    <Translation ID="ZMD_111_0" String="Tool button is now moveable (click and drag to move)" />
+    <Translation ID="ZMD_111_1" String="Button and panel positions are saved when exiting the game" />
   </Translations>
 </Language>
