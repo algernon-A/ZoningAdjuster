@@ -4,7 +4,7 @@ using UnityEngine;
 /* Inspired by Node Contoller by kian.zarrin, which in turn was "A lot of copy-pasting from Crossings mod by Spectra and Roundabout Mod by Strad." */
 
 namespace ZoningAdjuster
-{
+{/*
     public class ZoningAdjusterButton : UIButton
     {
         // Button size.
@@ -182,5 +182,5 @@ namespace ZoningAdjuster
             ModSettings.buttonY = this.absolutePosition.y;
             ZoningModSettingsFile.SaveSettings();
         }
-    }
+    }*/
 }

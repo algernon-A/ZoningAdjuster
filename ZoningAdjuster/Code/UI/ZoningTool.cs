@@ -68,8 +68,8 @@ namespace ZoningAdjuster
 					spritefile: Path.Combine(Path.Combine(ModUtils.GetAssemblyPath(), "Resources"), "uui_zoning_adjuster.png"),
 					tool: this,
 					activationKey: new SavedInputKey(
-			ModSettings.SettingsFileName, "ZoningAdjuster",
-			key: KeyCode.Z, control: false, shift: false, alt: true, true)
+						ModSettings.SettingsFileName, "ZoningAdjuster",
+						key: KeyCode.A, control: false, shift: false, alt: true, true)
 					) as UIButton;
 			}
 			catch (Exception e)
@@ -104,7 +104,7 @@ namespace ZoningAdjuster
 			Singleton<TerrainManager>.instance.RenderZones = true;
 
 			// Set button state to indicate tool is active.
-			ZoningAdjusterButton.ToolActive = true;
+			//ZoningAdjusterButton.ToolActive = true;
 		}
 
 
@@ -119,7 +119,7 @@ namespace ZoningAdjuster
 			Singleton<TerrainManager>.instance.RenderZones = prevRenderZones;
 
 			// Set panel button state to indicate tool no longer active.
-			ZoningAdjusterButton.ToolActive = false;
+			//ZoningAdjusterButton.ToolActive = false;
 		}
 
 

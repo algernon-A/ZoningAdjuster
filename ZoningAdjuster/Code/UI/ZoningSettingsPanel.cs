@@ -5,6 +5,7 @@ using ColossalFramework.UI;
 
 namespace ZoningAdjuster
 {
+
     /// <summary>
     /// The zoning settings panel.
     /// </summary>
@@ -38,12 +39,43 @@ namespace ZoningAdjuster
 
 
         // Panel components.
-        private readonly UICheckBox[] priorityChecks;
+        private UICheckBox[] priorityChecks;
 
         // Instance references.
         private static GameObject uiGameObject;
         private static ZoningSettingsPanel panel;
         internal static ZoningSettingsPanel Panel => panel;
+
+
+
+
+
+        /// <summary>
+        /// Creates the button and attaches it to the roads option panel.
+        /// </summary>
+        /// <returns>Button instance</returns>
+        internal static ZoningSettingsPanel AttachPanel()
+        {
+            return RoadsOptionPanel().AddUIComponent<ZoningSettingsPanel>();
+        }
+
+        /// <summary>
+        /// Finds the game's RoadOptionPanel.
+        /// </summary>
+        /// <returns>RoadOptionPanel as UIComponent</returns>
+        private static UIComponent RoadsOptionPanel()
+        {
+            foreach (UIComponent component in UnityEngine.Object.FindObjectsOfType<UIComponent>())
+            {
+                if (component.name.Equals("RoadsOptionPanel"))
+                {
+                    Logging.Message("found RoadsOptionPanel");
+                    return component;
+                }
+            }
+
+            return null;
+        }
 
 
         /// <summary>
@@ -98,8 +130,11 @@ namespace ZoningAdjuster
         /// <summary>
         /// Constructor.
         /// </summary>
-        public ZoningSettingsPanel()
+        public override void Start()
         {
+            // Instance reference.
+            panel = this;
+
             // Size and position.
             autoSize = false;
             size = new Vector2(PanelWidth, PanelHeight);
@@ -163,7 +198,7 @@ namespace ZoningAdjuster
             // Restore previous position if we had one ((ModSettings.panelX isn't negative), otherwise position it in default position above panel button.
             if (ModSettings.panelX < 0)
             {
-                absolutePosition = new Vector2(ZoningAdjusterButton.Instance.absolutePosition.x, ZoningAdjusterButton.Instance.absolutePosition.y - PanelHeight - Margin);
+                relativePosition = new Vector2(0f, -PanelHeight - Margin);
             }
             else
             {

@@ -109,8 +109,9 @@ namespace ZoningAdjuster
             // Initialise zoning tool.
             ToolsModifierControl.toolController.gameObject.AddComponent<ZoningTool>();
 
-			// Add panel button.
-			ZoningAdjusterButton.CreateButton();
+            // Add panel button.
+            //ZoningAdjusterButton.CreateButton();
+            ZoningSettingsPanel.AttachPanel();
 
 			// Display update notification.
 			WhatsNew.ShowWhatsNew();
