@@ -47,9 +47,6 @@ namespace ZoningAdjuster
         internal static ZoningSettingsPanel Panel => panel;
 
 
-
-
-
         /// <summary>
         /// Creates the button and attaches it to the roads option panel.
         /// </summary>

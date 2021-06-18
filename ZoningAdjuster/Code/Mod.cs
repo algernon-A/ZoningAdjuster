@@ -62,7 +62,6 @@ namespace ZoningAdjuster
             // Reset panel and button positions.
             UIHelperBase positionGroup = helper.AddGroup(Translations.Translate("ZMD_OPT_POS"));
             positionGroup.AddButton(Translations.Translate("ZMD_OPT_RPP"), delegate { ModSettings.panelX = -1; ZoningSettingsPanel.Panel?.SetPosition(); ModSettings.panelX = -1; ZoningModSettingsFile.SaveSettings(); });
-            //positionGroup.AddButton(Translations.Translate("ZMD_OPT_RBP"), delegate { ModSettings.buttonX = -1; ZoningAdjusterButton.Instance?.SetPosition();});
 
             // Language options.
             UIHelperBase languageGroup = helper.AddGroup(Translations.Translate("TRN_CHOICE"));

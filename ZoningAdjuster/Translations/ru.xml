@@ -15,7 +15,6 @@
     <Translation ID="ZMD_OPT_ZOK" String="Клавиша-модификатор смещения зонирования" />"
     <Translation ID="ZMD_OPT_POS" String="Расположение панели и кнопки" />"
     <Translation ID="ZMD_OPT_RPP" String="Сброс положения панели" />"
-    <Translation ID="ZMD_OPT_RBP" String="Сброс положения кнопки" />"
     <Translation ID="ZMD_SHIFT" String="Shift" />"
     <Translation ID="ZMD_CTRL" String="Control" />"
     <Translation ID="ZMD_ALT" String="Alt" />"
