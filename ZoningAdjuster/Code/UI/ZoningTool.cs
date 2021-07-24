@@ -65,7 +65,7 @@ namespace ZoningAdjuster
 					name: "ZoningAdjuster",
 					groupName: null, // default group
 					tooltip: "Zoning Adjuster tool",
-					spritefile: Path.Combine(Path.Combine(ModUtils.GetAssemblyPath(), "Resources"), "uui_zoning_adjuster.png"),
+					spritefile: Path.Combine(Path.Combine(ModUtils.GetAssemblyPath(), "Resources"), "uui_pf.png"),
 					tool: this,
 					activationKey: new SavedInputKey(
 			ModSettings.SettingsFileName, "ZoningAdjuster",
