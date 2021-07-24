@@ -15,6 +15,7 @@
     <Translation ID="ZMD_OPT_ZOK" String="Zoning offset modifier key" />"
     <Translation ID="ZMD_OPT_POS" String="Panel and button locations" />"
     <Translation ID="ZMD_OPT_RPP" String="Reset panel position" />"
+    <Translation ID="ZMD_OPT_RBP" String="Reset button position" />"
     <Translation ID="ZMD_SHIFT" String="Shift" />"
     <Translation ID="ZMD_CTRL" String="Control" />"
     <Translation ID="ZMD_ALT" String="Alt" />"
