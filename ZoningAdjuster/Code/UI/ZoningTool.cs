@@ -99,9 +99,14 @@ namespace ZoningAdjuster
 		{
 			base.OnEnable();
 
+			Logging.Message("tool enabled");
+
 			// Show zone grids when tool is active.
 			prevRenderZones = Singleton<TerrainManager>.instance.RenderZones;
 			Singleton<TerrainManager>.instance.RenderZones = true;
+
+			// Show panel if it isn't already.
+			ZoningSettingsPanel.Create();
 
 			// Set button state to indicate tool is active.
 			//ZoningAdjusterButton.ToolActive = true;
@@ -117,6 +122,12 @@ namespace ZoningAdjuster
 
 			// Restore zone grid showing to previous state.
 			Singleton<TerrainManager>.instance.RenderZones = prevRenderZones;
+
+			// Hide panel if we're not keeping it when road tool is active.
+			//if (!ModSettings.ShowPanel)
+            {
+				ZoningSettingsPanel.Close();
+            }
 
 			// Set panel button state to indicate tool no longer active.
 			//ZoningAdjusterButton.ToolActive = false;

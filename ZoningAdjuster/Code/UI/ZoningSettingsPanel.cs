@@ -51,9 +51,27 @@ namespace ZoningAdjuster
         /// Creates the button and attaches it to the roads option panel.
         /// </summary>
         /// <returns>Button instance</returns>
-        internal static ZoningSettingsPanel AttachPanel()
+        internal static void AttachPanel()
         {
-            return RoadsOptionPanel().AddUIComponent<ZoningSettingsPanel>();
+            //return RoadsOptionPanel().AddUIComponent<ZoningSettingsPanel>();
+
+            RoadsOptionPanel().parent.parent.eventVisibilityChanged += (control, isVisible) =>
+            {
+                Logging.Message("RoadsOptionPanel visibility");
+
+                //if (ModSettings.ShowPanel)
+                {
+                    if (isVisible)
+                    {
+                        
+                        Create();
+                    }
+                    else
+                    {
+                        Close();
+                    }
+                }
+            };
         }
 
         /// <summary>
@@ -127,7 +145,7 @@ namespace ZoningAdjuster
         /// <summary>
         /// Constructor.
         /// </summary>
-        public override void Start()
+        public ZoningSettingsPanel()
         {
             // Instance reference.
             panel = this;
