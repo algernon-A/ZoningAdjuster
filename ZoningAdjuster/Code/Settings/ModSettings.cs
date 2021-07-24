@@ -5,9 +5,6 @@
     /// </summary>
     internal static class ModSettings
     {
-        // C:S settings file name (for UUI).
-        internal const string SettingsFileName = "ZoningAdjuster";
-
         // What's new notification version.
         internal static string whatsNewVersion = "0.0";
         internal static int whatsNewBetaVersion = 0;

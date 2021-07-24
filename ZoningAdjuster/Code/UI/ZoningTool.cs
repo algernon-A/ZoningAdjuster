@@ -1,9 +1,6 @@
-﻿using System;
-using System.IO;
-using ColossalFramework;
+﻿using ColossalFramework;
 using ColossalFramework.UI;
 using UnityEngine;
-using UnifiedUI.Helpers;
 
 
 namespace ZoningAdjuster
@@ -22,6 +19,18 @@ namespace ZoningAdjuster
 		/// </summary>
 		public static ZoningTool Instance => ToolsModifierControl.toolController?.gameObject?.GetComponent<ZoningTool>();
 
+
+		/// <summary>
+		/// Initialise the tool.
+		/// Called by unity when the tool is created.
+		/// </summary>
+		protected override void Awake()
+		{
+			base.Awake();
+
+			// Set default cursor.
+			m_cursor = TextureUtils.LoadCursor("ZAcursor.png");
+		}
 
 		// Ignore anything except segments.
 		public override Building.Flags GetBuildingIgnoreFlags() => Building.Flags.All;
@@ -44,38 +53,6 @@ namespace ZoningAdjuster
 		{
 			nameOnly = false;
 			return NetSegment.Flags.None;
-		}
-
-
-		/// <summary>
-		/// Initialise the tool.
-		/// Called by unity when the tool is created.
-		/// </summary>
-		protected override void Awake()
-		{
-			try
-			{
-				base.Awake();
-
-				// Set default cursor.
-				m_cursor = TextureUtils.LoadCursor("ZAcursor.png");
-
-				// Register UUI button.
-				UIButton panelButton = UUIHelpers.RegisterToolButton(
-					name: "ZoningAdjuster",
-					groupName: null, // default group
-					tooltip: "Zoning Adjuster tool",
-					spritefile: Path.Combine(Path.Combine(ModUtils.GetAssemblyPath(), "Resources"), "uui_pf.png"),
-					tool: this,
-					activationKey: new SavedInputKey(
-			ModSettings.SettingsFileName, "ZoningAdjuster",
-			key: KeyCode.Z, control: false, shift: false, alt: true, true)
-					) as UIButton;
-			}
-			catch (Exception e)
-			{
-				Logging.LogException(e, "exception waking select tool");
-			}
 		}
 
 
