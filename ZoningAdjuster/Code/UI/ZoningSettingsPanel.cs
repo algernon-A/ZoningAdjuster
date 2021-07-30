@@ -293,7 +293,7 @@ namespace ZoningAdjuster
             newSlider.stepSize = 0.5f;
             newSlider.minValue = -4f;
             newSlider.maxValue = 8f;
-            newSlider.value = 0f;
+            newSlider.value = ZoneBlockPatch.setback;
 
             // Event handler to update value.
             newSlider.eventValueChanged += (control, value) =>

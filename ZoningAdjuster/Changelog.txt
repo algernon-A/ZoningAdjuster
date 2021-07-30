@@ -1,4 +1,8 @@
-﻿Version 1.1.1 -
+﻿- Allow negative setbacks of up to -4m
+- Fix setback slider sometimes being reset to zero when selecting networks in Find It
+
+
+Version 1.1.1 -
 
 - Tool button is now moveable
 - Button and panel positions are retained after restart
