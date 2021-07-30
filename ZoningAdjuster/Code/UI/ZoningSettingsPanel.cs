@@ -291,7 +291,7 @@ namespace ZoningAdjuster
 
             // Setback slider values.
             newSlider.stepSize = 0.5f;
-            newSlider.minValue = 0f;
+            newSlider.minValue = -4f;
             newSlider.maxValue = 8f;
             newSlider.value = 0f;
 
