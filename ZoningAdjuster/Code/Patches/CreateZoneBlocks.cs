@@ -385,14 +385,14 @@ namespace ZoningAdjuster
                 float endOffset = magnitude - (float)rows * CellSize;
 
                 // Left side of road.
-                Vector3 leftOffset = new Vector3(endDirection.x * (MaxExtent + endOffset) - endDirection.z * maxDistance, 0f, endDirection.z * (MaxExtent + endOffset) + endDirection.x * maxDistance);
+                Vector3 leftOffset = new Vector3(endDirection.x * ((float)(segmentEndRows - 4) * CellSize + endOffset) + endDirection.z * maxDistance, 0f, endDirection.z * ((float)(segmentEndRows - 4) * CellSize + endOffset) - endDirection.x * maxDistance);
                 Vector3 position = endPosition + leftOffset;
-                zoneManager.CreateBlock(out segment.m_blockEndLeft, ref randomizer, position, endAngle, segmentEndRows, distance, segment.m_buildIndex + 1u);
+                zoneManager.CreateBlock(out segment.m_blockEndLeft, ref randomizer, position, endAngle + 3.14159274f, segmentEndRows, distance, segment.m_buildIndex + 1u);
 
                 // Right side of road.
-                Vector3 rightOffset = new Vector3(endDirection.x * ((float)(segmentEndRows - 4) * CellSize + endOffset) + endDirection.z * maxDistance, 0f, endDirection.z * ((float)(segmentEndRows - 4) * CellSize + endOffset) - endDirection.x * maxDistance);
+                Vector3 rightOffset = new Vector3(endDirection.x * (MaxExtent + endOffset) - endDirection.z * maxDistance, 0f, endDirection.z * (MaxExtent + endOffset) + endDirection.x * maxDistance);
                 position = endPosition + rightOffset;
-                zoneManager.CreateBlock(out segment.m_blockEndRight, ref randomizer, position, endAngle + 3.14159274f, segmentEndRows, distance, segment.m_buildIndex + 1u);
+                zoneManager.CreateBlock(out segment.m_blockEndRight, ref randomizer, position, endAngle, segmentEndRows, distance, segment.m_buildIndex + 1u);
             }
         }
     }

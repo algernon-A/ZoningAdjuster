@@ -142,6 +142,10 @@ namespace ZoningAdjuster
 					// Only interested in RoadAI, as that's the only one with zoning.
 					if (segment.Info.GetAI() is RoadAI roadAI)
 					{
+						// Determine existing blocks.
+						bool hasLeft = segment.m_blockStartLeft != 0 || segment.m_blockEndLeft != 0;
+						bool hasRight = segment.m_blockStartRight != 0 || segment.m_blockEndRight != 0;
+
 						// Remove any attached zone blocks.
 						RemoveZoneBlock(ref segment.m_blockStartLeft);
 						RemoveZoneBlock(ref segment.m_blockStartRight);
@@ -151,7 +155,33 @@ namespace ZoningAdjuster
 						// Replace with new zone blocks if the button click was with the primary mouse button.
 						if (e.button == 0)
 						{
+							// If shift key is held down, toggle offset.
+							if ((e.modifiers & EventModifiers.Shift) != EventModifiers.None)
+                            {
+								UIThreading.shiftOffset = true;
+                            }
+
 							roadAI.CreateZoneBlocks(segmentID, ref netManager.m_segments.m_buffer[segmentID]);
+
+							// If alt key is held down, toggle left/right/both.
+							if (((e.modifiers & EventModifiers.Alt) != EventModifiers.None) && hasLeft)
+							{
+								if (hasRight)
+								{
+									// Both->left.
+									RemoveZoneBlock(ref netManager.m_segments.m_buffer[segmentID].m_blockStartRight);
+									RemoveZoneBlock(ref netManager.m_segments.m_buffer[segmentID].m_blockEndRight);
+								}
+								else
+								{
+									// Left->right.
+									RemoveZoneBlock(ref netManager.m_segments.m_buffer[segmentID].m_blockStartLeft);
+									RemoveZoneBlock(ref netManager.m_segments.m_buffer[segmentID].m_blockEndLeft);
+								}
+							}
+
+							// Reset shift offset.
+							UIThreading.shiftOffset = false;
 						}
 					}
 				}

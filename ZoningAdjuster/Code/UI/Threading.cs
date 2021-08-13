@@ -25,7 +25,7 @@ namespace ZoningAdjuster
         internal static bool shiftOffset = false;
 
         /// <summary>
-        /// Look for keypress to open GUI.
+        /// Look for offset modifier keypress.
         /// </summary>
         /// <param name="realTimeDelta"></param>
         /// <param name="simulationTimeDelta"></param>
