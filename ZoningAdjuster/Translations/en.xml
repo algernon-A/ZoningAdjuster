@@ -3,6 +3,8 @@
   <Translations>
     <Translation ID="ZMD_NAME" String="Zoning Adjuster" />
     <Translation ID="ZMD_DESC" String="Allows zoning of 8- and 24- meter wide roads to align with regular-width roads and adds the ability to offset zoning start positions along roads." />"
+    <Translation ID="ZMD_PNL_DIS" String="Disable zoning" />"
+    <Translation ID="ZMD_PNL_DIS_TIP" String="Disable all zone creation when building roads (zoning can still be added using the Zoning Adjuster tool)" />"
     <Translation ID="ZMD_PNL_POZ" String="Prioritize older roads" />"
     <Translation ID="ZMD_PNL_POZ_TIP" String="Zoning attached to newer roads won't overwrite zoning attached to older roads" />"
     <Translation ID="ZMD_PNL_PNZ" String="Prioritize newer roads" />"

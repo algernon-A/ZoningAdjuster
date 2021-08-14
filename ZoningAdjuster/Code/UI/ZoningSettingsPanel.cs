@@ -14,7 +14,8 @@ namespace ZoningAdjuster
         const float Margin = 8f;
         const float PanelWidth = 230f;
         const float TitleHeight = 40f;
-        const float OldCheckY = TitleHeight;
+        const float DisableCheckY = TitleHeight;
+        const float OldCheckY = DisableCheckY + 30f;
         const float NewCheckY = OldCheckY + 20f;
         const float NoCheckY = NewCheckY + 20f;
         const float SetbackSliderY = NoCheckY + 25f;
@@ -36,9 +37,13 @@ namespace ZoningAdjuster
             NoCheckY
         };
 
+        // Status flag.
+        public static bool disableZoning = false;
+
 
         // Panel components.
         private readonly UICheckBox[] priorityChecks;
+        private readonly UICheckBox disableCheck;
 
         // Instance references.
         private static GameObject uiGameObject;
@@ -129,7 +134,12 @@ namespace ZoningAdjuster
             dragHandle.relativePosition = Vector3.zero;
             dragHandle.target = this;
 
-            // Controls.
+            // Disable zoning checkbox.
+            disableCheck = UIControls.LabelledCheckBox(this, Margin, DisableCheckY, Translations.Translate("ZMD_PNL_DIS"), tooltip: Translations.Translate("ZMD_PNL_DIS_TIP"));
+            disableCheck.isChecked = disableZoning;
+            disableCheck.eventCheckChanged += (control, isChecked) => disableZoning = isChecked;
+
+            // Priority checkboxes.
             priorityChecks = new UICheckBox[(int)PriorityIndexes.NumPriorities];
             int currentPriority = ZoneBlockData.Instance.GetCurrentPriority();
             for (int i = 0; i < priorityChecks.Length; ++i)
@@ -240,7 +250,6 @@ namespace ZoningAdjuster
         /// <returns>New UISlider with Fine Road Tool appearance</returns>
         private UISlider AddSlider(string textKey, float yPos, string toolTipKey)
         {
-
             // Slider label.
             UILabel setbackLabel = this.AddUIComponent<UILabel>();
             setbackLabel.textScale = 0.9f;
