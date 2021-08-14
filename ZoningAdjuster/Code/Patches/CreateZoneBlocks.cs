@@ -27,25 +27,29 @@ namespace ZoningAdjuster
         /// <returns>False (always)</returns>
         public static bool Prefix(ushort segment, ref NetSegment data)
         {
-            // Local references.
-            NetManager netManager = Singleton<NetManager>.instance;
-            Randomizer randomizer = new Randomizer((int)segment);
-            NetInfo info = data.Info;
-            NetNode startNode = netManager.m_nodes.m_buffer[(int)data.m_startNode];
-            NetNode endNode = netManager.m_nodes.m_buffer[(int)data.m_endNode];
+            // Don't do anything if zoning is disabled.
+            if (!ZoningSettingsPanel.disableZoning)
+            {
+                // Local references.
+                NetManager netManager = Singleton<NetManager>.instance;
+                Randomizer randomizer = new Randomizer((int)segment);
+                NetInfo info = data.Info;
+                NetNode startNode = netManager.m_nodes.m_buffer[(int)data.m_startNode];
+                NetNode endNode = netManager.m_nodes.m_buffer[(int)data.m_endNode];
 
-            // Is this a straight or curved segment?
-            Vector3 startPosition = startNode.m_position;
-            Vector3 endPosition = endNode.m_position;
-            Vector3 startDirection = data.m_startDirection;
-            Vector3 endDirection = data.m_endDirection;
-            if (NetSegment.IsStraight(startPosition, startDirection, endPosition, endDirection))
-            {
-                StraightZoneBlocks(info, randomizer, ref data, startNode, endNode);
-            }
-            else
-            {
-                CurvedZoneBlocks(info, randomizer, ref data);
+                // Is this a straight or curved segment?
+                Vector3 startPosition = startNode.m_position;
+                Vector3 endPosition = endNode.m_position;
+                Vector3 startDirection = data.m_startDirection;
+                Vector3 endDirection = data.m_endDirection;
+                if (NetSegment.IsStraight(startPosition, startDirection, endPosition, endDirection))
+                {
+                    StraightZoneBlocks(info, randomizer, ref data, startNode, endNode);
+                }
+                else
+                {
+                    CurvedZoneBlocks(info, randomizer, ref data);
+                }
             }
 
             // Pre-empt original method.

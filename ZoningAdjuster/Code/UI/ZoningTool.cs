@@ -134,6 +134,10 @@ namespace ZoningAdjuster
 					// Got one; use the event.
 					UIInput.MouseUsed();
 
+					// Store current 'disable zoning' state and temporarily disable.
+					bool zoningDisabled = ZoningSettingsPanel.disableZoning;
+					ZoningSettingsPanel.disableZoning = false;
+
 					// Local references.
 					NetManager netManager = Singleton<NetManager>.instance;
 					NetSegment[] segmentBuffer = netManager.m_segments.m_buffer;
@@ -182,6 +186,9 @@ namespace ZoningAdjuster
 
 							// Reset shift offset.
 							UIThreading.shiftOffset = false;
+
+							// Restore 'disable zoning' state.
+							ZoningSettingsPanel.disableZoning = zoningDisabled;
 						}
 					}
 				}
