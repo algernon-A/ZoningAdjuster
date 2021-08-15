@@ -3,6 +3,8 @@
   <Translations>
     <Translation ID="ZMD_NAME" String="Zoning Adjuster" />
     <Translation ID="ZMD_DESC" String="Ermöglicht es Gebiete entlang von 8 und 24 Meter breiten Straßen anzulegen, die den normal-breiten Straßen angeglichen sind. Außerdem kann der Versatz des Rasters entlang der Straße angepasst werden" />
+    <Translation ID="ZMD_PNL_DIS" String="Gebiete ausschalten" />
+    <Translation ID="ZMD_PNL_DIS_TIP" String="Das erstellen von Gebieten beim Bau von Straßen wird ausgeschaltet (Gebiete können jederzeit über das Zoning Adjuster Werkzeug hinzugefügt werden)" />
     <Translation ID="ZMD_PNL_POZ" String="Ältere Straßen priorisieren" />
     <Translation ID="ZMD_PNL_POZ_TIP" String="Gebiete die für neue Straßen angelegt werden, überschreiben nicht die Gebiete bereits bestehender Straßen." />
     <Translation ID="ZMD_PNL_PNZ" String="Neuere Straßen priorisieren" />
@@ -40,5 +42,7 @@
     <Translation ID="ZMD_110_2" String="Info 2: Widersprüchliche Einstellungen (z.B. eine Priorisierung neuer Straßen wird an eine Stra0e angebunden, die die Priosierung alter Straßen gesetz hat) werden zu uneinheitlichen Ergebnissen führen." />
     <Translation ID="ZMD_111_0" String="Werkzeug-Schaltfläche ist nun verschiebbar (anklicken und ziehen zum Bewegen)" />
     <Translation ID="ZMD_111_1" String="Position der Schaltfläche und Oberfläche werden nun beim Beenden des Spiels gespeichert" />
+    <Translation ID="ZMD_120_0" String="'Gebiete ausschalten' hinzugefügt und das automatische erstellen von Gebieten zu verhindern (Gebiete können jederzeit über das Zoning Adjuster Werkzeug hinzugefügt werden)" />
+    <Translation ID="ZMD_120_1" String="Negativer Gebietsversatz hinzugefügt  (Gebiete näher an die Straße setzen)" />
   </Translations>
 </Language>
