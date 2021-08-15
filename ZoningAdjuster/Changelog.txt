@@ -1,4 +1,7 @@
-﻿- Allow negative setbacks of up to -4m
+﻿Version 1.2 -
+
+- Add option to disable all automatic zoning
+- Allow negative setbacks of up to -4m
 - Fix setback slider sometimes being reset to zero when selecting networks in Find It
 
 
