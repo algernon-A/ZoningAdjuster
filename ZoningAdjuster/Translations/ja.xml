@@ -2,25 +2,25 @@
 <Language UniqueName="ja" ReadableName="日本語">
   <Translations>
     <Translation ID="ZMD_NAME" String="Zoning Adjuster"/>
-    <Translation ID="ZMD_DESC" String="幅が8m＆24mの道路にあるゾーニングを、道路と隙間を空けずに敷設できます。道路とゾーニングに出来る隙間も、オフセットの調整が可能になりました。"/>"
-    <Translation ID="ZMD_PNL_DIS" String="ゾーニングを無効化"/>"
-    <Translation ID="ZMD_PNL_DIS_TIP" String="道路敷設時にゾーニングを無効化(後からゾーニングの追加・変更も可能)"/>"
+    <Translation ID="ZMD_DESC" String="幅が8m＆24mの道路にあるゾーニングを、道路と隙間を空けずに敷設できます。道路とゾーニングに出来る隙間も、オフセットの調整が可能になりました。"/>
+    <Translation ID="ZMD_PNL_DIS" String="ゾーニングを無効化"/>
+    <Translation ID="ZMD_PNL_DIS_TIP" String="道路敷設時にゾーニングを無効化(後からゾーニングの追加・変更も可能)"/>
     <Translation ID="ZMD_PNL_POZ" String="古い道路を優先"/>"
-    <Translation ID="ZMD_PNL_POZ_TIP" String="新しい道路のゾーニングは、古い道路のゾーニングを上書きしない"/>"
-    <Translation ID="ZMD_PNL_PNZ" String="新しい道路の優先"/>"
-    <Translation ID="ZMD_PNL_PNZ_TIP" String="古い道路のゾーニングは、新しい道路のゾーニングを上書きしない"/>"
+    <Translation ID="ZMD_PNL_POZ_TIP" String="新しい道路のゾーニングは、古い道路のゾーニングを上書きしない"/>
+    <Translation ID="ZMD_PNL_PNZ" String="新しい道路の優先"/>
+    <Translation ID="ZMD_PNL_PNZ_TIP" String="古い道路のゾーニングは、新しい道路のゾーニングを上書きしない"/>
     <Translation ID="ZMD_PNL_PVZ" String="優先順位なし"/>"
     <Translation ID="ZMD_PNL_PVZ_TIP" String="ゲームのデフォルト動作"/>"
     <Translation ID="ZMD_PNL_SBK" String="ゾーニングのセットバック"/>"
-    <Translation ID="ZMD_PNL_SBK_TIP" String="道路とゾーニング間にセットバックを追加"/>"
-    <Translation ID="ZMD_OPT_KEY" String="キーバインド"/>"
-    <Translation ID="ZMD_OPT_ZOK" String="ゾーニングオフセットのキーバインド"/>"
-    <Translation ID="ZMD_OPT_POS" String="パネルとボタンの位置"/>"
-    <Translation ID="ZMD_OPT_RPP" String="パネルの位置をリセット"/>"
-    <Translation ID="ZMD_OPT_RBP" String="ボタンの位置をリセット"/>"
-    <Translation ID="ZMD_SHIFT" String="Shift"/>"
-    <Translation ID="ZMD_CTRL" String="Control"/>"
-    <Translation ID="ZMD_ALT" String="Alt"/>"
+    <Translation ID="ZMD_PNL_SBK_TIP" String="道路とゾーニング間にセットバックを追加"/>
+    <Translation ID="ZMD_OPT_KEY" String="キーバインド"/>
+    <Translation ID="ZMD_OPT_ZOK" String="ゾーニングオフセットのキーバインド"/>
+    <Translation ID="ZMD_OPT_POS" String="パネルとボタンの位置"/>
+    <Translation ID="ZMD_OPT_RPP" String="パネルの位置をリセット"/>
+    <Translation ID="ZMD_OPT_RBP" String="ボタンの位置をリセット"/>
+    <Translation ID="ZMD_SHIFT" String="Shift"/>
+    <Translation ID="ZMD_CTRL" String="Control"/>
+    <Translation ID="ZMD_ALT" String="Alt"/>
     <Translation ID="TRN_CHOICE" String="言語設定"/>
     <Translation ID="TRN_SYS" String="システム言語を使用"/>
     <Translation ID="MES_CLS" String="閉じる"/>

@@ -3,14 +3,14 @@
   <Translations>
     <Translation ID="ZMD_NAME" String="Zoning Adjuster" />
     <Translation ID="ZMD_DESC" String="Ermöglicht es Gebiete entlang von 8 und 24 Meter breiten Straßen anzulegen, die den normal-breiten Straßen angeglichen sind. Außerdem kann der Versatz des Rasters entlang der Straße angepasst werden" />
-    <Translation ID="ZMD_PNL_POZ" String="Ältere Straßen priorisieren" />"
-    <Translation ID="ZMD_PNL_POZ_TIP" String="Gebiete die für neue Straßen angelegt werden, überschreiben nicht die Gebiete bereits bestehender Straßen." />"
-    <Translation ID="ZMD_PNL_PNZ" String="Neuere Straßen priorisieren" />"
-    <Translation ID="ZMD_PNL_PNZ_TIP" String="Gebiete von bereits angelegten Straßen, überschreiben nicht die Gebiete neu angelegter Straßen" />"
-    <Translation ID="ZMD_PNL_PVZ" String="Keine Priorisierung" />"
-    <Translation ID="ZMD_PNL_PVZ_TIP" String="Standard-Verhalten des Spiels" />"
-    <Translation ID="ZMD_PNL_SBK" String="Gebiets-Versatz" />"
-    <Translation ID="ZMD_PNL_SBK_TIP" String="Fügt einen Abstand zwischen dem Straßenrand und dem Gebiets-Raster hinzu" />"
+    <Translation ID="ZMD_PNL_POZ" String="Ältere Straßen priorisieren" />
+    <Translation ID="ZMD_PNL_POZ_TIP" String="Gebiete die für neue Straßen angelegt werden, überschreiben nicht die Gebiete bereits bestehender Straßen." />
+    <Translation ID="ZMD_PNL_PNZ" String="Neuere Straßen priorisieren" />
+    <Translation ID="ZMD_PNL_PNZ_TIP" String="Gebiete von bereits angelegten Straßen, überschreiben nicht die Gebiete neu angelegter Straßen" />
+    <Translation ID="ZMD_PNL_PVZ" String="Keine Priorisierung" />
+    <Translation ID="ZMD_PNL_PVZ_TIP" String="Standard-Verhalten des Spiels" />
+    <Translation ID="ZMD_PNL_SBK" String="Gebiets-Versatz" />
+    <Translation ID="ZMD_PNL_SBK_TIP" String="Fügt einen Abstand zwischen dem Straßenrand und dem Gebiets-Raster hinzu" />
     <Translation ID="ZMD_OPT_KEY" String="Anpassungstaste" />
     <Translation ID="ZMD_OPT_ZOK" String="Taste zum Anpassen des Raster-Versatzes" />
     <Translation ID="ZMD_SHIFT" String="Umschalt" />

@@ -2,23 +2,23 @@
 <Language UniqueName="ru" ReadableName="Русский">
   <Translations>
     <Translation ID="ZMD_NAME" String="Zoning Adjuster" />
-    <Translation ID="ZMD_DESC" String="Позволяет зонировать дороги шириной 8 и 24 метра для выравнивания с дорогами обычной ширины и добавляет возможность смещения начальных позиций зонирования вдоль дорог." />"
-    <Translation ID="ZMD_PNL_POZ" String="Приоритет старых дорог" />"
-    <Translation ID="ZMD_PNL_POZ_TIP" String="Когда этот параметр установлен, зонирование, привязанное к новым дорогам, не будет перезаписывать зонирование, привязанное к старым дорогам" />"
-    <Translation ID="ZMD_PNL_PNZ" String="Приоритет новых дорог" />"
-    <Translation ID="ZMD_PNL_PNZ_TIP" String="Когда этот параметр установлен, зонирование, привязанное к старым дорогам, не будет перезаписывать зонирование, привязанное к новым дорогам" />"
-    <Translation ID="ZMD_PNL_PVZ" String="Нет приоритета" />"
-    <Translation ID="ZMD_PNL_PVZ_TIP" String="Поведение игры по умолчанию" />"
-    <Translation ID="ZMD_PNL_SBK" String="Зонирование с отступом" />"
-    <Translation ID="ZMD_PNL_SBK_TIP" String="Добавляет зазор между краем дороги и сеткой зонирования" />"
-    <Translation ID="ZMD_OPT_KEY" String="Клавиша-модификатор" />"
-    <Translation ID="ZMD_OPT_ZOK" String="Клавиша-модификатор смещения зонирования" />"
-    <Translation ID="ZMD_OPT_POS" String="Расположение панели и кнопки" />"
-    <Translation ID="ZMD_OPT_RPP" String="Сброс положения панели" />"
-    <Translation ID="ZMD_OPT_RBP" String="Сброс положения кнопки" />"
-    <Translation ID="ZMD_SHIFT" String="Shift" />"
-    <Translation ID="ZMD_CTRL" String="Control" />"
-    <Translation ID="ZMD_ALT" String="Alt" />"
+    <Translation ID="ZMD_DESC" String="Позволяет зонировать дороги шириной 8 и 24 метра для выравнивания с дорогами обычной ширины и добавляет возможность смещения начальных позиций зонирования вдоль дорог." />
+    <Translation ID="ZMD_PNL_POZ" String="Приоритет старых дорог" />
+    <Translation ID="ZMD_PNL_POZ_TIP" String="Когда этот параметр установлен, зонирование, привязанное к новым дорогам, не будет перезаписывать зонирование, привязанное к старым дорогам" />
+    <Translation ID="ZMD_PNL_PNZ" String="Приоритет новых дорог" />
+    <Translation ID="ZMD_PNL_PNZ_TIP" String="Когда этот параметр установлен, зонирование, привязанное к старым дорогам, не будет перезаписывать зонирование, привязанное к новым дорогам" />
+    <Translation ID="ZMD_PNL_PVZ" String="Нет приоритета" />
+    <Translation ID="ZMD_PNL_PVZ_TIP" String="Поведение игры по умолчанию" />
+    <Translation ID="ZMD_PNL_SBK" String="Зонирование с отступом" />
+    <Translation ID="ZMD_PNL_SBK_TIP" String="Добавляет зазор между краем дороги и сеткой зонирования" />
+    <Translation ID="ZMD_OPT_KEY" String="Клавиша-модификатор" />
+    <Translation ID="ZMD_OPT_ZOK" String="Клавиша-модификатор смещения зонирования" />
+    <Translation ID="ZMD_OPT_POS" String="Расположение панели и кнопки" />
+    <Translation ID="ZMD_OPT_RPP" String="Сброс положения панели" />
+    <Translation ID="ZMD_OPT_RBP" String="Сброс положения кнопки" />
+    <Translation ID="ZMD_SHIFT" String="Shift" />
+    <Translation ID="ZMD_CTRL" String="Control" />
+    <Translation ID="ZMD_ALT" String="Alt" />
     <Translation ID="TRN_CHOICE" String="Установить язык" />
     <Translation ID="TRN_SYS" String="Использ. системный" />
     <Translation ID="MES_CLS" String="Закрыть" />

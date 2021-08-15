@@ -2,12 +2,12 @@
 <Language UniqueName="zh" ReadableName="中文">
   <Translations>
     <Translation ID="ZMD_NAME" String="區域分配調節器" />
-    <Translation ID="ZMD_DESC" String="允許對8米和24米寬的道路進行區域分配，以與標準寬度的道路對齊並增加了抵消沿道路區域分配的開始位置功能。" />"
-    <Translation ID="ZMD_OPT_KEY" String="編輯鍵位" />"
-    <Translation ID="ZMD_OPT_ZOK" String="編輯區域分配偏移鍵位" />"
-    <Translation ID="ZMD_SHIFT" String="Shift" />"
-    <Translation ID="ZMD_CTRL" String="Control" />"
-    <Translation ID="ZMD_ALT" String="Alt" />"
+    <Translation ID="ZMD_DESC" String="允許對8米和24米寬的道路進行區域分配，以與標準寬度的道路對齊並增加了抵消沿道路區域分配的開始位置功能。" />
+    <Translation ID="ZMD_OPT_KEY" String="編輯鍵位" />
+    <Translation ID="ZMD_OPT_ZOK" String="編輯區域分配偏移鍵位" />
+    <Translation ID="ZMD_SHIFT" String="Shift" />
+    <Translation ID="ZMD_CTRL" String="Control" />
+    <Translation ID="ZMD_ALT" String="Alt" />
     <Translation ID="TRN_CHOICE" String="語言設置" />
     <Translation ID="TRN_SYS" String="使用遊戲默認語言" />
     <Translation ID="MES_CLS" String="關閉" />

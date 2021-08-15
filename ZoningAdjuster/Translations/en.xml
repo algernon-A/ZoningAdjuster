@@ -2,22 +2,22 @@
 <Language UniqueName="en" ReadableName="English">
   <Translations>
     <Translation ID="ZMD_NAME" String="Zoning Adjuster" />
-    <Translation ID="ZMD_DESC" String="Allows zoning of 8- and 24- meter wide roads to align with regular-width roads and adds the ability to offset zoning start positions along roads." />"
-    <Translation ID="ZMD_PNL_DIS" String="Disable zoning" />"
-    <Translation ID="ZMD_PNL_DIS_TIP" String="Disable all zone creation when building roads (zoning can still be added using the Zoning Adjuster tool)" />"
-    <Translation ID="ZMD_PNL_POZ" String="Prioritize older roads" />"
-    <Translation ID="ZMD_PNL_POZ_TIP" String="Zoning attached to newer roads won't overwrite zoning attached to older roads" />"
-    <Translation ID="ZMD_PNL_PNZ" String="Prioritize newer roads" />"
-    <Translation ID="ZMD_PNL_PNZ_TIP" String="Zoning attached to older roads won't overwrite zoning attached to newer roads" />"
-    <Translation ID="ZMD_PNL_PVZ" String="No priority" />"
-    <Translation ID="ZMD_PNL_PVZ_TIP" String="Default game behavior" />"
+    <Translation ID="ZMD_DESC" String="Allows zoning of 8- and 24- meter wide roads to align with regular-width roads and adds the ability to offset zoning start positions along roads." />
+    <Translation ID="ZMD_PNL_DIS" String="Disable zoning" />
+    <Translation ID="ZMD_PNL_DIS_TIP" String="Disable all zone creation when building roads (zoning can still be added using the Zoning Adjuster tool)" />
+    <Translation ID="ZMD_PNL_POZ" String="Prioritize older roads" />
+    <Translation ID="ZMD_PNL_POZ_TIP" String="Zoning attached to newer roads won't overwrite zoning attached to older roads" />
+    <Translation ID="ZMD_PNL_PNZ" String="Prioritize newer roads" />
+    <Translation ID="ZMD_PNL_PNZ_TIP" String="Zoning attached to older roads won't overwrite zoning attached to newer roads" />
+    <Translation ID="ZMD_PNL_PVZ" String="No priority" />
+    <Translation ID="ZMD_PNL_PVZ_TIP" String="Default game behavior" />
     <Translation ID="ZMD_PNL_SBK" String="Zoning setback" />"
-    <Translation ID="ZMD_PNL_SBK_TIP" String="Adds a gap between the road edge and the zoning grid" />"
-    <Translation ID="ZMD_OPT_KEY" String="Modifier key" />"
-    <Translation ID="ZMD_OPT_ZOK" String="Zoning offset modifier key" />"
-    <Translation ID="ZMD_OPT_POS" String="Panel and button locations" />"
-    <Translation ID="ZMD_OPT_RPP" String="Reset panel position" />"
-    <Translation ID="ZMD_OPT_RBP" String="Reset button position" />"
+    <Translation ID="ZMD_PNL_SBK_TIP" String="Adds a gap between the road edge and the zoning grid" />
+    <Translation ID="ZMD_OPT_KEY" String="Modifier key" />
+    <Translation ID="ZMD_OPT_ZOK" String="Zoning offset modifier key" />
+    <Translation ID="ZMD_OPT_POS" String="Panel and button locations" />
+    <Translation ID="ZMD_OPT_RPP" String="Reset panel position" />
+    <Translation ID="ZMD_OPT_RBP" String="Reset button position" />
     <Translation ID="ZMD_SHIFT" String="Shift" />"
     <Translation ID="ZMD_CTRL" String="Control" />"
     <Translation ID="ZMD_ALT" String="Alt" />"

@@ -3,19 +3,19 @@
   <Translations>
     <Translation ID="ZMD_NAME" String="Zoning Adjuster" />
     <Translation ID="ZMD_DESC" String="Permite la zonificación de carreteras de 8 y 24 metros de ancho para alinearlas con carreteras de ancho regular y agrega la capacidad de compensar las posiciones de inicio de zonificación a lo largo de las carreteras." />"
-    <Translation ID="ZMD_PNL_POZ" String="Dar prioridad a las carreteras más antiguas" />"
-    <Translation ID="ZMD_PNL_POZ_TIP" String="La zonificación adjunta a carreteras nuevas no sobrescribirá la zonificación adjunta a carreteras más antiguas" />"
-    <Translation ID="ZMD_PNL_PNZ" String="Dar prioridad a las carreteras más nuevas" />"
-    <Translation ID="ZMD_PNL_PNZ_TIP" String="La zonificación adjunta a carreteras antiguas no sobrescribirá la zonificación adjunta a carreteras más nuevas" />"
+    <Translation ID="ZMD_PNL_POZ" String="Dar prioridad a las carreteras más antiguas" />
+    <Translation ID="ZMD_PNL_POZ_TIP" String="La zonificación adjunta a carreteras nuevas no sobrescribirá la zonificación adjunta a carreteras más antiguas" />
+    <Translation ID="ZMD_PNL_PNZ" String="Dar prioridad a las carreteras más nuevas" />
+    <Translation ID="ZMD_PNL_PNZ_TIP" String="La zonificación adjunta a carreteras antiguas no sobrescribirá la zonificación adjunta a carreteras más nuevas" />
     <Translation ID="ZMD_PNL_PVZ" String="Sin prioridad" />"
-    <Translation ID="ZMD_PNL_PVZ_TIP" String="Comportamiento predeterminado del juego" />"
-    <Translation ID="ZMD_PNL_SBK" String="Desplazamiento de zonificación" />"
-    <Translation ID="ZMD_PNL_SBK_TIP" String="Agrega un espacio entre el borde de la carretera y la cuadrícula de zonificación" />"
+    <Translation ID="ZMD_PNL_PVZ_TIP" String="Comportamiento predeterminado del juego" />
+    <Translation ID="ZMD_PNL_SBK" String="Desplazamiento de zonificación" />
+    <Translation ID="ZMD_PNL_SBK_TIP" String="Agrega un espacio entre el borde de la carretera y la cuadrícula de zonificación" />
     <Translation ID="ZMD_OPT_KEY" String="Tecla modificadora" />"
-    <Translation ID="ZMD_OPT_ZOK" String="Tecla modificadora de desplazamiento de zonificación" />"
-    <Translation ID="ZMD_SHIFT" String="Mayús" />"
-    <Translation ID="ZMD_CTRL" String="Ctrl" />"
-    <Translation ID="ZMD_ALT" String="Alt" />"
+    <Translation ID="ZMD_OPT_ZOK" String="Tecla modificadora de desplazamiento de zonificación" />
+    <Translation ID="ZMD_SHIFT" String="Mayús" />
+    <Translation ID="ZMD_CTRL" String="Ctrl" />
+    <Translation ID="ZMD_ALT" String="Alt" />
     <Translation ID="TRN_CHOICE" String="Elegir idioma" />
     <Translation ID="TRN_SYS" String="Usa el idioma del juego" />
     <Translation ID="MES_CLS" String="Cerrar" />
