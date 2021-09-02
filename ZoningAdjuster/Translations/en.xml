@@ -4,6 +4,7 @@
     <Translation ID="ZMD_NAME" String="Zoning Adjuster" />
     <Translation ID="ZMD_DESC" String="Allows zoning of 8- and 24- meter wide roads to align with regular-width roads and adds the ability to offset zoning start positions along roads." />
     <Translation ID="ZMD_PNL_DIS" String="Disable zoning" />
+    <Translation ID="ZMD_PNL_FOR" String="Force zoning" />
     <Translation ID="ZMD_PNL_DIS_TIP" String="Disable all zone creation when building roads (zoning can still be added using the Zoning Adjuster tool)" />
     <Translation ID="ZMD_PNL_POZ" String="Prioritize older roads" />
     <Translation ID="ZMD_PNL_POZ_TIP" String="Zoning attached to newer roads won't overwrite zoning attached to older roads" />
@@ -46,6 +47,7 @@
     <Translation ID="ZMD_111_0" String="Tool button is now moveable (click and drag to move)" />
     <Translation ID="ZMD_111_1" String="Button and panel positions are saved when exiting the game" />
     <Translation ID="ZMD_120_0" String="Add 'disable zoning' option to disable all automatic zoning (zoning can still be applied manually using the Zoning Adjuster tool)" />
-    <Translation ID="ZMD_120_1" String="Allow negative zoning setback (move zoning closer to the road)" />
+    <Translation ID="ZMD_120_1" String="Add 'force zoning' option to add zoning on construction to roads without zoning enabled (e.g. highways)" />
+    <Translation ID="ZMD_120_2" String="Allow negative zoning setback (move zoning closer to the road)" />
   </Translations>
 </Language>

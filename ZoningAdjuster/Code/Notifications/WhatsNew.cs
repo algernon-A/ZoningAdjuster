@@ -21,7 +21,8 @@ namespace ZoningAdjuster
                 messages = new string[]
                 {
                     "ZMD_120_0",
-                    "ZMD_120_1"
+                    "ZMD_120_1",
+                    "ZMD_120_2"
                 }
             },
             new WhatsNewMessage

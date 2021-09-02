@@ -28,7 +28,7 @@ namespace ZoningAdjuster
         public static bool Prefix(ushort segment, ref NetSegment data)
         {
             // Don't do anything if zoning is disabled.
-            if (!ZoningSettingsPanel.disableZoning)
+            if (!ModSettings.disableZoning)
             {
                 // Local references.
                 NetManager netManager = Singleton<NetManager>.instance;

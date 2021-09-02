@@ -135,8 +135,8 @@ namespace ZoningAdjuster
 					UIInput.MouseUsed();
 
 					// Store current 'disable zoning' state and temporarily disable.
-					bool zoningDisabled = ZoningSettingsPanel.disableZoning;
-					ZoningSettingsPanel.disableZoning = false;
+					bool zoningDisabled = ModSettings.disableZoning;
+					ModSettings.disableZoning = false;
 
 					// Local references.
 					NetManager netManager = Singleton<NetManager>.instance;
@@ -188,7 +188,7 @@ namespace ZoningAdjuster
 							UIThreading.shiftOffset = false;
 
 							// Restore 'disable zoning' state.
-							ZoningSettingsPanel.disableZoning = zoningDisabled;
+							ModSettings.disableZoning = zoningDisabled;
 						}
 					}
 				}

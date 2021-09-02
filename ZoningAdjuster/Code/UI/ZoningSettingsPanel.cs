@@ -12,12 +12,14 @@ namespace ZoningAdjuster
     {
         // Layout constants.
         const float Margin = 8f;
+        const float CheckHeight = 20f;
         const float PanelWidth = 230f;
         const float TitleHeight = 40f;
         const float DisableCheckY = TitleHeight;
-        const float OldCheckY = DisableCheckY + 30f;
-        const float NewCheckY = OldCheckY + 20f;
-        const float NoCheckY = NewCheckY + 20f;
+        const float ForceCheckY = DisableCheckY + CheckHeight;
+        const float OldCheckY = ForceCheckY + 30f;
+        const float NewCheckY = OldCheckY + CheckHeight;
+        const float NoCheckY = NewCheckY + CheckHeight;
         const float SetbackSliderY = NoCheckY + 25f;
         const float SliderLabelHeight = 20f;
         const float SliderPanelHeight = 36f;
@@ -37,13 +39,10 @@ namespace ZoningAdjuster
             NoCheckY
         };
 
-        // Status flag.
-        public static bool disableZoning = false;
-
 
         // Panel components.
         private readonly UICheckBox[] priorityChecks;
-        private readonly UICheckBox disableCheck;
+        private readonly UICheckBox disableCheck, forceCheck;
 
         // Instance references.
         private static GameObject uiGameObject;
@@ -136,8 +135,31 @@ namespace ZoningAdjuster
 
             // Disable zoning checkbox.
             disableCheck = UIControls.LabelledCheckBox(this, Margin, DisableCheckY, Translations.Translate("ZMD_PNL_DIS"), tooltip: Translations.Translate("ZMD_PNL_DIS_TIP"));
-            disableCheck.isChecked = disableZoning;
-            disableCheck.eventCheckChanged += (control, isChecked) => disableZoning = isChecked;
+            disableCheck.isChecked = ModSettings.disableZoning;
+            disableCheck.eventCheckChanged += (control, isChecked) =>
+            {
+                ModSettings.disableZoning = isChecked;
+
+                // Disable forced zoning check if this is selected
+                if (isChecked)
+                {
+                    forceCheck.isChecked = false;
+                }
+            };
+
+            // Force zoning checkbox.
+            forceCheck = UIControls.LabelledCheckBox(this, Margin, ForceCheckY, Translations.Translate("ZMD_PNL_FOR"), tooltip: Translations.Translate("ZMD_PNL_DIS_TIP"));
+            forceCheck.isChecked = ModSettings.forceZoning;
+            forceCheck.eventCheckChanged += (control, isChecked) =>
+            {
+                ModSettings.forceZoning = isChecked;
+
+                // Disable disable zoning check if this is selected
+                if (isChecked)
+                {
+                    disableCheck.isChecked = false;
+                }
+            };
 
             // Priority checkboxes.
             priorityChecks = new UICheckBox[(int)PriorityIndexes.NumPriorities];

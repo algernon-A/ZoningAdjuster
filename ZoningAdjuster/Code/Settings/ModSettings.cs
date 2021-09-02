@@ -16,5 +16,9 @@
         // Button postion.
         internal static float buttonX = -1;
         internal static float buttonY = -1;
+
+        // Current zoning settings.
+        internal static bool disableZoning = false;
+        internal static bool forceZoning = false;
     }
 }
