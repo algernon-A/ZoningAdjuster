@@ -59,6 +59,10 @@ namespace ZoningAdjuster
             string[] keyOptions = new string[] { Translations.Translate("ZMD_SHIFT"), Translations.Translate("ZMD_CTRL"), Translations.Translate("ZMD_ALT") };
             UIDropDown offsetKeyDropDown = (UIDropDown)keyGroup.AddDropdown(Translations.Translate("ZMD_OPT_ZOK"), keyOptions, UIThreading.offsetModifier, (value) => { UIThreading.offsetModifier = value; ZoningModSettingsFile.SaveSettings(); });
 
+            // Show panel controls.
+            UIHelperBase showGroup = helper.AddGroup(Translations.Translate("ZMD_OPT_SHO"));
+            showGroup.AddCheckbox(Translations.Translate("ZMD_OPT_SOR"), ModSettings.showOnRoad, (isChecked) => { ModSettings.showOnRoad = isChecked; ZoningModSettingsFile.SaveSettings(); });
+
             // Reset panel and button positions.
             UIHelperBase positionGroup = helper.AddGroup(Translations.Translate("ZMD_OPT_POS"));
             positionGroup.AddButton(Translations.Translate("ZMD_OPT_RPP"), delegate { ModSettings.panelX = -1; ZoningSettingsPanel.Panel?.SetPosition(); ModSettings.panelX = -1; ZoningModSettingsFile.SaveSettings(); });

@@ -16,6 +16,8 @@
     <Translation ID="ZMD_PNL_SBK_TIP" String="Adds a gap between the road edge and the zoning grid" />
     <Translation ID="ZMD_OPT_KEY" String="Modifier key" />
     <Translation ID="ZMD_OPT_ZOK" String="Zoning offset modifier key" />
+    <Translation ID="ZMD_OPT_SHO" String="Panel visibility options" />
+    <Translation ID="ZMD_OPT_SOR" String="Automatically show zoning settings panel when the roads menu is open" />
     <Translation ID="ZMD_OPT_POS" String="Panel and button locations" />
     <Translation ID="ZMD_OPT_RPP" String="Reset panel position" />
     <Translation ID="ZMD_OPT_RBP" String="Reset button position" />

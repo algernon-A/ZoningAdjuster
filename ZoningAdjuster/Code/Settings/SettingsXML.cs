@@ -35,6 +35,10 @@ namespace ZoningAdjuster
         [XmlElement("OffsetKey")]
         public int OffsetModifier { get => UIThreading.offsetModifier; set => UIThreading.offsetModifier = value; }
 
+        // Show panel on road tool.
+        [XmlElement("ShowOnRoad")]
+        public bool ShowOnRoad { get => ModSettings.showOnRoad; set => ModSettings.showOnRoad = value; }
+
         // Panel postion.
         [XmlElement("PanelX")]
         public float PanelX { get => ModSettings.panelX; set => ModSettings.panelX = value; }
