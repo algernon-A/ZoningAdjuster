@@ -1,5 +1,6 @@
 ﻿Version 1.2 -
 
+- Add option to show/hide settings panel by default when road menu is visible
 - Add option to disable all automatic zoning
 - Add option to force zoning (for roads that don't normally have it)
 - Allow negative setbacks of up to -4m
