@@ -2,30 +2,34 @@
 <Language UniqueName="ja" ReadableName="日本語">
   <Translations>
     <Translation ID="ZMD_NAME" String="Zoning Adjuster"/>
-    <Translation ID="ZMD_DESC" String="幅が8m＆24mの道路にあるゾーニングを、道路と隙間を空けずに敷設できます。道路とゾーニングに出来る隙間も、オフセットの調整が可能になりました。"/>
+    <Translation ID="ZMD_DESC" String="道路幅が8m＆24mで、ゾーニングの隙間を空けずに敷設可能です。道路とゾーニングに出来る隙間も調整が可能です。"/>
     <Translation ID="ZMD_PNL_DIS" String="ゾーニングを無効化"/>
+    <Translation ID="ZMD_PNL_FOR" String="ゾーニングを強制"/>
     <Translation ID="ZMD_PNL_DIS_TIP" String="道路敷設時にゾーニングを無効化(後からゾーニングの追加・変更も可能)"/>
-    <Translation ID="ZMD_PNL_POZ" String="古い道路を優先"/>"
+    <Translation ID="ZMD_PNL_POZ" String="古い道路を優先"/>
     <Translation ID="ZMD_PNL_POZ_TIP" String="新しい道路のゾーニングは、古い道路のゾーニングを上書きしない"/>
     <Translation ID="ZMD_PNL_PNZ" String="新しい道路の優先"/>
     <Translation ID="ZMD_PNL_PNZ_TIP" String="古い道路のゾーニングは、新しい道路のゾーニングを上書きしない"/>
-    <Translation ID="ZMD_PNL_PVZ" String="優先順位なし"/>"
-    <Translation ID="ZMD_PNL_PVZ_TIP" String="ゲームのデフォルト動作"/>"
+    <Translation ID="ZMD_PNL_PVZ" String="優先順位なし"/>
+    <Translation ID="ZMD_PNL_PVZ_TIP" String="ゲームのデフォルト動作"/>
     <Translation ID="ZMD_PNL_SBK" String="ゾーニングのセットバック"/>"
-    <Translation ID="ZMD_PNL_SBK_TIP" String="道路とゾーニング間にセットバックを追加"/>
+    <Translation ID="ZMD_PNL_SBK_TIP" String="道路とゾーニングの間にセットバックを追加"/>
     <Translation ID="ZMD_OPT_KEY" String="キーバインド"/>
     <Translation ID="ZMD_OPT_ZOK" String="ゾーニングオフセットのキーバインド"/>
+    <Translation ID="ZMD_OPT_SHO" String="パネルの表示オプション"/>
+    <Translation ID="ZMD_OPT_SOR" String="道路タブが開いているときは、自動的にゾーニングツールを表示"/>
     <Translation ID="ZMD_OPT_POS" String="パネルとボタンの位置"/>
     <Translation ID="ZMD_OPT_RPP" String="パネルの位置をリセット"/>
     <Translation ID="ZMD_OPT_RBP" String="ボタンの位置をリセット"/>
-    <Translation ID="ZMD_SHIFT" String="Shift"/>
-    <Translation ID="ZMD_CTRL" String="Control"/>
-    <Translation ID="ZMD_ALT" String="Alt"/>
+    <Translation ID="ZMD_SHIFT" String="Shift"/>"
+    <Translation ID="ZMD_CTRL" String="Control"/>"
+    <Translation ID="ZMD_ALT" String="Alt"/>"
     <Translation ID="TRN_CHOICE" String="言語設定"/>
     <Translation ID="TRN_SYS" String="システム言語を使用"/>
+    <Translation ID="KEY_KEY" String="ゾーニングツールのホットキー"/>
     <Translation ID="MES_CLS" String="閉じる"/>
     <Translation ID="MES_DSA" String="次回から非表示"/>
-    <Translation ID="MES_PAGE" String="詳細はMODがある、Steamのワークショップを確認してください。"/>
+    <Translation ID="MES_PAGE" String="詳細は、MODがあるSteamのワークショップを確認してください。"/>
     <Translation ID="ZMD_ERR_FAT" String="正常にMODが起動できないため、動作をシャットダウンしました。"/>
     <Translation ID="ZMD_ERR_HAR" String="Zoning Adjusterは、必要なHarmony 2.0 MODのパッチ動作を完了できません。"/>
     <Translation ID="ERR_HAR0" String="Harmony 2.0 MODでエラーが発生しました"/>
@@ -33,7 +37,7 @@
     <Translation ID="ERR_HAR2" String="依存関係にある、必要なHarmony 2 MODがインストールされていません。"/>
     <Translation ID="ERR_HAR3" String="古いMODや壊れたMODが、Harmony 2.0 MODの動作を妨げています。"/>
     <Translation ID="ERR_CON0" String="MODの競合が検出されました！"/>
-    <Translation ID="ERR_CON1" String="Zoning Adjusterを動作させるには、これらのMODを削除してください"/>
+    <Translation ID="ERR_CON1" String="競合するMOD:"/>
     <Translation ID="ZMD_ERR_CON0" String="Zoning Adjusterは、少なくとも1つ以上のMODと競合を検出しました。"/>
     <Translation ID="ZMD_ERR_CON1" String="Zoning Adjusterを動作させるには、これらのMODを削除してください。"/>
     <Translation ID="ZMD_100_0" String="New zoning tool for adding, resetting, and removing zoning for any road"/>
@@ -45,5 +49,11 @@
     <Translation ID="ZMD_110_2" String="NOTE 2: conflicting settings (e.g. a newer road prioritizing older settings next to an older road prioritizing newer settings) will lead to inconsistent results"/>
     <Translation ID="ZMD_111_0" String="Tool button is now moveable (click and drag to move)"/>
     <Translation ID="ZMD_111_1" String="Button and panel positions are saved when exiting the game"/>
+    <Translation ID="ZMD_120_0" String="Add option to show/hide settings panel by default when road menu is visible"/>
+    <Translation ID="ZMD_120_1" String="Add 'disable zoning' option to disable all automatic zoning (zoning can still be applied manually using the Zoning Adjuster tool)"/>
+    <Translation ID="ZMD_120_2" String="Add 'force zoning' option to add zoning on construction to roads without zoning enabled (e.g. highways)"/>
+    <Translation ID="ZMD_120_3" String="Add option to toggle single-side zoning (hold Alt key when clicking with the Zoning Adjuster tool)"/>
+    <Translation ID="ZMD_120_4" String="Allow negative zoning setback (move zoning closer to the road)"/>
+    <Translation ID="ZMD_120_5" String="Add zoning tool hotkey (default Alt-Z)"/>
   </Translations>
 </Language>
