@@ -2,6 +2,7 @@
 using System.IO;
 using System.Xml.Serialization;
 using System.ComponentModel;
+using UnityEngine;
 
 
 namespace ZoningAdjuster
@@ -30,10 +31,33 @@ namespace ZoningAdjuster
         [XmlElement("Language")]
         public string Language { get => Translations.Language; set => Translations.Language = value; }
 
+        // Zoning tool hotkey.
+        [XmlElement("PanelKey")]
+        public KeyBinding PanelKey
+        {
+            get
+            {
+                return new KeyBinding
+                {
+                    keyCode = (int)ToolKeyThreading.hotKey,
+                    control = ToolKeyThreading.hotCtrl,
+                    shift = ToolKeyThreading.hotShift,
+                    alt = ToolKeyThreading.hotAlt
+                };
+            }
+            set
+            {
+                ToolKeyThreading.hotKey = (KeyCode)value.keyCode;
+                ToolKeyThreading.hotCtrl = value.control;
+                ToolKeyThreading.hotShift = value.shift;
+                ToolKeyThreading.hotAlt = value.alt;
+            }
+        }
 
-        // Offset hotkey/
+
+        // Offset modifier key.
         [XmlElement("OffsetKey")]
-        public int OffsetModifier { get => UIThreading.offsetModifier; set => UIThreading.offsetModifier = value; }
+        public int OffsetModifier { get => OffsetKeyThreading.offsetModifier; set => OffsetKeyThreading.offsetModifier = value; }
 
         // Show panel on road tool.
         [XmlElement("ShowOnRoad")]
@@ -105,5 +129,24 @@ namespace ZoningAdjuster
                 Logging.LogException(e, "exception saving XML settings file");
             }
         }
+    }
+
+
+    /// <summary>
+    /// Basic keybinding class - code and modifiers.
+    /// </summary>
+    public class KeyBinding
+    {
+        [XmlAttribute("KeyCode")]
+        public int keyCode;
+
+        [XmlAttribute("Control")]
+        public bool control;
+
+        [XmlAttribute("Shift")]
+        public bool shift;
+
+        [XmlAttribute("Alt")]
+        public bool alt;
     }
 }

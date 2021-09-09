@@ -57,7 +57,10 @@ namespace ZoningAdjuster
             // Offset key.
             UIHelperBase keyGroup = helper.AddGroup(Translations.Translate("ZMD_OPT_KEY"));
             string[] keyOptions = new string[] { Translations.Translate("ZMD_SHIFT"), Translations.Translate("ZMD_CTRL"), Translations.Translate("ZMD_ALT") };
-            UIDropDown offsetKeyDropDown = (UIDropDown)keyGroup.AddDropdown(Translations.Translate("ZMD_OPT_ZOK"), keyOptions, UIThreading.offsetModifier, (value) => { UIThreading.offsetModifier = value; ZoningModSettingsFile.SaveSettings(); });
+            UIDropDown offsetKeyDropDown = (UIDropDown)keyGroup.AddDropdown(Translations.Translate("ZMD_OPT_ZOK"), keyOptions, OffsetKeyThreading.offsetModifier, (value) => { OffsetKeyThreading.offsetModifier = value; ZoningModSettingsFile.SaveSettings(); });
+
+            // Tool activation hotkey.
+            offsetKeyDropDown.parent.parent.gameObject.AddComponent<OptionsKeymapping>();
 
             // Show panel controls.
             UIHelperBase showGroup = helper.AddGroup(Translations.Translate("ZMD_OPT_SHO"));

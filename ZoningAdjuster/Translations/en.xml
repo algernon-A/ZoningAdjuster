@@ -26,6 +26,7 @@
     <Translation ID="ZMD_ALT" String="Alt" />"
     <Translation ID="TRN_CHOICE" String="Set language" />
     <Translation ID="TRN_SYS" String="Use system language" />
+    <Translation ID="KEY_KEY" String="Zoning tool hotkey" />
     <Translation ID="MES_CLS" String="Close" />
     <Translation ID="MES_DSA" String="Don't show again" />
     <Translation ID="MES_PAGE" String="Please refer to the mod's Steam Workshop page for further information." />
@@ -48,8 +49,10 @@
     <Translation ID="ZMD_110_2" String="NOTE 2: conflicting settings (e.g. a newer road prioritizing older settings next to an older road prioritizing newer settings) will lead to inconsistent results" />
     <Translation ID="ZMD_111_0" String="Tool button is now moveable (click and drag to move)" />
     <Translation ID="ZMD_111_1" String="Button and panel positions are saved when exiting the game" />
-    <Translation ID="ZMD_120_0" String="Add 'disable zoning' option to disable all automatic zoning (zoning can still be applied manually using the Zoning Adjuster tool)" />
-    <Translation ID="ZMD_120_1" String="Add 'force zoning' option to add zoning on construction to roads without zoning enabled (e.g. highways)" />
-    <Translation ID="ZMD_120_2" String="Allow negative zoning setback (move zoning closer to the road)" />
+    <Translation ID="ZMD_120_0" String="Add option to show/hide settings panel by default when road menu is visible" />
+    <Translation ID="ZMD_120_1" String="Add 'disable zoning' option to disable all automatic zoning (zoning can still be applied manually using the Zoning Adjuster tool)" />
+    <Translation ID="ZMD_120_2" String="Add 'force zoning' option to add zoning on construction to roads without zoning enabled (e.g. highways)" />
+    <Translation ID="ZMD_120_3" String="Allow negative zoning setback (move zoning closer to the road)" />
+    <Translation ID="ZMD_120_4" String="Add zoning tool hotkey (default Alt-Z)" />
   </Translations>
 </Language>

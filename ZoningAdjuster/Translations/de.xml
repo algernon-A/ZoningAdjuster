@@ -42,7 +42,7 @@
     <Translation ID="ZMD_110_2" String="Info 2: Widersprüchliche Einstellungen (z.B. eine Priorisierung neuer Straßen wird an eine Stra0e angebunden, die die Priosierung alter Straßen gesetz hat) werden zu uneinheitlichen Ergebnissen führen." />
     <Translation ID="ZMD_111_0" String="Werkzeug-Schaltfläche ist nun verschiebbar (anklicken und ziehen zum Bewegen)" />
     <Translation ID="ZMD_111_1" String="Position der Schaltfläche und Oberfläche werden nun beim Beenden des Spiels gespeichert" />
-    <Translation ID="ZMD_120_0" String="'Gebiete ausschalten' hinzugefügt und das automatische erstellen von Gebieten zu verhindern (Gebiete können jederzeit über das Zoning Adjuster Werkzeug hinzugefügt werden)" />
-    <Translation ID="ZMD_120_1" String="Negativer Gebietsversatz hinzugefügt  (Gebiete näher an die Straße setzen)" />
+    <Translation ID="ZMD_120_1" String="'Gebiete ausschalten' hinzugefügt und das automatische erstellen von Gebieten zu verhindern (Gebiete können jederzeit über das Zoning Adjuster Werkzeug hinzugefügt werden)" />
+    <Translation ID="ZMD_120_2" String="Negativer Gebietsversatz hinzugefügt  (Gebiete näher an die Straße setzen)" />
   </Translations>
 </Language>

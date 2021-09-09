@@ -22,7 +22,9 @@ namespace ZoningAdjuster
                 {
                     "ZMD_120_0",
                     "ZMD_120_1",
-                    "ZMD_120_2"
+                    "ZMD_120_2",
+                    "ZMD_120_3",
+                    "ZMD_120_4"
                 }
             },
             new WhatsNewMessage

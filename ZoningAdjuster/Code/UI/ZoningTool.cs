@@ -11,6 +11,7 @@ namespace ZoningAdjuster
 	public class ZoningTool : DefaultTool
 	{
 		// Previous tool state.
+		private static ToolBase previousTool;
 		private bool prevRenderZones;
 
 
@@ -53,6 +54,35 @@ namespace ZoningAdjuster
 		{
 			nameOnly = false;
 			return NetSegment.Flags.None;
+		}
+
+
+		/// <summary>
+		/// Toggles the current tool to/from the zoning tool.
+		/// </summary>
+		internal static void ToggleTool()
+		{
+			// Activate zoning tool if it isn't already; if already active, deactivate it by selecting the previously active tool instead.
+			if (ToolsModifierControl.toolController.CurrentTool != ZoningTool.Instance)
+			{
+				// Record previous tool.
+				previousTool = ToolsModifierControl.toolController.CurrentTool;
+				ToolsModifierControl.toolController.CurrentTool = ZoningTool.Instance;
+
+				// Create zoning settings panel if it isn't already created, and in any case make sure it's visible.
+				ZoningSettingsPanel.Create();
+			}
+			else
+			{
+				// Revert to previously selected tool.
+				ToolsModifierControl.toolController.CurrentTool = previousTool;
+
+				// Hide panel if necessary.
+				if (!ModSettings.showOnRoad)
+				{
+					ZoningSettingsPanel.Close();
+				}
+			}
 		}
 
 
@@ -162,7 +192,7 @@ namespace ZoningAdjuster
 							// If shift key is held down, toggle offset.
 							if ((e.modifiers & EventModifiers.Shift) != EventModifiers.None)
                             {
-								UIThreading.shiftOffset = true;
+								OffsetKeyThreading.shiftOffset = true;
                             }
 
 							roadAI.CreateZoneBlocks(segmentID, ref netManager.m_segments.m_buffer[segmentID]);
@@ -185,7 +215,7 @@ namespace ZoningAdjuster
 							}
 
 							// Reset shift offset.
-							UIThreading.shiftOffset = false;
+							OffsetKeyThreading.shiftOffset = false;
 
 							// Restore 'disable zoning' state.
 							ModSettings.disableZoning = zoningDisabled;

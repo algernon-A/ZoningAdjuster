@@ -5,6 +5,7 @@
 - Add option to force zoning (for roads that don't normally have it)
 - Allow negative setbacks of up to -4m
 - Fix setback slider sometimes being reset to zero when selecting networks in Find It
+- Add zoning tool hotkey (default Alt-Z)
 
 
 Version 1.1.1 -

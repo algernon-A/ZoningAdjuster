@@ -10,10 +10,6 @@ namespace ZoningAdjuster
         // Button size.
         private const float ButtonSize = 36f;
 
-        // Previous tool.
-        private ToolBase previousTool;
-
-
         // Instance reference.
         internal static ZoningAdjusterButton Instance { get; private set; }
 
@@ -71,30 +67,7 @@ namespace ZoningAdjuster
             normalFgSprite = ToolsModifierControl.toolController.CurrentTool == ZoningTool.Instance ? "focused" : "normal";
 
             // Event handler.
-            eventClicked += (control, clickEvent) =>
-            {
-                // Activate zoning tool if it isn't already; if already active, deactivate it by selecting the previously active tool instead.
-                if (ToolsModifierControl.toolController.CurrentTool != ZoningTool.Instance)
-                {
-                    // Record previous tool.
-                    previousTool = ToolsModifierControl.toolController.CurrentTool;
-                    ToolsModifierControl.toolController.CurrentTool = ZoningTool.Instance;
-
-                    // Create zoning settings panel if it isn't already created, and in any case make sure it's visible.
-                    ZoningSettingsPanel.Create();
-                }
-                else
-                {
-                    // Revert to previously selected tool.
-                    ToolsModifierControl.toolController.CurrentTool = previousTool;
-
-                    // Hide panel if necessary.
-                    if (!ModSettings.showOnRoad)
-                    {
-                        ZoningSettingsPanel.Close();
-                    }
-                }
-            };
+            eventClicked += (control, clickEvent) => ZoningTool.ToggleTool();
 
             // Set initial visibility state and add event hook.
             VisibilityChanged(null, isVisible);

@@ -63,6 +63,7 @@
     <Compile Include="Code\Notifications\WhatsNewMessageBox.cs" />
     <Compile Include="Code\Patches\CreateBlock.cs" />
     <Compile Include="Code\Patches\CreateSegment.cs" />
+    <Compile Include="Code\Settings\OptionsKeymapping.cs" />
     <Compile Include="Code\ZoneBlockData\Serializer.cs" />
     <Compile Include="Code\Settings\ModSettings.cs" />
     <Compile Include="Code\Utils\Logging.cs" />
