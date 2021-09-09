@@ -3,6 +3,9 @@
   <Translations>
     <Translation ID="ZMD_NAME" String="Zoning Adjuster" />
     <Translation ID="ZMD_DESC" String="Permite la zonificación de carreteras de 8 y 24 metros de ancho para alinearlas con carreteras de ancho regular y agrega la capacidad de compensar las posiciones de inicio de zonificación a lo largo de las carreteras." />"
+    <Translation ID="ZMD_PNL_DIS" String="Deshabilitar zonificación" />
+    <Translation ID="ZMD_PNL_FOR" String="Forzar modificación" />
+    <Translation ID="ZMD_PNL_DIS_TIP" String="Deshabilitar la creación de zonas al construir carreteras (aún puedes agregar zonificación con Zoning Adjuster)" />
     <Translation ID="ZMD_PNL_POZ" String="Dar prioridad a las carreteras más antiguas" />
     <Translation ID="ZMD_PNL_POZ_TIP" String="La zonificación adjunta a carreteras nuevas no sobrescribirá la zonificación adjunta a carreteras más antiguas" />
     <Translation ID="ZMD_PNL_PNZ" String="Dar prioridad a las carreteras más nuevas" />
@@ -13,15 +16,21 @@
     <Translation ID="ZMD_PNL_SBK_TIP" String="Agrega un espacio entre el borde de la carretera y la cuadrícula de zonificación" />
     <Translation ID="ZMD_OPT_KEY" String="Tecla modificadora" />"
     <Translation ID="ZMD_OPT_ZOK" String="Tecla modificadora de desplazamiento de zonificación" />
+    <Translation ID="ZMD_OPT_SHO" String="Opciones de visualización del panel" />
+    <Translation ID="ZMD_OPT_SOR" String="Mostrar el panel de configuración de zonoficación cuando el menú de carreteras este abierto" />
+    <Translation ID="ZMD_OPT_POS" String="Ubicación del panel y botón" />
+    <Translation ID="ZMD_OPT_RPP" String="Restablecer la posición del panel" />
+    <Translation ID="ZMD_OPT_RBP" String="Restablecer la posición del botón" />
     <Translation ID="ZMD_SHIFT" String="Mayús" />
     <Translation ID="ZMD_CTRL" String="Ctrl" />
     <Translation ID="ZMD_ALT" String="Alt" />
     <Translation ID="TRN_CHOICE" String="Elegir idioma" />
-    <Translation ID="TRN_SYS" String="Usa el idioma del juego" />
+    <Translation ID="TRN_SYS" String="Utilizar el idioma del juego" />
+    <Translation ID="KEY_KEY" String="Atajo de la herramienta de zonificación" />
     <Translation ID="MES_CLS" String="Cerrar" />
     <Translation ID="MES_DSA" String="No mostrar de nuevo" />
     <Translation ID="MES_PAGE" String="Consulta la página de Steam Workshop del mod para obtener más información." />
-    <Translation ID="ZMD_ERR_FAT" String="Esto significa que el mod no puede funcionar y se ha apagado." />
+    <Translation ID="ZMD_ERR_FAT" String="Esto significa que el mod no puede funcionar y se ha desactivado." />
     <Translation ID="ZMD_ERR_HAR" String="Zoning Adjuster no pudo completar los parches de Harmony requeridos." />
     <Translation ID="ERR_HAR0" String="Error de parcheo de Harmony" />
     <Translation ID="ERR_HAR1" String="Las posibles causas de este problema incluyen:" />
@@ -33,12 +42,18 @@
     <Translation ID="ZMD_ERR_CON1" String="Es necesario eliminar estos mods antes de que Zoning Adjuster pueda funcionar." />
     <Translation ID="ZMD_100_0" String="Nueva herramienta de zonificación para agregar, restablecer y eliminar la zonificación de cualquier carretera." />
     <Translation ID="ZMD_100_1" String="Opción de herramienta de zonificación: separación de zonificación variable desde la carretera" />
-    <Translation ID="ZMD_100_2" String="Opción de la herramienta de zonificación: priorice la zonificación por antigüedad de la carretera (para que la zonificación de nuevas carreteras no interrumpa la zonificación adjunta a las carreteras existentes)" />
-    <Translation ID="ZMD_102_0" String="Agrega opción para priorizar la zonificación de carreteras más nuevas" />
-    <Translation ID="ZMD_110_0" String="Cada bloque de zona recién creado ahora recuerda la configuración de prioridad con la que se creó (es decir, priorizar carreteras más nuevas o más antiguas) y conservará esa prioridad independientemente de cualquier cambio de configuración" />
-    <Translation ID="ZMD_110_1" String="NOTA 1: esto solo se aplica a los bloques de zona recién creados" />
-    <Translation ID="ZMD_110_2" String="NOTA 2: las configuraciones en conflicto (por ejemplo, una carretera más nueva que prioriza las configuraciones más antiguas junto a una carretera más antigua que prioriza las configuraciones más nuevas) darán lugar a resultados inconsistentes" />
+    <Translation ID="ZMD_100_2" String="Opción de la herramienta de zonificación: dar prioridad a la zonificación por antigüedad de la carretera (para que la zonificación de nuevas carreteras no interrumpa la zonificación adjunta a las carreteras existentes)" />
+    <Translation ID="ZMD_102_0" String="Agregada opción para darle prioridad a la zonificación de carreteras más nuevas" />
+    <Translation ID="ZMD_110_0" String="Cada bloque de zona recién creado ahora recuerda la configuración de la prioridad con la que se creó (es decir, darle prioridad a carreteras más nuevas o más antiguas) y conservará esa prioridad independientemente de cualquier cambio de configuración" />
+    <Translation ID="ZMD_110_1" String="NOTA 1: esto solo aplica a los bloques de zona recién creados" />
+    <Translation ID="ZMD_110_2" String="NOTA 2: las configuraciones en conflicto (por ejemplo, una carretera más nueva que da prioridad a las configuraciones más antiguas junto a una carretera más antigua que da prioridad a las configuraciones más nuevas) darán resultados inconsistentes" />
     <Translation ID="ZMD_111_0" String="El botón de la herramienta ahora se puede mover (haga clic y arrastre para mover)" />
-    <Translation ID="ZMD_111_1" String="Las posiciones de los botones y paneles se guardan al salir del juego" />
+    <Translation ID="ZMD_111_1" String="Las posiciones de los botones y páneles se guardan al salir del juego" />
+    <Translation ID="ZMD_120_0" String="Nueva opción para mostrar/esconder el panel de configuración de forma predeterminada cuando el menú de carreteras está visible" />
+    <Translation ID="ZMD_120_1" String="Nueva opción, 'deshabilitar zonificación' para deshabilitar la zonificación automática (aún puedes agregar zonificación con Zoning Adjuster)" />
+    <Translation ID="ZMD_120_2" String="Nueva opción, 'forzar zonificación' para agregar zonas en carreteras que no se pueden zonificar (ejemplo, autopistas)" />
+    <Translation ID="ZMD_120_3" String="Nueva opción para alternar zonificación en un solo lado (mantener presionada la tecla Alt al hacer clic con la herramienta de Zoning Adjuster)" />
+    <Translation ID="ZMD_120_4" String="Permitir zonificación negativa (mover zonificación más cerca de la carretera)" />
+    <Translation ID="ZMD_120_5" String="Agregada opción de atajo para la herramienta de zonificación (predeterminada Alt-Z)" />
   </Translations>
 </Language>
