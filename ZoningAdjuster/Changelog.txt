@@ -3,6 +3,7 @@
 - Add option to show/hide settings panel by default when road menu is visible
 - Add option to disable all automatic zoning
 - Add option to force zoning (for roads that don't normally have it)
+- Add option to toggle single-side zoning (hold Alt key when clicking with Zoning Adjuster tool)
 - Allow negative setbacks of up to -4m
 - Fix setback slider sometimes being reset to zero when selecting networks in Find It
 - Add zoning tool hotkey (default Alt-Z)

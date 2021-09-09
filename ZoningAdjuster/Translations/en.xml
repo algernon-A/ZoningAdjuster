@@ -52,7 +52,8 @@
     <Translation ID="ZMD_120_0" String="Add option to show/hide settings panel by default when road menu is visible" />
     <Translation ID="ZMD_120_1" String="Add 'disable zoning' option to disable all automatic zoning (zoning can still be applied manually using the Zoning Adjuster tool)" />
     <Translation ID="ZMD_120_2" String="Add 'force zoning' option to add zoning on construction to roads without zoning enabled (e.g. highways)" />
-    <Translation ID="ZMD_120_3" String="Allow negative zoning setback (move zoning closer to the road)" />
-    <Translation ID="ZMD_120_4" String="Add zoning tool hotkey (default Alt-Z)" />
+    <Translation ID="ZMD_120_3" String="Add option to toggle single-side zoning (hold Alt key when clicking with the Zoning Adjuster tool)" />
+    <Translation ID="ZMD_120_4" String="Allow negative zoning setback (move zoning closer to the road)" />
+    <Translation ID="ZMD_120_5" String="Add zoning tool hotkey (default Alt-Z)" />
   </Translations>
 </Language>
