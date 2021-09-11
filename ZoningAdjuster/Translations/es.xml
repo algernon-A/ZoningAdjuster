@@ -14,13 +14,13 @@
     <Translation ID="ZMD_PNL_PVZ_TIP" String="Comportamiento predeterminado del juego" />
     <Translation ID="ZMD_PNL_SBK" String="Desplazamiento de zonificación" />
     <Translation ID="ZMD_PNL_SBK_TIP" String="Agrega un espacio entre el borde de la carretera y la cuadrícula de zonificación" />
-    <Translation ID="ZMD_OPT_KEY" String="Tecla modificadora" />"
+    <Translation ID="ZMD_OPT_KEY" String="Atajos y configuración de teclas" />"
     <Translation ID="ZMD_OPT_ZOK" String="Tecla modificadora de desplazamiento de zonificación" />
     <Translation ID="ZMD_OPT_SHO" String="Opciones de visualización del panel" />
-    <Translation ID="ZMD_OPT_SOR" String="Mostrar el panel de configuración de zonoficación cuando el menú de carreteras este abierto" />
+    <Translation ID="ZMD_OPT_SOR" String="Mostrar panel de configuración de zonificación al abrir menú de carreteras" />
     <Translation ID="ZMD_OPT_POS" String="Ubicación del panel y botón" />
-    <Translation ID="ZMD_OPT_RPP" String="Restablecer la posición del panel" />
-    <Translation ID="ZMD_OPT_RBP" String="Restablecer la posición del botón" />
+    <Translation ID="ZMD_OPT_RPP" String="Restablecer posición del panel" />
+    <Translation ID="ZMD_OPT_RBP" String="Restablecer posición del botón" />
     <Translation ID="ZMD_SHIFT" String="Mayús" />
     <Translation ID="ZMD_CTRL" String="Ctrl" />
     <Translation ID="ZMD_ALT" String="Alt" />
