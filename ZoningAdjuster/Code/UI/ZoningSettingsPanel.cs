@@ -154,6 +154,9 @@ namespace ZoningAdjuster
                 }
             };
 
+            // Accomodate longer translation strings.
+            this.width = Mathf.Max(this.width, forceCheck.width + (Margin * 2f), disableCheck.width + (Margin * 2f));
+
             // Priority checkboxes.
             priorityChecks = new UICheckBox[(int)PriorityIndexes.NumPriorities];
             int currentPriority = ZoneBlockData.Instance.GetCurrentPriority();
