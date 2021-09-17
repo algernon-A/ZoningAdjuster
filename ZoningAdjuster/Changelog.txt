@@ -1,4 +1,9 @@
-﻿Version 1.2 -
+﻿Version 1.2.1 -
+
+- Dynamically resize settings panel to accomodate longer translation strings
+
+
+Version 1.2 -
 
 - Add option to show/hide settings panel by default when road menu is visible
 - Add option to disable all automatic zoning
