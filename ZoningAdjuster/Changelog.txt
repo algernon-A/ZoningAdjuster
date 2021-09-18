@@ -1,4 +1,9 @@
-﻿Version 1.2.1 -
+﻿Version 1.2.2 hotfix -
+
+- Fix settings panel controls not working for some players
+
+
+Version 1.2.1 -
 
 - Dynamically resize settings panel to accomodate longer translation strings
 

@@ -126,6 +126,13 @@ namespace ZoningAdjuster
             titleSprite.atlas = Textures.ToolButtonSprites;
             titleSprite.spriteName = "normal";
 
+            // Drag bar (sizing takes place after priority checkboxes to allow for any width adjustments for longer translation strings).
+            UIDragHandle dragHandle = AddUIComponent<UIDragHandle>();
+            dragHandle.width = this.width;
+            dragHandle.height = this.height;
+            dragHandle.relativePosition = Vector3.zero;
+            dragHandle.target = this;
+
             // Disable zoning checkbox.
             disableCheck = UIControls.LabelledCheckBox(this, Margin, DisableCheckY, Translations.Translate("ZMD_PNL_DIS"), tooltip: Translations.Translate("ZMD_PNL_DIS_TIP"));
             disableCheck.isChecked = ModSettings.disableZoning;
@@ -171,12 +178,9 @@ namespace ZoningAdjuster
                 this.width = Mathf.Max(this.width, priorityChecks[i].width + (Margin * 2f));
             }
 
-            // Drag bar (after priority checkboxes to allow for any width adjustments for longer translation strings).
-            UIDragHandle dragHandle = AddUIComponent<UIDragHandle>();
+            // Drag bar sizing (after priority checkboxes to allow for any width adjustments for longer translation strings).
             dragHandle.width = this.width;
             dragHandle.height = this.height;
-            dragHandle.relativePosition = Vector3.zero;
-            dragHandle.target = this;
 
             // Setback slider control - same appearance as Fine Road Tool's, for consistency.
             UISlider setbackSlider = AddSlider("ZMD_PNL_SBK", SetbackSliderY, "ZMD_PNL_SBK_TIP");
