@@ -79,7 +79,7 @@ namespace ZoningAdjuster
     /// <summary>
     ///  Savegame (de)serialisation for settings.
     /// </summary>
-    public class RealPopSerializer : IDataContainer
+    public class ZoningAdjusterSerializer : IDataContainer
     {
         /// <summary>
         /// Serialise to savegame.
