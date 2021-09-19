@@ -31,7 +31,7 @@ namespace ZoningAdjuster
                 BinaryFormatter formatter = new BinaryFormatter();
 
                 // Serialise savegame settings.
-                DataSerializer.Serialize(stream, DataSerializer.Mode.Memory, CurrentDataVersion, new ZoningAdjusterSerializer());
+                DataSerializer.Serialize(stream, DataSerializer.Mode.Memory, CurrentDataVersion, new RealPopSerializer());
 
                 // Write to savegame.
                 serializableDataManager.SaveData(dataID, stream.ToArray());
@@ -62,7 +62,7 @@ namespace ZoningAdjuster
                     BinaryFormatter formatter = new BinaryFormatter();
 
                     // Deserialise savegame settings.
-                    DataSerializer.Deserialize<ZoningAdjusterSerializer>(stream, DataSerializer.Mode.Memory);
+                    DataSerializer.Deserialize<RealPopSerializer>(stream, DataSerializer.Mode.Memory);
 
                     Logging.Message("read ", stream.Length.ToString());
                 }
