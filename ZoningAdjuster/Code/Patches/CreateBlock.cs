@@ -11,6 +11,7 @@ namespace ZoningAdjuster
     {
         public static void Postfix(ref ushort block)
         {
+            // Record current mod settings against this zone block ID.
             ZoneBlockData.Instance.SetCurrentMode(block); 
         }
     }

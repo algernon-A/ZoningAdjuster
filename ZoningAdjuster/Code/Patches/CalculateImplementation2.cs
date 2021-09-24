@@ -103,7 +103,7 @@ namespace ZoningAdjuster
                 // Intersect the row quad with the other zone block quad
                 if (zoneBlockQuad.Intersect(otherZoneBlockQuad))
                 {
-                    for (int column = 0; (long)column < ZoneBlock.COLUMN_COUNT && ((long)valid & 1L << (row << 3 | column)) != 0L; ++column)
+                    for (int column = 0; (long)column < ZoneDepthPatches.COLUMN_COUNT && ((long)valid & 1L << (row << 3 | column)) != 0L; ++column)
                     {
                         // calculate 2 relative column positions: 
                         // * one 0.01m from previous column
@@ -138,7 +138,7 @@ namespace ZoningAdjuster
                                 Vector2 otherRowNearPreviousLength = ((float)otherRow - 3.99f) * otherRowDirection;
                                 Vector2 otherRowNearNextLength = ((float)otherRow - 3.01f) * otherRowDirection;
 
-                                for (int otherColumn = 0; (long)otherColumn < ZoneBlock.COLUMN_COUNT && cellIsValid; ++otherColumn)
+                                for (int otherColumn = 0; (long)otherColumn < ZoneDepthPatches.COLUMN_COUNT && cellIsValid; ++otherColumn)
                                 {
                                     // checks if the cell is marked as valid in the valid mask of the other block, and that it is not contained in the shared mask
                                     if (((long)other.m_valid & ~(long)other.m_shared & 1L << (otherRow << 3 | otherColumn)) != 0L)

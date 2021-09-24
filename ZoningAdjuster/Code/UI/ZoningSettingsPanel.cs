@@ -15,15 +15,16 @@ namespace ZoningAdjuster
         const float CheckHeight = 20f;
         const float PanelWidth = 230f;
         const float TitleHeight = 40f;
+        const float SliderLabelHeight = 20f;
+        const float SliderPanelHeight = 36f;
         const float DisableCheckY = TitleHeight;
         const float ForceCheckY = DisableCheckY + CheckHeight;
         const float OldCheckY = ForceCheckY + 30f;
         const float NewCheckY = OldCheckY + CheckHeight;
         const float NoCheckY = NewCheckY + CheckHeight;
-        const float SetbackSliderY = NoCheckY + 25f;
-        const float SliderLabelHeight = 20f;
-        const float SliderPanelHeight = 36f;
-        const float PanelHeight = SetbackSliderY + SliderLabelHeight + SliderPanelHeight + Margin;
+        const float SetbackSliderY = NoCheckY + 30f;
+        const float ZoneDepthSliderY = SetbackSliderY + SliderLabelHeight + SliderPanelHeight + (Margin * 2f);
+        const float PanelHeight = ZoneDepthSliderY + SliderLabelHeight + SliderPanelHeight + Margin;
 
         // Zoning age priority checkboxes.
         private readonly string[] priorityNames =
@@ -183,10 +184,17 @@ namespace ZoningAdjuster
             dragHandle.height = this.height;
 
             // Setback slider control - same appearance as Fine Road Tool's, for consistency.
-            UISlider setbackSlider = AddSlider("ZMD_PNL_SBK", SetbackSliderY, "ZMD_PNL_SBK_TIP");
+            UISlider setbackSlider = AddSlider("ZMD_PNL_SBK", SetbackSliderY, "ZMD_PNL_SBK_TIP", false);
             setbackSlider.eventValueChanged += (control, value) =>
             {
                 ZoneBlockPatch.setback = value;
+            };
+
+            // Zoning depth slider control - same appearance as Fine Road Tool's, for consistency.
+            UISlider zoneDepthSlider = AddSlider("ZMD_PNL_DEP", ZoneDepthSliderY, "ZMD_PNL_DEP_TIP", true);
+            zoneDepthSlider.eventValueChanged += (control, value) =>
+            {
+                ZoneDepthPatches.zoneDepth = (byte)Mathf.Clamp(value -1, 0f, 3f);
             };
 
             // Bring to front.
@@ -272,15 +280,16 @@ namespace ZoningAdjuster
             }
         }
 
-        
+
         /// <summary>
         /// Adds a labelled slider control to the panel at the specified postion.
         /// </summary>
         /// <param name="textKey">Label translation key</param>
         /// <param name="yPos">Relative Y position</param>
         /// <param name="toolTipKey">Tooltip translation key</param>
+        /// <param name="isDepthSlider">True if this is a zone depth slider, false otherwise</param>
         /// <returns>New UISlider with Fine Road Tool appearance</returns>
-        private UISlider AddSlider(string textKey, float yPos, string toolTipKey)
+        private UISlider AddSlider(string textKey, float yPos, string toolTipKey, bool isDepthSlider)
         {
             // Slider label.
             UILabel setbackLabel = this.AddUIComponent<UILabel>();
@@ -305,7 +314,6 @@ namespace ZoningAdjuster
             valueLabel.verticalAlignment = UIVerticalAlignment.Bottom;
             valueLabel.textAlignment = UIHorizontalAlignment.Center;
             valueLabel.textScale = 0.7f;
-            valueLabel.text = ZoneBlockPatch.setback.ToString() + "m";
             valueLabel.autoSize = false;
             valueLabel.color = new Color32(91, 97, 106, 255);
             valueLabel.size = new Vector2(38, 15);
@@ -330,17 +338,38 @@ namespace ZoningAdjuster
             sliderThumb.spriteName = "SliderBudget";
             newSlider.thumbObject = sliderThumb;
 
-            // Setback slider values.
-            newSlider.stepSize = 0.5f;
-            newSlider.minValue = -4f;
-            newSlider.maxValue = 8f;
-            newSlider.value = ZoneBlockPatch.setback;
-
-            // Event handler to update value.
-            newSlider.eventValueChanged += (control, value) =>
+            // Is this a zone depth slider?
+            if (isDepthSlider)
             {
-                valueLabel.text = value.ToString() + "m";
-            };
+
+                // Event handler to update value.
+                newSlider.eventValueChanged += (control, value) =>
+                {
+                    valueLabel.text = ((int)value).ToString();
+                };
+
+                // Depth slider - set values.
+                newSlider.stepSize = 1;
+                newSlider.minValue = 1;
+                newSlider.maxValue = 4;
+
+                // +1 to account for zero-basing.
+                newSlider.value = ZoneDepthPatches.zoneDepth + 1;
+            }
+            else
+            {
+                // Event handler to update value.
+                newSlider.eventValueChanged += (control, value) =>
+                {
+                    valueLabel.text = value.ToString() + "m";
+                };
+
+                // Setback slider - set values.
+                newSlider.stepSize = 0.5f;
+                newSlider.minValue = -4f;
+                newSlider.maxValue = 8f;
+                newSlider.value = ZoneBlockPatch.setback;
+            }
 
             return newSlider;
         }
