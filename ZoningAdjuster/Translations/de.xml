@@ -4,6 +4,8 @@
     <Translation ID="ZMD_NAME" String="Zoning Adjuster" />
     <Translation ID="ZMD_DESC" String="Ermöglicht es Gebiete entlang von 8 und 24 Meter breiten Straßen anzulegen, die den normal-breiten Straßen angeglichen sind. Außerdem kann der Versatz des Rasters entlang der Straße angepasst werden" />
     <Translation ID="ZMD_PNL_DIS" String="Gebiete ausschalten" />
+    <Translation ID="ZMD_PNL_FOR" String="Gebiete erzwingen" />
+    <Translation ID="ZMD_PNL_DIS" String="Gebiete ausschalten" />
     <Translation ID="ZMD_PNL_DIS_TIP" String="Das erstellen von Gebieten beim Bau von Straßen wird ausgeschaltet (Gebiete können jederzeit über das Zoning Adjuster Werkzeug hinzugefügt werden)" />
     <Translation ID="ZMD_PNL_POZ" String="Ältere Straßen priorisieren" />
     <Translation ID="ZMD_PNL_POZ_TIP" String="Gebiete die für neue Straßen angelegt werden, überschreiben nicht die Gebiete bereits bestehender Straßen." />
@@ -12,14 +14,21 @@
     <Translation ID="ZMD_PNL_PVZ" String="Keine Priorisierung" />
     <Translation ID="ZMD_PNL_PVZ_TIP" String="Standard-Verhalten des Spiels" />
     <Translation ID="ZMD_PNL_SBK" String="Gebiets-Versatz" />
-    <Translation ID="ZMD_PNL_SBK_TIP" String="Fügt einen Abstand zwischen dem Straßenrand und dem Gebiets-Raster hinzu" />
+    <Translation ID="ZMD_PNL_SBK_TIP" String="Fügt einen Abstand zwischen dem Straßenrand und dem Gebiets-Raster hinzu" />    <Translation ID="ZMD_PNL_DEP" String="Gebiets-Tiefe" />"
+    <Translation ID="ZMD_PNL_DEP_TIP" String="Die maximale Gebiets-Tiefe in Zellen festlegen (wie weit weg von der Straße)" />
     <Translation ID="ZMD_OPT_KEY" String="Anpassungstaste" />
     <Translation ID="ZMD_OPT_ZOK" String="Taste zum Anpassen des Raster-Versatzes" />
+    <Translation ID="ZMD_OPT_SHO" String="Panel-Sichtbarkeit" />
+    <Translation ID="ZMD_OPT_SOR" String="Öffne automatisch das Panel zum Einstellen der Gebiet, wenn das Straßenmenü geöffnet ist" />
+    <Translation ID="ZMD_OPT_POS" String="Panel und Button Position" />
+    <Translation ID="ZMD_OPT_RPP" String="Panel Position zurücksetzen" />
+    <Translation ID="ZMD_OPT_RBP" String="Button Position zurücksetzen" />
     <Translation ID="ZMD_SHIFT" String="Umschalt" />
     <Translation ID="ZMD_CTRL" String="Strg" />
     <Translation ID="ZMD_ALT" String="Alt" />
     <Translation ID="TRN_CHOICE" String="Sprache" />
     <Translation ID="TRN_SYS" String="Systemsprache verwenden" />
+    <Translation ID="KEY_KEY" String="Tastenkürzel für das Gebietswerkzeug" />
     <Translation ID="MES_CLS" String="Schließen" />
     <Translation ID="MES_DSA" String="Nicht erneut anzeigen" />
     <Translation ID="MES_PAGE" String="Bitte besuche die Steam Workshop-Seite für weitere Informationen." />
@@ -42,7 +51,11 @@
     <Translation ID="ZMD_110_2" String="Info 2: Widersprüchliche Einstellungen (z.B. eine Priorisierung neuer Straßen wird an eine Stra0e angebunden, die die Priosierung alter Straßen gesetz hat) werden zu uneinheitlichen Ergebnissen führen." />
     <Translation ID="ZMD_111_0" String="Werkzeug-Schaltfläche ist nun verschiebbar (anklicken und ziehen zum Bewegen)" />
     <Translation ID="ZMD_111_1" String="Position der Schaltfläche und Oberfläche werden nun beim Beenden des Spiels gespeichert" />
-    <Translation ID="ZMD_120_1" String="'Gebiete ausschalten' hinzugefügt und das automatische erstellen von Gebieten zu verhindern (Gebiete können jederzeit über das Zoning Adjuster Werkzeug hinzugefügt werden)" />
-    <Translation ID="ZMD_120_2" String="Negativer Gebietsversatz hinzugefügt  (Gebiete näher an die Straße setzen)" />
+    <Translation ID="ZMD_120_0" String="Funktion hinzugefügt, um das Panel automatisch anzuzeigen/auszublenden, wenn das Straßenmenü geöffnet ist" />
+    <Translation ID="ZMD_120_1" String="'Gebiete ausschalten' hinzugefügt, um automatische Gebietserstellungen zu verhindern (Können aber manuell hinzugefügt werden)" />
+    <Translation ID="ZMD_120_2" String="'Gebiete erzwingen' hinzugefügt, Gebiete zu erzwingen bei Straßen, die keine Gebiete haben (z.B. Autobahnen)" />
+    <Translation ID="ZMD_120_3" String="Funktion hinzugefügt, um nur auf einer Seite Gebiete zu erstellen (Alt-Taste gedrückt halten beim Klicken mit dem Werkzeug)" />
+    <Translation ID="ZMD_120_4" String="Negative Gebiets-Versätze  hinzugefügt (Bringt die Gebiete näher an die Straße)" />
+    <Translation ID="ZMD_120_5" String="Tastenkürzel hinzugefügt (Standard Alt+Z)" />
   </Translations>
 </Language>
