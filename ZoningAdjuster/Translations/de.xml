@@ -57,5 +57,6 @@
     <Translation ID="ZMD_120_3" String="Funktion hinzugefügt, um nur auf einer Seite Gebiete zu erstellen (Alt-Taste gedrückt halten beim Klicken mit dem Werkzeug)" />
     <Translation ID="ZMD_120_4" String="Negative Gebiets-Versätze  hinzugefügt (Bringt die Gebiete näher an die Straße)" />
     <Translation ID="ZMD_120_5" String="Tastenkürzel hinzugefügt (Standard Alt+Z)" />
+    <Translation ID="ZMD_130_0" String="Einstellung für die maximale Gebiets-Tiefe hinzugefügt" />
   </Translations>
 </Language>
