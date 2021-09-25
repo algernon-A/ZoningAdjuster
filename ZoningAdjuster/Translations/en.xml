@@ -57,5 +57,6 @@
     <Translation ID="ZMD_120_3" String="Add option to toggle single-side zoning (hold Alt key when clicking with the Zoning Adjuster tool)" />
     <Translation ID="ZMD_120_4" String="Allow negative zoning setback (move zoning closer to the road)" />
     <Translation ID="ZMD_120_5" String="Add zoning tool hotkey (default Alt-Z)" />
+    <Translation ID="ZMD_130_0" String="Add adjustable zone depth" />
   </Translations>
 </Language>
