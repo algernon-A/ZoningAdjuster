@@ -14,7 +14,7 @@
     <Translation ID="ZMD_PNL_PVZ_TIP" String="ゲームのデフォルト動作"/>
     <Translation ID="ZMD_PNL_SBK" String="ゾーニングのセットバック"/>"
     <Translation ID="ZMD_PNL_SBK_TIP" String="道路とゾーニングの間にセットバックを追加"/>
-    <Translation ID="ZMD_PNL_DEP" String="ゾーニングの深度"/>"
+    <Translation ID="ZMD_PNL_DEP" String="ゾーニングの深さ"/>"
     <Translation ID="ZMD_PNL_DEP_TIP" String="ゾーニングの最大深度を設定 (セルを道路から離した場合)"/>
     <Translation ID="ZMD_OPT_KEY" String="キーバインド"/>
     <Translation ID="ZMD_OPT_ZOK" String="ゾーニングオフセットのキーバインド"/>
@@ -57,5 +57,6 @@
     <Translation ID="ZMD_120_3" String="Add option to toggle single-side zoning (hold Alt key when clicking with the Zoning Adjuster tool)"/>
     <Translation ID="ZMD_120_4" String="Allow negative zoning setback (move zoning closer to the road)"/>
     <Translation ID="ZMD_120_5" String="Add zoning tool hotkey (default Alt-Z)"/>
+    <Translation ID="ZMD_130_0" String="Add adjustable zone depth"/>
   </Translations>
 </Language>
