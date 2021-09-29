@@ -154,7 +154,7 @@ namespace ZoningAdjuster
                                 || (double)Mathf.Max(Mathf.Max(quadMin.x - 64f - endNodePos.x, quadMin.y - 64f - endNodePos.z), Mathf.Max((float)((double)endNodePos.x - (double)quadMax.x - 64.0), (float)((double)endNodePos.z - (double)quadMax.y - 64.0))) < 0.0)
                             {
                                 // Mark zone cells overlapped by network segments as invalid.
-                                CalculateImplementation1(__instance, blockID, segmentID, ref netManager.m_segments.m_buffer[(int)segmentID], ref valid, quadMin.x, quadMin.y, quadMax.x, quadMax.y);
+                                CalculateImplementation1(ref __instance, blockID, segmentID, ref netManager.m_segments.m_buffer[(int)segmentID], ref valid, quadMin.x, quadMin.y, quadMax.x, quadMax.y);
                             }
                         }
                         // Next segment in grid cell (linked list).
@@ -192,7 +192,7 @@ namespace ZoningAdjuster
         /// <summary>
         /// Harmony reverse patch to access private method ZoneBlock.CalculateImplementation1.
         /// </summary>
-        /// <param name="instance">Zone block instance references</param>
+        /// <param name="instance">Zone block instance reference</param>
         /// <param name="blockID">Zone block ID</param>
         /// <param name="segmentID">Net segment ID</param>
         /// <param name="data">Net segment data</param>
@@ -204,7 +204,7 @@ namespace ZoningAdjuster
         [HarmonyReversePatch]
         [HarmonyPatch("CalculateImplementation1")]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static void CalculateImplementation1(object instance, ushort blockID, ushort segmentID, ref NetSegment data, ref ulong valid, float minX, float minZ, float maxX, float maxZ)
+        public static void CalculateImplementation1(ref ZoneBlock instance, ushort blockID, ushort segmentID, ref NetSegment data, ref ulong valid, float minX, float minZ, float maxX, float maxZ)
         {
             Logging.Error("CalculateImplementation1 reverse Harmony patch wasn't applied", instance.ToString(), blockID.ToString(), segmentID.ToString(), data.ToString(), valid.ToString(), minX.ToString(), minZ.ToString(), maxX.ToString(), maxZ.ToString());
         }
