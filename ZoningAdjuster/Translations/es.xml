@@ -14,6 +14,8 @@
     <Translation ID="ZMD_PNL_PVZ_TIP" String="Comportamiento predeterminado del juego" />
     <Translation ID="ZMD_PNL_SBK" String="Desplazar zonificación" />
     <Translation ID="ZMD_PNL_SBK_TIP" String="Agrega un espacio entre el borde de la carretera y la cuadrícula de zonificación" />
+    <Translation ID="ZMD_PNL_DEP" String="Profundidad de zonificación" />"
+    <Translation ID="ZMD_PNL_DEP_TIP" String="Establece la profundidad máxima de zonas (lejos de la carretera) en celdas" />
     <Translation ID="ZMD_OPT_KEY" String="Atajos y configuración de teclas" />"
     <Translation ID="ZMD_OPT_ZOK" String="Tecla modificadora de desplazamiento de zonificación" />
     <Translation ID="ZMD_OPT_SHO" String="Opciones de visualización del panel" />
@@ -30,7 +32,7 @@
     <Translation ID="MES_CLS" String="Cerrar" />
     <Translation ID="MES_DSA" String="No mostrar de nuevo" />
     <Translation ID="MES_PAGE" String="Consulta la página de Steam Workshop del mod para obtener más información." />
-    <Translation ID="ZMD_ERR_FAT" String="Esto significa que el mod no puede funcionar y se ha desactivado." />
+    <Translation ID="ZMD_ERR_FAT" String="Esto significa que el mod no puede funcionar y se ha desactivado." />c
     <Translation ID="ZMD_ERR_HAR" String="Zoning Adjuster no pudo completar los parches de Harmony requeridos." />
     <Translation ID="ERR_HAR0" String="Error de parcheo de Harmony" />
     <Translation ID="ERR_HAR1" String="Las posibles causas de este problema incluyen:" />
@@ -55,5 +57,6 @@
     <Translation ID="ZMD_120_3" String="Nueva opción para alternar zonificación en un solo lado (mantener presionada la tecla Alt al hacer clic con la herramienta de Zoning Adjuster)" />
     <Translation ID="ZMD_120_4" String="Permitir zonificación negativa (mover zonificación más cerca de la carretera)" />
     <Translation ID="ZMD_120_5" String="Agregada opción de atajo para la herramienta de zonificación (predeterminada Alt-Z)" />
+    <Translation ID="ZMD_130_0" String="Agregar profundidad de zona ajustable" />
   </Translations>
 </Language>

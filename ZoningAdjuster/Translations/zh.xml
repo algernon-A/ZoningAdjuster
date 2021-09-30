@@ -1,22 +1,62 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Language UniqueName="zh" ReadableName="中文">
+<Language UniqueName="zh" ReadableName="简体中文">
   <Translations>
-    <Translation ID="ZMD_NAME" String="區域分配調節器" />
-    <Translation ID="ZMD_DESC" String="允許對8米和24米寬的道路進行區域分配，以與標準寬度的道路對齊並增加了抵消沿道路區域分配的開始位置功能。" />
-    <Translation ID="ZMD_OPT_KEY" String="編輯鍵位" />
-    <Translation ID="ZMD_OPT_ZOK" String="編輯區域分配偏移鍵位" />
-    <Translation ID="ZMD_SHIFT" String="Shift" />
-    <Translation ID="ZMD_CTRL" String="Control" />
-    <Translation ID="ZMD_ALT" String="Alt" />
-    <Translation ID="TRN_CHOICE" String="語言設置" />
-    <Translation ID="TRN_SYS" String="使用遊戲默認語言" />
-    <Translation ID="MES_CLS" String="關閉" />
-    <Translation ID="MES_PAGE" String="請參閱模組(Mod)在Steam工作坊的頁面以獲得更多資訊。" />
-    <Translation ID="ZMD_ERR_FAT" String="這意味著模組(Mod)將無法正常使用，並且已關閉。" />
-    <Translation ID="ZMD_ERR_HAR" String="”區域分配調節器“無法完成因為它須要 “Harmony” 擴展文檔。" />
-    <Translation ID="ERR_HAR0" String="“Harmony” 擴展文檔錯誤" />
-    <Translation ID="ERR_HAR1" String="此問題有可能包括的原因：" />
-    <Translation ID="ERR_HAR2" String="“Harmony 2” 擴展文檔模組(Mod)沒有訂閱。" />
-    <Translation ID="ERR_HAR3" String="一些老的或壞的模組(Mod)導致 “Harmony 2” 擴展文檔模組(Mod)無法正常運轉。" />
+    <Translation ID="ZMD_NAME" String="区域分配调整器" />
+    <Translation ID="ZMD_DESC" String="允许分区8米和24米宽的道路与常规宽度的道路对齐，并增加了沿道路偏移分区开始位置的能力。" />
+    <Translation ID="ZMD_PNL_DIS" String="禁用分区" />
+    <Translation ID="ZMD_PNL_FOR" String="强制分区" />
+    <Translation ID="ZMD_PNL_DIS_TIP" String="当建造道路时禁用所有区域创建(分区仍然可以使用分区调整器工具添加)" />
+    <Translation ID="ZMD_PNL_POZ" String="优先考虑旧道路" />
+    <Translation ID="ZMD_PNL_POZ_TIP" String="与新道路相连的分区不会覆盖与旧道路相连的分区" />
+    <Translation ID="ZMD_PNL_PNZ" String="优化更新的道路" />
+    <Translation ID="ZMD_PNL_PNZ_TIP" String="附在旧道路上的分区不会覆盖附在新道路上的分区" />
+    <Translation ID="ZMD_PNL_PVZ" String="没有优先级" />
+    <Translation ID="ZMD_PNL_PVZ_TIP" String="默认的游戏行为" />
+    <Translation ID="ZMD_PNL_SBK" String="分区缩进" />"
+    <Translation ID="ZMD_PNL_SBK_TIP" String="在道路边缘和分区网格之间增加一个间隙" />
+    <Translation ID="ZMD_PNL_DEP" String="分区深度" />"
+    <Translation ID="ZMD_PNL_DEP_TIP" String="设置单元格中区域(远离道路)的最大深度" />
+    <Translation ID="ZMD_OPT_KEY" String="快捷键" />
+    <Translation ID="ZMD_OPT_ZOK" String="区域偏移修改键" />
+    <Translation ID="ZMD_OPT_SHO" String="面板可见选项" />
+    <Translation ID="ZMD_OPT_SOR" String="自动显示分区设置面板时，道路菜单是打开的" />
+    <Translation ID="ZMD_OPT_POS" String="面板和按钮位置" />
+    <Translation ID="ZMD_OPT_RPP" String="复位面板的位置" />
+    <Translation ID="ZMD_OPT_RBP" String="重置按钮的位置" />
+    <Translation ID="ZMD_SHIFT" String="Shift" />"
+    <Translation ID="ZMD_CTRL" String="Control" />"
+    <Translation ID="ZMD_ALT" String="Alt" />"
+    <Translation ID="TRN_CHOICE" String="语言设定" />
+    <Translation ID="TRN_SYS" String="使用系统默认语语言" />
+    <Translation ID="KEY_KEY" String="热键" />
+    <Translation ID="MES_CLS" String="关闭" />
+    <Translation ID="MES_DSA" String="不再显示" />
+    <Translation ID="MES_PAGE" String="请前往工坊该模组的详细页面了解更多信息" />
+    <Translation ID="ZMD_ERR_FAT" String="这意味着该模组无法操作，并已关闭。" />
+    <Translation ID="ZMD_ERR_HAR" String="分区调整器无法请求其所需的前置模组补丁。" />
+    <Translation ID="ERR_HAR0" String="Harmony模组调佣失败" />
+    <Translation ID="ERR_HAR1" String="造成该问题的原因可能是：" />
+    <Translation ID="ERR_HAR2" String="前置模组Harmony 2 mod dependency并未订阅或未启用" />
+    <Translation ID="ERR_HAR3" String="一个旧的和/或坏的模组正在阻止Harmony 2正常运行" />
+    <Translation ID="ERR_CON0" String="检测到模组冲突！" />
+    <Translation ID="ERR_CON1" String="冲突模组是：" />
+    <Translation ID="ZMD_ERR_CON0" String="该模组检测到至少存在一个冲突模组" />
+    <Translation ID="ZMD_ERR_CON1" String="为保证该模组能够正常工作请先移除以下模组。" />
+    <Translation ID="ZMD_100_0" String="新的分区工具添加，重置，并删除任何道路的分区" />
+    <Translation ID="ZMD_100_1" String="分区工具选项:可变的分区挫折从道路" />
+    <Translation ID="ZMD_100_2" String="分区工具选项:按道路年龄优先分区(所以新道路的分区不会干扰现有道路的分区)" />
+    <Translation ID="ZMD_102_0" String="增加选择优先分区较新的道路" />
+    <Translation ID="ZMD_110_0" String="每个新创建的区域块现在会记住它创建时的优先级设置(例如，更新或旧的道路的优先级)，并且无论设置如何改变，都会保留该优先级" />
+    <Translation ID="ZMD_110_1" String="注1:这只适用于新创建的区域块" />
+    <Translation ID="ZMD_110_2" String="注2:冲突的设置(例如，更新的道路优先设置旧的设置，而更新的道路优先设置旧的设置)将导致不一致的结果" />
+    <Translation ID="ZMD_111_0" String="工具按钮现在是可移动的(点击和拖动移动)" />
+    <Translation ID="ZMD_111_1" String="退出游戏时保存按钮和面板位置" />
+    <Translation ID="ZMD_120_0" String="添加选项显示/隐藏设置面板默认时，道路菜单是可见的" />
+    <Translation ID="ZMD_120_1" String="添加'disable zoning'选项以禁用所有自动zoning (zoning仍然可以使用zoning调整器工具手动应用)" />
+    <Translation ID="ZMD_120_2" String="增加“强制分区”选项，在没有分区的道路(例如高速公路)上增加建筑分区" />
+    <Translation ID="ZMD_120_3" String="增加单面分区切换选项(使用分区调整器工具单击时按住Alt键)" />
+    <Translation ID="ZMD_120_4" String="允许负分区后退(将分区移到离道路更近的地方)" />
+    <Translation ID="ZMD_120_5" String="添加分区工具热键(默认Alt+Z)" />
+    <Translation ID="ZMD_130_0" String="Add adjustable zone depth" />
   </Translations>
 </Language>
