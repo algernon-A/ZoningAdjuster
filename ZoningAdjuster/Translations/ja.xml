@@ -14,8 +14,8 @@
     <Translation ID="ZMD_PNL_PVZ_TIP" String="ゲームのデフォルト動作"/>
     <Translation ID="ZMD_PNL_SBK" String="ゾーニングのセットバック"/>"
     <Translation ID="ZMD_PNL_SBK_TIP" String="道路とゾーニングの間にセットバックを追加"/>
-    <Translation ID="ZMD_PNL_DEP" String="ゾーニングの深さ"/>"
-    <Translation ID="ZMD_PNL_DEP_TIP" String="ゾーニングの最大深度を設定 (セルを道路から離した場合)"/>
+    <Translation ID="ZMD_PNL_DEP" String="ゾーニングの列数"/>"
+    <Translation ID="ZMD_PNL_DEP_TIP" String="ゾーニングにあるセルの列数を設定 (道路から外側に向かっての列数)"/>
     <Translation ID="ZMD_OPT_KEY" String="キーバインド"/>
     <Translation ID="ZMD_OPT_ZOK" String="ゾーニングオフセットのキーバインド"/>
     <Translation ID="ZMD_OPT_SHO" String="パネルの表示オプション"/>
