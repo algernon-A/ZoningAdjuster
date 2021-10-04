@@ -13,7 +13,7 @@
     <Translation ID="ZMD_PNL_PVZ" String="Нет приоритета" />
     <Translation ID="ZMD_PNL_PVZ_TIP" String="Поведение игры по умолчанию" />
     <Translation ID="ZMD_PNL_DEP" String="Глубина зонирования" />"
-    <Translation ID="ZMD_PNL_DEP_TIP" String="Устанавливает максимальный отступ зон (от дороги) в ячейках" />
+    <Translation ID="ZMD_PNL_DEP_TIP" String="Устанавливает максимальный отступ зон от дороги в ячейках" />
     <Translation ID="ZMD_PNL_SBK" String="Зонирование с отступом" />
     <Translation ID="ZMD_PNL_SBK_TIP" String="Добавляет зазор между краем дороги и сеткой зонирования" />
     <Translation ID="ZMD_OPT_KEY" String="Клавиша-модификатор" />
@@ -57,6 +57,6 @@
     <Translation ID="ZMD_120_3" String="Добавлена опция переключения одностороннего зонирования (удерживайте клавишу Alt при настройке дорог с помощью Zoning Adjuster)" />
     <Translation ID="ZMD_120_4" String="Разрешить отрицательное зонирование (переместить зонирование ближе к дороге)" />
     <Translation ID="ZMD_120_5" String="Добавлена горячая клавиша инструмента зонирования (по умолчанию Alt+Z)" />
-    <Translation ID="ZMD_130_0" String="Добавить регулируемую глубину зонирования" />
+    <Translation ID="ZMD_130_0" String="Добавлена регулируемая глубина зонирования" />
   </Translations>
 </Language>
