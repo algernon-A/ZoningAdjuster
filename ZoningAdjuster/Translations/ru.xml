@@ -29,6 +29,7 @@
     <Translation ID="TRN_CHOICE" String="Установить язык" />
     <Translation ID="TRN_SYS" String="Использ. системный" />
     <Translation ID="KEY_KEY" String="Горячая клавиша инструмента зонирования" />
+    <Translation ID="KEY_PRS" String="Нажмите любую клавишу" />
     <Translation ID="MES_CLS" String="Закрыть" />
     <Translation ID="MES_DSA" String="Больше не показывать" />
     <Translation ID="MES_PAGE" String="Пожалуйста, перейдите на страницу мода в Steam Workshop для получения дополнительной информации." />

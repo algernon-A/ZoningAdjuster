@@ -29,6 +29,7 @@
     <Translation ID="TRN_CHOICE" String="Sprache" />
     <Translation ID="TRN_SYS" String="Systemsprache verwenden" />
     <Translation ID="KEY_KEY" String="Tastenkürzel für das Gebietswerkzeug" />
+    <Translation ID="KEY_PRS" String="Drücke eine Taste" />
     <Translation ID="MES_CLS" String="Schließen" />
     <Translation ID="MES_DSA" String="Nicht erneut anzeigen" />
     <Translation ID="MES_PAGE" String="Bitte besuche die Steam Workshop-Seite für weitere Informationen." />

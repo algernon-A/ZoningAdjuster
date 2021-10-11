@@ -29,6 +29,7 @@
     <Translation ID="TRN_CHOICE" String="言語設定"/>
     <Translation ID="TRN_SYS" String="システム言語を使用"/>
     <Translation ID="KEY_KEY" String="ゾーニングツールのホットキー"/>
+    <Translation ID="KEY_PRS" String="何かキーを押してください"/>
     <Translation ID="MES_CLS" String="閉じる"/>
     <Translation ID="MES_DSA" String="次回から非表示"/>
     <Translation ID="MES_PAGE" String="詳細は、MODがあるSteamのワークショップを確認してください。"/>

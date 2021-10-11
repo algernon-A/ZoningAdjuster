@@ -29,6 +29,7 @@
     <Translation ID="TRN_CHOICE" String="Elegir idioma" />
     <Translation ID="TRN_SYS" String="Utilizar el idioma del juego" />
     <Translation ID="KEY_KEY" String="Activar/Desactivar herramienta de zonificación" />
+    <Translation ID="KEY_PRS" String="Presiona cualquier tecla" />
     <Translation ID="MES_CLS" String="Cerrar" />
     <Translation ID="MES_DSA" String="No mostrar de nuevo" />
     <Translation ID="MES_PAGE" String="Consulta la página de Steam Workshop del mod para obtener más información." />

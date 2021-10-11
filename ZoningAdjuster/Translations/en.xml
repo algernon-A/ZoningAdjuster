@@ -29,6 +29,7 @@
     <Translation ID="TRN_CHOICE" String="Set language" />
     <Translation ID="TRN_SYS" String="Use system language" />
     <Translation ID="KEY_KEY" String="Zoning tool hotkey" />
+    <Translation ID="KEY_PRS" String="Press any key" />
     <Translation ID="MES_CLS" String="Close" />
     <Translation ID="MES_DSA" String="Don't show again" />
     <Translation ID="MES_PAGE" String="Please refer to the mod's Steam Workshop page for further information." />
