@@ -78,7 +78,7 @@ namespace ZoningAdjuster
 				ToolsModifierControl.toolController.CurrentTool = previousTool;
 
 				// Hide panel if necessary.
-				if (!ModSettings.showOnRoad)
+				if (!ModSettings.showOnRoad || (ModSettings.showOnRoad && !ZoningAdjusterButton.Instance.isVisible))
 				{
 					ZoningSettingsPanel.Close();
 				}
