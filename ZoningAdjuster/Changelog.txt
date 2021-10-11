@@ -1,4 +1,5 @@
-﻿- Fix zoning panel not closing automatically on tool deactivation when showOnRoad isn't set
+﻿- Add proper escape key handling to zoning tool
+- Fix zoning panel not closing automatically on tool deactivation when showOnRoad isn't set
 
 
 Version 1.3 -

@@ -45,6 +45,13 @@ namespace ZoningAdjuster
 		public override Vehicle.Flags GetVehicleIgnoreFlags() => Vehicle.Flags.LeftHandDrive | Vehicle.Flags.Created | Vehicle.Flags.Deleted | Vehicle.Flags.Spawned | Vehicle.Flags.Inverted | Vehicle.Flags.TransferToTarget | Vehicle.Flags.TransferToSource | Vehicle.Flags.Emergency1 | Vehicle.Flags.Emergency2 | Vehicle.Flags.WaitingPath | Vehicle.Flags.Stopped | Vehicle.Flags.Leaving | Vehicle.Flags.Arriving | Vehicle.Flags.Reversed | Vehicle.Flags.TakingOff | Vehicle.Flags.Flying | Vehicle.Flags.Landing | Vehicle.Flags.WaitingSpace | Vehicle.Flags.WaitingCargo | Vehicle.Flags.GoingBack | Vehicle.Flags.WaitingTarget | Vehicle.Flags.Importing | Vehicle.Flags.Exporting | Vehicle.Flags.Parking | Vehicle.Flags.CustomName | Vehicle.Flags.OnGravel | Vehicle.Flags.WaitingLoading | Vehicle.Flags.Congestion | Vehicle.Flags.DummyTraffic | Vehicle.Flags.Underground | Vehicle.Flags.Transition | Vehicle.Flags.InsideBuilding;
 
 
+
+		/// <summary>
+		/// Returns true if the zoning tool is currently active, false otherwise.
+		/// </summary>
+		public static bool IsActiveTool => Instance != null && ToolsModifierControl.toolController.CurrentTool == Instance;
+
+
 		/// <summary>
 		/// Called by the game.  Sets which network segments are ignored by the tool (always returns none, i.e. all segments are selectable by the tool).
 		/// </summary>
@@ -63,7 +70,7 @@ namespace ZoningAdjuster
 		internal static void ToggleTool()
 		{
 			// Activate zoning tool if it isn't already; if already active, deactivate it by selecting the previously active tool instead.
-			if (ToolsModifierControl.toolController.CurrentTool != ZoningTool.Instance)
+			if (!IsActiveTool)
 			{
 				// Record previous tool.
 				previousTool = ToolsModifierControl.toolController.CurrentTool;
