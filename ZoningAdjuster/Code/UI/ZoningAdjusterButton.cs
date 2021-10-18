@@ -100,7 +100,8 @@ namespace ZoningAdjuster
         internal void SetPosition()
         {
             // Restore previous position if we had one (ModSettings.buttonX isn't negative), otherwise position it in default position above panel button.
-            if (ModSettings.buttonX < 0)
+            Vector2 screenSize = GetUIView().GetScreenResolution();
+            if (ModSettings.buttonX < 0 || (ModSettings.buttonX > screenSize.x - this.height || ModSettings.buttonY > screenSize.y - this.width))
             {
                 relativePosition = new Vector2((-ButtonSize - 1f) * 2f, 0);
             }
@@ -108,6 +109,21 @@ namespace ZoningAdjuster
             {
                 absolutePosition = new Vector2(ModSettings.buttonX, ModSettings.buttonY);
             }
+        }
+
+
+        /// <summary>
+        /// Check that icon is still visible when the screen resolution changes.
+        /// Called by the game when the screen resolution changes.
+        /// </summary>
+        /// <param name="previousResolution">Previous screen resolution</param>
+        /// <param name="currentResolution">Current screen resolution</param>
+        protected override void OnResolutionChanged(Vector2 previousResolution, Vector2 currentResolution)
+        {
+            base.OnResolutionChanged(previousResolution, currentResolution);
+
+            // Reset button position.
+            SetPosition();
         }
 
 
