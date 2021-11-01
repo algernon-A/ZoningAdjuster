@@ -115,9 +115,8 @@ namespace ZoningAdjuster
 			// Display update notification.
 			WhatsNew.ShowWhatsNew();
 
-            // Activate UI threads.
+            // Activate UI thread.
             OffsetKeyThreading.operating = true;
-            ToolKeyThreading.operating = true;
 		}
 	}
 }

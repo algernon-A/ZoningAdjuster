@@ -16,24 +16,6 @@ namespace ZoningAdjuster
 
 
         /// <summary>
-        /// The current hotkey settings as ColossalFramework InputKey
-        /// </summary>
-        /// </summary>
-        private InputKey CurrentHotkey
-        {
-            get => SavedInputKey.Encode(ToolKeyThreading.hotKey, ToolKeyThreading.hotCtrl, ToolKeyThreading.hotShift, ToolKeyThreading.hotAlt);
-
-            set
-            {
-                ToolKeyThreading.hotKey = (KeyCode)(value & 0xFFFFFFF);
-                ToolKeyThreading.hotCtrl = (value & 0x40000000) != 0;
-                ToolKeyThreading.hotShift = (value & 0x20000000) != 0;
-                ToolKeyThreading.hotAlt = (value & 0x10000000) != 0;
-            }
-        }
-
-
-        /// <summary>
         /// Setup this control
         /// Called by Unity immediately before the first update.
         /// </summary>
@@ -52,7 +34,7 @@ namespace ZoningAdjuster
 
             // Set label and button text.
             label.text = Translations.Translate("KEY_KEY");
-            button.text = SavedInputKey.ToLocalizedString("KEYNAME", CurrentHotkey);
+            button.text = SavedInputKey.ToLocalizedString("KEYNAME", ModSettings.CurrentHotkey);
         }
 
 
@@ -76,7 +58,7 @@ namespace ZoningAdjuster
                 // If escape was entered, we don't change the code.
                 if (keyEvent.keycode == KeyCode.Escape)
                 {
-                    inputKey = CurrentHotkey;
+                    inputKey = ModSettings.CurrentHotkey;
                 }
                 else
                 {
@@ -106,7 +88,7 @@ namespace ZoningAdjuster
                 if (mouseEvent.buttons == UIMouseButton.Left || mouseEvent.buttons == UIMouseButton.Right)
                 {
                     // Not a bindable mouse button - set the button text and cancel priming.
-                    button.text = SavedInputKey.ToLocalizedString("KEYNAME", CurrentHotkey);
+                    button.text = SavedInputKey.ToLocalizedString("KEYNAME", ModSettings.CurrentHotkey);
                     UIView.PopModal();
                     isPrimed = false;
                 }
@@ -163,8 +145,8 @@ namespace ZoningAdjuster
         private void ApplyKey(InputKey key)
         {
             // Apply key to current settings and save.
-            CurrentHotkey = key;
-            ZoningModSettingsFile.SaveSettings();
+            ModSettings.CurrentHotkey = key;
+            ModSettings.Save();
 
             // Set the label for the new hotkey.
             button.text = SavedInputKey.ToLocalizedString("KEYNAME", key);

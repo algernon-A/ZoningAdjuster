@@ -103,7 +103,7 @@ namespace ZoningAdjuster
 
             // Save current version header as beta.
             ModSettings.whatsNewBetaVersion = WhatsNewMessages[0].betaVersion;
-            ZoningModSettingsFile.SaveSettings();
+            ModSettings.Save();
 
             return true;
         }

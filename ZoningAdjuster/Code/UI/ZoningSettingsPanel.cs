@@ -231,7 +231,7 @@ namespace ZoningAdjuster
         {
             ModSettings.panelX = this.absolutePosition.x;
             ModSettings.panelY = this.absolutePosition.y;
-            ZoningModSettingsFile.SaveSettings();
+            ModSettings.Save();
         }
 
 

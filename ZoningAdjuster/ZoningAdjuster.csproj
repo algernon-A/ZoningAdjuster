@@ -52,6 +52,9 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="UnifiedUILib">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\workshop\content\255710\2255219025\UnifiedUILib.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
@@ -81,7 +84,6 @@
     <Compile Include="Code\Utils\UIControls.cs" />
     <Compile Include="Code\Patches\CreateZoneBlocks.cs" />
     <Compile Include="Code\Patches\Patcher.cs" />
-    <Compile Include="Code\Settings\SettingsXML.cs" />
     <Compile Include="Code\UI\Threading.cs" />
     <Compile Include="Code\TranslationFramework\TranslationFramework.cs" />
     <Compile Include="Code\TranslationFramework\TranslationXML.cs" />
@@ -100,6 +102,7 @@
     <Content Include="Images\8m roads.jpg" />
     <Content Include="Images\Offset.jpg" />
     <Content Include="Images\PreviewImage.png" />
+    <Content Include="Libraries\UnifiedUILib.dll" />
     <Content Include="License.txt" />
     <Content Include="Resources\uui_zoning_adjuster.png" />
     <Content Include="Resources\ZAcursor.png" />
@@ -113,14 +116,16 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)"
-del "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\$(TargetFileName)"
+del "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\*.dll""
 xcopy /y "$(TargetPath)" "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)"
-del "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\CitiesHarmony.API.dll"
+
 xcopy /y "$(SolutionDir)packages\CitiesHarmony.API.2.0.0\lib\net35\CitiesHarmony.API.dll" "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)"
-$(ProjectName)"
+xcopy /y "$(ProjectDir)\Libraries\UnifiedUILib.dll" "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)"
+
 mkdir "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\Translations"
 del "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\Translations\*.xml"
 xcopy /y "$(SolutionDir)\$(ProjectName)\Translations\" "$(LOCALAPPDATA)\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\Translations" /s /e
+
 mkdir "$(LOCALAPPDATA)\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\Resources"
 del "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\Resources\*"
 xcopy /y "$(ProjectDir)\Resources\" "$(LOCALAPPDATA)\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\Resources" /s /e</PostBuildEvent>

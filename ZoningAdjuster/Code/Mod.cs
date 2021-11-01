@@ -45,7 +45,7 @@ namespace ZoningAdjuster
             HarmonyHelper.DoOnHarmonyReady(() => Patcher.PatchAll());
 
             // Load the settings file.
-            ZoningModSettingsFile.LoadSettings();
+            ModSettings.Load();
         }
 
 
@@ -57,23 +57,23 @@ namespace ZoningAdjuster
             // Offset key.
             UIHelperBase keyGroup = helper.AddGroup(Translations.Translate("ZMD_OPT_KEY"));
             string[] keyOptions = new string[] { Translations.Translate("ZMD_SHIFT"), Translations.Translate("ZMD_CTRL"), Translations.Translate("ZMD_ALT") };
-            UIDropDown offsetKeyDropDown = (UIDropDown)keyGroup.AddDropdown(Translations.Translate("ZMD_OPT_ZOK"), keyOptions, OffsetKeyThreading.offsetModifier, (value) => { OffsetKeyThreading.offsetModifier = value; ZoningModSettingsFile.SaveSettings(); });
+            UIDropDown offsetKeyDropDown = (UIDropDown)keyGroup.AddDropdown(Translations.Translate("ZMD_OPT_ZOK"), keyOptions, OffsetKeyThreading.offsetModifier, (value) => { OffsetKeyThreading.offsetModifier = value; ModSettings.Save(); });
 
             // Tool activation hotkey.
             offsetKeyDropDown.parent.parent.gameObject.AddComponent<OptionsKeymapping>();
 
             // Show panel controls.
             UIHelperBase showGroup = helper.AddGroup(Translations.Translate("ZMD_OPT_SHO"));
-            showGroup.AddCheckbox(Translations.Translate("ZMD_OPT_SOR"), ModSettings.showOnRoad, (isChecked) => { ModSettings.showOnRoad = isChecked; ZoningModSettingsFile.SaveSettings(); });
+            showGroup.AddCheckbox(Translations.Translate("ZMD_OPT_SOR"), ModSettings.showOnRoad, (isChecked) => ModSettings.showOnRoad = isChecked );
 
             // Reset panel and button positions.
             UIHelperBase positionGroup = helper.AddGroup(Translations.Translate("ZMD_OPT_POS"));
-            positionGroup.AddButton(Translations.Translate("ZMD_OPT_RPP"), delegate { ModSettings.panelX = -1; ZoningSettingsPanel.Panel?.SetPosition(); ModSettings.panelX = -1; ZoningModSettingsFile.SaveSettings(); });
+            positionGroup.AddButton(Translations.Translate("ZMD_OPT_RPP"), delegate { ModSettings.panelX = -1; ZoningSettingsPanel.Panel?.SetPosition(); ModSettings.panelX = -1; ModSettings.Save(); });
             positionGroup.AddButton(Translations.Translate("ZMD_OPT_RBP"), delegate { ModSettings.buttonX = -1; ZoningAdjusterButton.Instance?.SetPosition();});
 
             // Language options.
             UIHelperBase languageGroup = helper.AddGroup(Translations.Translate("TRN_CHOICE"));
-            UIDropDown languageDropDown = (UIDropDown)languageGroup.AddDropdown(Translations.Translate("TRN_CHOICE"), Translations.LanguageList, Translations.Index, (value) => { Translations.Index = value; ZoningModSettingsFile.SaveSettings(); });
+            UIDropDown languageDropDown = (UIDropDown)languageGroup.AddDropdown(Translations.Translate("TRN_CHOICE"), Translations.LanguageList, Translations.Index, (value) => { Translations.Index = value; ModSettings.Save(); });
             languageDropDown.autoSize = false;
             languageDropDown.width = 270f;
         }

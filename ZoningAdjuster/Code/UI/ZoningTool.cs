@@ -1,6 +1,7 @@
 ﻿using ColossalFramework;
 using ColossalFramework.UI;
 using UnityEngine;
+using UnifiedUI.Helpers;
 
 
 namespace ZoningAdjuster
@@ -31,6 +32,15 @@ namespace ZoningAdjuster
 
 			// Set default cursor.
 			m_cursor = TextureUtils.LoadCursor("ZAcursor.png");
+
+			// Create new UUI button.
+			UIComponent uuiButton = UUIHelpers.RegisterToolButton(
+				name: nameof(ZoningAdjusterMod),
+				groupName: null, // default group
+				tooltip: Translations.Translate("ZMD_NAME"),
+				tool: this,
+				icon: UUIHelpers.LoadTexture(UUIHelpers.GetFullPath<ZoningAdjusterMod>("Resources", "uui_zoning_adjuster.png")),
+				hotkeys: new UUIHotKeys { ActivationKey = ModSettings.PanelSavedKey });
 		}
 
 		// Ignore anything except segments.

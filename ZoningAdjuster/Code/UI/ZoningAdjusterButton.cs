@@ -180,7 +180,7 @@ namespace ZoningAdjuster
             Logging.Message("setting button position");
             ModSettings.buttonX = this.absolutePosition.x;
             ModSettings.buttonY = this.absolutePosition.y;
-            ZoningModSettingsFile.SaveSettings();
+            ModSettings.Save();
         }
     }
 }
