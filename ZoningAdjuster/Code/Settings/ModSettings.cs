@@ -37,6 +37,10 @@ namespace ZoningAdjuster
         [XmlIgnore]
         internal static bool showOnRoad = true;
 
+        // Button visibility.
+        [XmlIgnore]
+        internal static bool showPanelButton = true;
+
         // Current zoning settings.
         [XmlIgnore]
         internal static bool disableZoning = false;
@@ -91,9 +95,6 @@ namespace ZoningAdjuster
                 uuiSavedKey.Control = value.control;
                 uuiSavedKey.Shift = value.shift;
                 uuiSavedKey.Alt = value.alt;
-
-                // Save settings.
-                Save();
             }
         }
 
@@ -126,6 +127,11 @@ namespace ZoningAdjuster
         // Button Ypostion.
         [XmlElement("ButtonY")]
         public float ButtonY { get => buttonY; set => buttonY = value; }
+
+
+        // Show panel button.
+        [XmlElement("ShowPanelButton")]
+        public bool ShowPanelButton { get => showPanelButton; set => showPanelButton = value; }
 
 
         /// <summary>

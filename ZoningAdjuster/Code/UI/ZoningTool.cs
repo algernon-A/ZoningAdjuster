@@ -31,7 +31,7 @@ namespace ZoningAdjuster
 			base.Awake();
 
 			// Set default cursor.
-			m_cursor = TextureUtils.LoadCursor("ZAcursor.png");
+			m_cursor = TextureUtils.LoadCursor("ZoningAdjusterCursor.png");
 
 			// Create new UUI button.
 			UIComponent uuiButton = UUIHelpers.RegisterToolButton(
@@ -39,7 +39,7 @@ namespace ZoningAdjuster
 				groupName: null, // default group
 				tooltip: Translations.Translate("ZMD_NAME"),
 				tool: this,
-				icon: UUIHelpers.LoadTexture(UUIHelpers.GetFullPath<ZoningAdjusterMod>("Resources", "uui_zoning_adjuster.png")),
+				icon: UUIHelpers.LoadTexture(UUIHelpers.GetFullPath<ZoningAdjusterMod>("Resources", "ZoningAdjusterUUI.png")),
 				hotkeys: new UUIHotKeys { ActivationKey = ModSettings.PanelSavedKey });
 		}
 
