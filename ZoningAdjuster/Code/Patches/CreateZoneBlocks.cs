@@ -318,6 +318,11 @@ namespace ZoningAdjuster
                 // If half-width is between 4 and 8, push out to 8.
                 minHalfWidth = 8f;
             }
+            else
+            {
+                // Fix specifically for BadPeanut's 32m roads that have half-widths just under an even 16, but also for any others with similar issues.
+                minHalfWidth = Mathf.RoundToInt(minHalfWidth);
+            }
 
             // Local reference.
             ZoneManager zoneManager = Singleton<ZoneManager>.instance;
