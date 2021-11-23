@@ -1,4 +1,6 @@
-﻿- Fix road prefabs with almost-but-not-quite integer m_halfWidth incorrectly triggering ShiftOffset
+﻿Version 1.3.2 -
+
+- Fix road prefabs with almost-but-not-quite integer m_halfWidth incorrectly triggering ShiftOffset
 - Automatically reset button position when screen resolution changes
 
 
