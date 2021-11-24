@@ -27,7 +27,7 @@
     <Translation ID="ZMD_CTRL" String="Strg" />
     <Translation ID="ZMD_ALT" String="Alt" />
     <Translation ID="TRN_CHOICE" String="Sprache" />
-    <Translation ID="TRN_SYS" String="Systemsprache verwenden" />
+    <Translation ID="TRN_SYS" String="Systemsprache" />
     <Translation ID="KEY_KEY" String="Tastenkürzel für das Gebietswerkzeug" />
     <Translation ID="KEY_PRS" String="Drücke eine Taste" />
     <Translation ID="MES_CLS" String="Schließen" />
