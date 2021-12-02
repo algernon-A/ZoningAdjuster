@@ -19,7 +19,7 @@
     <Translation ID="ZMD_OPT_KEY" String="Anpassungstaste" />
     <Translation ID="ZMD_OPT_ZOK" String="Taste zum Anpassen des Raster-Versatzes" />
     <Translation ID="ZMD_OPT_SHO" String="Panel-Sichtbarkeit" />
-    <Translation ID="ZMD_OPT_SOR" String="Öffne automatisch das Panel zum Einstellen der Gebiet, wenn das Straßenmenü geöffnet ist" />
+    <Translation ID="ZMD_OPT_SOR" String="Panel automatisch im Straßenmenü mit öffnen" />
     <Translation ID="ZMD_OPT_POS" String="Panel und Button Position" />
     <Translation ID="ZMD_OPT_RPP" String="Panel Position zurücksetzen" />
     <Translation ID="ZMD_OPT_RBP" String="Button Position zurücksetzen" />
