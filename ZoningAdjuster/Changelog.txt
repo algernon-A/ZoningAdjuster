@@ -1,4 +1,8 @@
-﻿Version 1.3.2 -
+﻿- Add option to hide legacy panel button (UUI button is always available)
+- Change settings file location from application directory to user directory
+
+
+Version 1.3.2 -
 
 - Fix road prefabs with almost-but-not-quite integer m_halfWidth incorrectly triggering ShiftOffset
 - Automatically reset button position when screen resolution changes

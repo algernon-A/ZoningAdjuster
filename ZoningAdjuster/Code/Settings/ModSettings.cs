@@ -15,6 +15,18 @@ namespace ZoningAdjuster
     [XmlRoot(ElementName = "ZoningAdjuster", Namespace = "")]
     public class ModSettings
     {
+        // Settings file name.
+        [XmlIgnore]
+        private static readonly string SettingsFileName = "ZoningAdjuster.xml";
+
+        // User settings directory.
+        [XmlIgnore]
+        private static readonly string UserSettingsDir = ColossalFramework.IO.DataLocation.localApplicationData;
+
+        // Full userdir settings file name.
+        [XmlIgnore]
+        private static readonly string SettingsFile = Path.Combine(UserSettingsDir, SettingsFileName);
+
         // What's new notification version.
         [XmlIgnore]
         internal static string whatsNewVersion = "0.0";
@@ -46,10 +58,6 @@ namespace ZoningAdjuster
         // SavedInputKey reference for communicating with UUI.
         [XmlIgnore]
         private static readonly SavedInputKey uuiSavedKey = new SavedInputKey("Zoning Ajduster hotkey", "Zoning Ajduster hotkey", key: KeyCode.Z, control: false, shift: false, alt: true, false);
-
-        // Settings file name.
-        [XmlIgnore]
-        private static readonly string SettingsFileName = "ZoningAdjuster.xml";
 
 
         /// <summary>
@@ -184,22 +192,28 @@ namespace ZoningAdjuster
         {
             try
             {
-                // Check to see if configuration file exists.
-                if (File.Exists(SettingsFileName))
+                // Attempt to read new settings file (in user settings directory).
+                string fileName = SettingsFile;
+                if (!File.Exists(fileName))
                 {
-                    // Read it.
-                    using (StreamReader reader = new StreamReader(SettingsFileName))
+                    // No settings file in user directory; use application directory instead.
+                    fileName = SettingsFileName;
+
+                    if (!File.Exists(fileName))
                     {
-                        XmlSerializer xmlSerializer = new XmlSerializer(typeof(ModSettings));
-                        if (!(xmlSerializer.Deserialize(reader) is ModSettings ZoningModSettingsFile))
-                        {
-                            Logging.Error("couldn't deserialize settings file");
-                        }
+                        Logging.Message("no settings file found");
+                        return;
                     }
                 }
-                else
+
+                // Read settings file.
+                using (StreamReader reader = new StreamReader(fileName))
                 {
-                    Logging.Message("no settings file found");
+                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(ModSettings));
+                    if (!(xmlSerializer.Deserialize(reader) is ModSettings settingsFile))
+                    {
+                        Logging.Error("couldn't deserialize settings file");
+                    }
                 }
             }
             catch (Exception e)
@@ -216,11 +230,17 @@ namespace ZoningAdjuster
         {
             try
             {
-                // Pretty straightforward.  Serialisation is within GBRSettingsFile class.
-                using (StreamWriter writer = new StreamWriter(SettingsFileName))
+                // Pretty straightforward..
+                using (StreamWriter writer = new StreamWriter(SettingsFile))
                 {
                     XmlSerializer xmlSerializer = new XmlSerializer(typeof(ModSettings));
                     xmlSerializer.Serialize(writer, new ModSettings());
+                }
+
+                // Cleaning up after ourselves - delete any old config file in the application direcotry.
+                if (File.Exists(SettingsFileName))
+                {
+                    File.Delete(SettingsFileName);
                 }
             }
             catch (Exception e)
