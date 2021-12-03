@@ -16,6 +16,12 @@ namespace ZoningAdjuster
 
 
         /// <summary>
+        /// Current loading state.
+        /// </summary>
+        internal static bool IsLoaded { get; private set; } = false;
+
+
+        /// <summary>
         /// Called by the game when the mod is initialised at the start of the loading process.
         /// </summary>
         /// <param name="loading">Loading mode (e.g. game, editor, scenario, etc.)</param>
@@ -106,6 +112,9 @@ namespace ZoningAdjuster
                 return;
             }
 
+            // Set loaded status.
+            IsLoaded = true;
+
             // Initialise zoning tool.
             ToolsModifierControl.toolController.gameObject.AddComponent<ZoningTool>();
 
@@ -117,6 +126,29 @@ namespace ZoningAdjuster
 
             // Activate UI thread.
             OffsetKeyThreading.operating = true;
+
+            // Add road options panel canary.
+            GameUIComponents.RoadsOptionPanel.AddUIComponent<RoadOptionsToggle>();
+
+            Logging.Message("loading complete");
 		}
-	}
+
+
+        /// <summary>
+        /// Called by the game when exiting a level.
+        /// </summary>
+        public override void OnLevelUnloading()
+        {
+            base.OnLevelUnloading();
+
+            // Clear loading status.
+            IsLoaded = false;
+
+            // Deactivate UI thread.
+            OffsetKeyThreading.operating = false;
+
+            // Destroy panel button.
+            ZoningAdjusterButton.DestroyButton();
+        }
+    }
 }

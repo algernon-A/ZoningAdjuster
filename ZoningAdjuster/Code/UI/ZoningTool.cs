@@ -85,20 +85,11 @@ namespace ZoningAdjuster
 				// Record previous tool.
 				previousTool = ToolsModifierControl.toolController.CurrentTool;
 				ToolsModifierControl.toolController.CurrentTool = ZoningTool.Instance;
-
-				// Create zoning settings panel if it isn't already created, and in any case make sure it's visible.
-				ZoningSettingsPanel.Create();
 			}
 			else
 			{
 				// Revert to previously selected tool.
 				ToolsModifierControl.toolController.CurrentTool = previousTool;
-
-				// Hide panel if necessary.
-				if (!ModSettings.showOnRoad || (ModSettings.showOnRoad && !ZoningAdjusterButton.Instance.isVisible))
-				{
-					ZoningSettingsPanel.Close();
-				}
 			}
 		}
 
@@ -123,6 +114,9 @@ namespace ZoningAdjuster
 		{
 			base.OnEnable();
 
+			// Create zoning settings panel if it isn't already created, and in any case make sure it's visible.
+			ZoningSettingsPanel.Create();
+
 			// Show zone grids when tool is active.
 			prevRenderZones = Singleton<TerrainManager>.instance.RenderZones;
 			Singleton<TerrainManager>.instance.RenderZones = true;
@@ -144,6 +138,12 @@ namespace ZoningAdjuster
 
 			// Set panel button state to indicate tool no longer active.
 			ZoningAdjusterButton.ToolActive = false;
+
+			// Hide panel if necessary.
+			if (!ModSettings.showOnRoad || (ModSettings.showOnRoad && !RoadOptionsToggle.IsVisible))
+			{
+				ZoningSettingsPanel.Close();
+			}
 		}
 
 

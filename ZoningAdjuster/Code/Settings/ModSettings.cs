@@ -37,10 +37,6 @@ namespace ZoningAdjuster
         [XmlIgnore]
         internal static bool showOnRoad = true;
 
-        // Button visibility.
-        [XmlIgnore]
-        internal static bool showPanelButton = true;
-
         // Current zoning settings.
         [XmlIgnore]
         internal static bool disableZoning = false;
@@ -51,9 +47,36 @@ namespace ZoningAdjuster
         [XmlIgnore]
         private static readonly SavedInputKey uuiSavedKey = new SavedInputKey("Zoning Ajduster hotkey", "Zoning Ajduster hotkey", key: KeyCode.Z, control: false, shift: false, alt: true, false);
 
-        // Settings file name
+        // Settings file name.
         [XmlIgnore]
         private static readonly string SettingsFileName = "ZoningAdjuster.xml";
+
+
+        /// <summary>
+        /// Sets panel button visibility.
+        /// </summary>
+        [XmlIgnore]
+        internal static bool ShowPanelButton
+        {
+            get => _showPanelButton;
+
+            set
+            {
+                _showPanelButton = value;
+
+                // Create or destroy panel button based on new state.
+                if (value)
+                {
+                    ZoningAdjusterButton.CreateButton();
+                }
+                else
+                {
+                    ZoningAdjusterButton.DestroyButton();
+                }
+            }
+        }
+        [XmlIgnore]
+        private static bool _showPanelButton = true;
 
 
         // Version.
@@ -62,22 +85,22 @@ namespace ZoningAdjuster
 
 
         [XmlElement("WhatsNewVersion")]
-        public string WhatsNewVersion { get => whatsNewVersion; set => whatsNewVersion = value; }
+        public string XMLWhatsNewVersion { get => whatsNewVersion; set => whatsNewVersion = value; }
 
 
         [XmlElement("WhatsNewBetaVersion")]
         [DefaultValue(0)]
-        public int WhatsNewBetaVersion { get => whatsNewBetaVersion; set => whatsNewBetaVersion = value; }
+        public int XMLWhatsNewBetaVersion { get => whatsNewBetaVersion; set => whatsNewBetaVersion = value; }
 
 
         // Language.
         [XmlElement("Language")]
-        public string Language { get => Translations.Language; set => Translations.Language = value; }
+        public string XMLLanguage { get => Translations.Language; set => Translations.Language = value; }
 
 
         // Zoning tool hotkey.
         [XmlElement("PanelKey")]
-        public KeyBinding PanelKey
+        public KeyBinding XMLPanelKey
         {
             get
             {
@@ -101,37 +124,37 @@ namespace ZoningAdjuster
 
         // Offset modifier key.
         [XmlElement("OffsetKey")]
-        public int OffsetModifier { get => OffsetKeyThreading.offsetModifier; set => OffsetKeyThreading.offsetModifier = value; }
+        public int XMLOffsetModifier { get => OffsetKeyThreading.offsetModifier; set => OffsetKeyThreading.offsetModifier = value; }
 
 
         // Show panel on road tool.
         [XmlElement("ShowOnRoad")]
-        public bool ShowOnRoad { get => showOnRoad; set => showOnRoad = value; }
+        public bool XMLShowOnRoad { get => showOnRoad; set => showOnRoad = value; }
 
 
         // Panel X postion.
         [XmlElement("PanelX")]
-        public float PanelX { get => panelX; set => panelX = value; }
+        public float XMLPanelX { get => panelX; set => panelX = value; }
 
 
         // Panel Y postion.
         [XmlElement("PanelY")]
-        public float PanelY { get => panelY; set => panelY = value; }
+        public float XMLPanelY { get => panelY; set => panelY = value; }
 
 
         // Button X postion.
         [XmlElement("ButtonX")]
-        public float ButtonX { get => buttonX; set => buttonX = value; }
+        public float XMLButtonX { get => buttonX; set => buttonX = value; }
 
 
         // Button Ypostion.
         [XmlElement("ButtonY")]
-        public float ButtonY { get => buttonY; set => buttonY = value; }
+        public float XMLButtonY { get => buttonY; set => buttonY = value; }
 
 
         // Show panel button.
         [XmlElement("ShowPanelButton")]
-        public bool ShowPanelButton { get => showPanelButton; set => showPanelButton = value; }
+        public bool XMLShowPanelButton { get => ShowPanelButton; set => ShowPanelButton = value; }
 
 
         /// <summary>

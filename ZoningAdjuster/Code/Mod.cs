@@ -62,14 +62,15 @@ namespace ZoningAdjuster
             // Tool activation hotkey.
             offsetKeyDropDown.parent.parent.gameObject.AddComponent<OptionsKeymapping>();
 
-            // Show panel controls.
+            // Panel/button visibility.
             UIHelperBase showGroup = helper.AddGroup(Translations.Translate("ZMD_OPT_SHO"));
-            showGroup.AddCheckbox(Translations.Translate("ZMD_OPT_SOR"), ModSettings.showOnRoad, (isChecked) => ModSettings.showOnRoad = isChecked );
+            showGroup.AddCheckbox(Translations.Translate("ZMD_OPT_SOR"), ModSettings.showOnRoad, (isChecked) => { ModSettings.showOnRoad = isChecked; ModSettings.Save(); });
+            showGroup.AddCheckbox(Translations.Translate("ZMD_OPT_SPB"), ModSettings.ShowPanelButton, (isChecked) => { ModSettings.ShowPanelButton = isChecked; ModSettings.Save(); });
 
             // Reset panel and button positions.
             UIHelperBase positionGroup = helper.AddGroup(Translations.Translate("ZMD_OPT_POS"));
             positionGroup.AddButton(Translations.Translate("ZMD_OPT_RPP"), delegate { ModSettings.panelX = -1; ZoningSettingsPanel.Panel?.SetPosition(); ModSettings.panelX = -1; ModSettings.Save(); });
-            positionGroup.AddButton(Translations.Translate("ZMD_OPT_RBP"), delegate { ModSettings.buttonX = -1; ZoningAdjusterButton.Instance?.SetPosition();});
+            positionGroup.AddButton(Translations.Translate("ZMD_OPT_RBP"), delegate { ModSettings.buttonX = -1; ZoningAdjusterButton.Instance?.SetPosition(); });
 
             // Language options.
             UIHelperBase languageGroup = helper.AddGroup(Translations.Translate("TRN_CHOICE"));

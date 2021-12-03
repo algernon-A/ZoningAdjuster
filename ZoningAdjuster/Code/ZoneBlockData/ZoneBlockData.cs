@@ -38,11 +38,6 @@ namespace ZoningAdjuster
         private readonly byte[] zoneBlockFlags;
 
 
-        // Gets current preserved state as index.
-
-        // Sets current preserved state by index.
-
-
         /// <summary>
         /// Gets the current prority state as an index.
         /// </summary>

@@ -69,6 +69,8 @@
     <Compile Include="Code\Patches\Escape.cs" />
     <Compile Include="Code\Patches\ZoneDepthPatches.cs" />
     <Compile Include="Code\Settings\OptionsKeymapping.cs" />
+    <Compile Include="Code\UI\RoadOptionsToggle.cs" />
+    <Compile Include="Code\Utils\GameUIComponents.cs" />
     <Compile Include="Code\ZoneBlockData\Serializer.cs" />
     <Compile Include="Code\Settings\ModSettings.cs" />
     <Compile Include="Code\Utils\Logging.cs" />

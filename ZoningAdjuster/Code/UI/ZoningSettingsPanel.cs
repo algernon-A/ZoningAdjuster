@@ -40,7 +40,6 @@ namespace ZoningAdjuster
             NoCheckY
         };
 
-
         // Panel components.
         private readonly UICheckBox[] priorityChecks;
         private readonly UICheckBox disableCheck, forceCheck;
@@ -213,7 +212,8 @@ namespace ZoningAdjuster
             // Restore previous position if we had one ((ModSettings.panelX isn't negative), otherwise position it in default position above panel button.
             if (ModSettings.panelX < 0)
             {
-                absolutePosition = new Vector2(ZoningAdjusterButton.Instance.absolutePosition.x, ZoningAdjusterButton.Instance.absolutePosition.y - PanelHeight - Margin);
+                // Default position is above the game's RoadOptionPanel, level with the zoning button's place (regardless of whether or not zoning button is shown).
+                absolutePosition = GameUIComponents.RoadsOptionPanel.absolutePosition - new Vector3((-ZoningAdjusterButton.ButtonSize - 1f) * 2f, PanelHeight + Margin);
             }
             else
             {

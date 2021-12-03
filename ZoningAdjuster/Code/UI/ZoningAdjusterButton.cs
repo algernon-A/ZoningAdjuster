@@ -8,7 +8,7 @@ namespace ZoningAdjuster
     public class ZoningAdjusterButton : UIButton
     {
         // Button size.
-        private const float ButtonSize = 36f;
+        internal const float ButtonSize = 36f;
 
         // Instance reference.
         internal static ZoningAdjusterButton Instance { get; private set; }
@@ -33,6 +33,33 @@ namespace ZoningAdjuster
                         Instance.normalFgSprite = "normal";
                     }
                 }
+            }
+        }
+
+
+        /// <summary>
+        /// Creates the button and attaches it to the roads option panel.
+        /// </summary>
+        /// <returns>Button instance</returns>
+        internal static void CreateButton()
+        {
+            // Don't do anything if already created or not ingame, and only create if setting is enabled.
+            if (Instance == null && Loading.IsLoaded && ModSettings.ShowPanelButton)
+            {
+                GameUIComponents.RoadsOptionPanel?.AddUIComponent<ZoningAdjusterButton>();
+            }
+        }
+
+
+        /// <summary>
+        /// Destroys the button.
+        /// </summary>
+        internal static void DestroyButton()
+        {
+            if (Instance != null)
+            {
+                GameObject.Destroy(Instance);
+                Instance = null;
             }
         }
 
@@ -69,10 +96,6 @@ namespace ZoningAdjuster
             // Event handler.
             eventClicked += (control, clickEvent) => ZoningTool.ToggleTool();
 
-            // Set initial visibility state and add event hook.
-            VisibilityChanged(null, isVisible);
-            eventVisibilityChanged += VisibilityChanged;
-
             // Add drag handle.
             UIDragHandle dragHandle = this.AddUIComponent<UIDragHandle>();
             dragHandle.target = this;
@@ -81,16 +104,6 @@ namespace ZoningAdjuster
 
             // Save new position when moved.
             eventPositionChanged += PositionChanged;
-        }
-
-
-        /// <summary>
-        /// Creates the button and attaches it to the roads option panel.
-        /// </summary>
-        /// <returns>Button instance</returns>
-        internal static ZoningAdjusterButton CreateButton()
-        {
-            return RoadsOptionPanel().AddUIComponent<ZoningAdjusterButton>();
         }
 
 
@@ -124,49 +137,6 @@ namespace ZoningAdjuster
 
             // Reset button position.
             SetPosition();
-        }
-
-
-        /// <summary>
-        /// Finds the game's RoadOptionPanel.
-        /// </summary>
-        /// <returns>RoadOptionPanel as UIComponent</returns>
-        private static UIComponent RoadsOptionPanel()
-        {
-            foreach (UIComponent component in UnityEngine.Object.FindObjectsOfType<UIComponent>())
-            {
-                if (component.name.Equals("RoadsOptionPanel"))
-                {
-                    Logging.Message("found RoadsOptionPanel");
-                    return component;
-                }
-            }
-
-            return null;
-        }
-
-
-        /// <summary>
-        /// Visibility changed event handler, to toggle visibility of panel.
-        /// </summary>
-        /// <param name="control">Calling component (unused)</param>
-        /// <param name="isVisible">New visibility state</param>
-        private static void VisibilityChanged(UIComponent control, bool isVisible)
-        {
-            Logging.Message("panel button visibility changed");
-            // Toggle zoning settings panel state accordingly.
-            if (isVisible)
-            {
-                // Only show if appropriate setting is enabled.
-                if (ModSettings.showOnRoad)
-                {
-                    ZoningSettingsPanel.Create();
-                }
-            }
-            else
-            {
-                ZoningSettingsPanel.Close();
-            }
         }
 
 
