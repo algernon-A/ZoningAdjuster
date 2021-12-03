@@ -112,11 +112,11 @@ namespace ZoningAdjuster
                 return;
             }
 
-            // Set loaded status.
-            IsLoaded = true;
-
             // Initialise zoning tool.
             ToolsModifierControl.toolController.gameObject.AddComponent<ZoningTool>();
+
+            // Set loaded status.
+            IsLoaded = true;
 
 			// Add panel button.
 			ZoningAdjusterButton.CreateButton();
@@ -126,9 +126,6 @@ namespace ZoningAdjuster
 
             // Activate UI thread.
             OffsetKeyThreading.operating = true;
-
-            // Add road options panel canary.
-            GameUIComponents.RoadsOptionPanel.AddUIComponent<RoadOptionsToggle>();
 
             Logging.Message("loading complete");
 		}

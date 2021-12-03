@@ -1,4 +1,5 @@
-﻿- Add option to hide legacy panel button (UUI button is always available)
+﻿- 'Show panel on road menu' option now only shows when roads are selected (not non-zoneable networks such as paths, rails, etc.)
+- Add option to hide legacy panel button (UUI button is always available)
 - Change settings file location from application directory to user directory
 
 

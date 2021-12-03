@@ -112,7 +112,14 @@ namespace ZoningAdjuster
 		/// </summary>
 		protected override void OnEnable()
 		{
+			Logging.Message("tool enabled");
 			base.OnEnable();
+
+			// Don't do anything further if game isn't loaded.
+			if (!Loading.IsLoaded)
+			{
+				return;
+			}
 
 			// Create zoning settings panel if it isn't already created, and in any case make sure it's visible.
 			ZoningSettingsPanel.Create();
@@ -131,6 +138,8 @@ namespace ZoningAdjuster
 		/// </summary>
 		protected override void OnDisable()
 		{
+			Logging.Message("tool disabled");
+
 			base.OnDisable();
 
 			// Restore zone grid showing to previous state.
@@ -139,11 +148,8 @@ namespace ZoningAdjuster
 			// Set panel button state to indicate tool no longer active.
 			ZoningAdjusterButton.ToolActive = false;
 
-			// Hide panel if necessary.
-			if (!ModSettings.showOnRoad || (ModSettings.showOnRoad && !RoadOptionsToggle.IsVisible))
-			{
-				ZoningSettingsPanel.Close();
-			}
+			// Close panel.
+			ZoningSettingsPanel.Close();
 		}
 
 
