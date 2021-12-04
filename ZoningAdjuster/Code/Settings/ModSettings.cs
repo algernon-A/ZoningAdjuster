@@ -230,7 +230,7 @@ namespace ZoningAdjuster
         {
             try
             {
-                // Pretty straightforward..
+                // Pretty straightforward.
                 using (StreamWriter writer = new StreamWriter(SettingsFile))
                 {
                     XmlSerializer xmlSerializer = new XmlSerializer(typeof(ModSettings));
