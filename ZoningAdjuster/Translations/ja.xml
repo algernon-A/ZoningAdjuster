@@ -20,6 +20,7 @@
     <Translation ID="ZMD_OPT_ZOK" String="ゾーニングオフセットのキーバインド"/>
     <Translation ID="ZMD_OPT_SHO" String="パネルの表示オプション"/>
     <Translation ID="ZMD_OPT_SOR" String="道路タブが開いているときは、自動的にゾーニングツールを表示"/>
+    <Translation ID="ZMD_OPT_SPB" String="従来のパネルボタンを表示"/>
     <Translation ID="ZMD_OPT_POS" String="パネルとボタンの位置"/>
     <Translation ID="ZMD_OPT_RPP" String="パネルの位置をリセット"/>
     <Translation ID="ZMD_OPT_RBP" String="ボタンの位置をリセット"/>
@@ -29,20 +30,21 @@
     <Translation ID="TRN_CHOICE" String="言語設定"/>
     <Translation ID="TRN_SYS" String="システム言語を使用"/>
     <Translation ID="KEY_KEY" String="ゾーニングツールのホットキー"/>
+    <Translation ID="KEY_PRS" String="Press any key"/>
     <Translation ID="MES_CLS" String="閉じる"/>
     <Translation ID="MES_DSA" String="次回から非表示"/>
-    <Translation ID="MES_PAGE" String="詳細は、MODがあるSteamのワークショップを確認してください。"/>
-    <Translation ID="ZMD_ERR_FAT" String="正常にMODが起動できないため、動作をシャットダウンしました。"/>
-    <Translation ID="ZMD_ERR_HAR" String="Zoning Adjusterは、必要なHarmony2 MODのパッチ動作を完了できません。"/>
+    <Translation ID="MES_PAGE" String="詳細は、MODがあるSteamのワークショップを確認してください"/>
+    <Translation ID="ZMD_ERR_FAT" String="正常にMODが起動できないため、動作をシャットダウンしました"/>
+    <Translation ID="ZMD_ERR_HAR" String="Zoning Adjusterは、必要なHarmony2 MODのパッチ動作を完了できません"/>
     <Translation ID="ERR_HAR0" String="Harmony2 MODでエラーが発生しました"/>
-    <Translation ID="ERR_HAR1" String="エラーが起きる原因として、考えられるのは以下の通りです。"/>
+    <Translation ID="ERR_HAR1" String="エラーが起きる原因として、考えられるのは以下の通りです"/>
     <Translation ID="ERR_HAR2" String="依存関係にある、必要なHarmony2 MODがインストールされていません"/>
     <Translation ID="ERR_HAR3" String="古いMODや壊れたMODが、Harmony2 MODの動作を妨げています"/>
     <Translation ID="ERR_CON0" String="MODの競合が検出されました！"/>
     <Translation ID="ERR_CON1" String="競合するMOD:"/>
     <Translation ID="ZMD_ERR_CON0" String="Zoning Adjusterは、少なくとも1つ以上のMODと競合を検出しました"/>
-    <Translation ID="ZMD_ERR_CON1" String="Zoning Adjusterを動作させるには、これらのMODを削除してください。"/>
-    <Translation ID="ZMD_100_0" String="色々な道路にゾーニングを追加・リセット・削除可能な、新しいゾーニングツール"/>
+    <Translation ID="ZMD_ERR_CON1" String="Zoning Adjusterを動作させるには、これらのMODを削除してください"/>
+    <Translation ID="ZMD_100_0" String="任意で道路のゾーニングを追加・リセット・削除可能な、新しいゾーニングツール"/>
     <Translation ID="ZMD_100_1" String="ゾーニングツールのオプション： 道路からゾーニングのセットバックが可能"/>
     <Translation ID="ZMD_100_2" String="ゾーニングツールのオプション： 道路の敷設順序によるゾーニングの優先順位（新しい道路のゾーニングが、既にある道路のゾーニングを上書きしません）"/>
     <Translation ID="ZMD_102_0" String="新しい道路のゾーニングを優先するオプションを追加"/>
