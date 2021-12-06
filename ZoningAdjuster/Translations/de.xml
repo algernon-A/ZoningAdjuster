@@ -5,7 +5,6 @@
     <Translation ID="ZMD_DESC" String="Ermöglicht es Gebiete entlang von 8 und 24 Meter breiten Straßen anzulegen, die den normal-breiten Straßen angeglichen sind. Außerdem kann der Versatz des Rasters entlang der Straße angepasst werden" />
     <Translation ID="ZMD_PNL_DIS" String="Gebiete ausschalten" />
     <Translation ID="ZMD_PNL_FOR" String="Gebiete erzwingen" />
-    <Translation ID="ZMD_PNL_DIS" String="Gebiete ausschalten" />
     <Translation ID="ZMD_PNL_DIS_TIP" String="Das erstellen von Gebieten beim Bau von Straßen wird ausgeschaltet (Gebiete können jederzeit über das Zoning Adjuster Werkzeug hinzugefügt werden)" />
     <Translation ID="ZMD_PNL_POZ" String="Ältere Straßen priorisieren" />
     <Translation ID="ZMD_PNL_POZ_TIP" String="Gebiete die für neue Straßen angelegt werden, überschreiben nicht die Gebiete bereits bestehender Straßen." />
@@ -14,11 +13,13 @@
     <Translation ID="ZMD_PNL_PVZ" String="Keine Priorisierung" />
     <Translation ID="ZMD_PNL_PVZ_TIP" String="Standard-Verhalten des Spiels" />
     <Translation ID="ZMD_PNL_SBK" String="Gebiets-Versatz" />
-    <Translation ID="ZMD_PNL_SBK_TIP" String="Fügt einen Abstand zwischen dem Straßenrand und dem Gebiets-Raster hinzu" />    <Translation ID="ZMD_PNL_DEP" String="Gebiets-Tiefe" />"
+    <Translation ID="ZMD_PNL_SBK_TIP" String="Fügt einen Abstand zwischen dem Straßenrand und dem Gebiets-Raster hinzu" />
+    <Translation ID="ZMD_PNL_DEP" String="Gebiets-Tiefe" />"
     <Translation ID="ZMD_PNL_DEP_TIP" String="Die maximale Gebiets-Tiefe in Zellen festlegen (wie weit weg von der Straße)" />
     <Translation ID="ZMD_OPT_KEY" String="Anpassungstaste" />
     <Translation ID="ZMD_OPT_ZOK" String="Taste zum Anpassen des Raster-Versatzes" />
     <Translation ID="ZMD_OPT_SHO" String="Panel-Sichtbarkeit" />
+    <Translation ID="ZMD_OPT_SPB" String="Original Button ausblenden" />
     <Translation ID="ZMD_OPT_SOR" String="Panel automatisch im Straßenmenü mit öffnen" />
     <Translation ID="ZMD_OPT_POS" String="Panel und Button Position" />
     <Translation ID="ZMD_OPT_RPP" String="Panel Position zurücksetzen" />
@@ -59,5 +60,6 @@
     <Translation ID="ZMD_120_4" String="Negative Gebiets-Versätze  hinzugefügt (Bringt die Gebiete näher an die Straße)" />
     <Translation ID="ZMD_120_5" String="Tastenkürzel hinzugefügt (Standard Alt+Z)" />
     <Translation ID="ZMD_130_0" String="Einstellung für die maximale Gebiets-Tiefe hinzugefügt" />
+    <Translation ID="ZMD_140_0" String="Funktion hinzugefügt, um den Button auszublenden (Der Unified UI Button wird immer angezeigt)" />
   </Translations>
 </Language>
