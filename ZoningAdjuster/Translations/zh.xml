@@ -20,6 +20,7 @@
     <Translation ID="ZMD_OPT_ZOK" String="区域偏移修改键" />
     <Translation ID="ZMD_OPT_SHO" String="面板可见选项" />
     <Translation ID="ZMD_OPT_SOR" String="自动显示分区设置面板时，道路菜单是打开的" />
+    <Translation ID="ZMD_OPT_SPB" String="显示旧面板按钮" />
     <Translation ID="ZMD_OPT_POS" String="面板和按钮位置" />
     <Translation ID="ZMD_OPT_RPP" String="复位面板的位置" />
     <Translation ID="ZMD_OPT_RBP" String="重置按钮的位置" />
@@ -59,5 +60,6 @@
     <Translation ID="ZMD_120_4" String="允许负分区后退(将分区移到离道路更近的地方)" />
     <Translation ID="ZMD_120_5" String="添加分区工具热键(默认Alt+Z)" />
     <Translation ID="ZMD_130_0" String="Add adjustable zone depth" />
+    <Translation ID="ZMD_140_0" String="添加选项以禁用面板按钮(UUI 按钮总是可用)" />
   </Translations>
 </Language>

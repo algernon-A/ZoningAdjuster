@@ -20,6 +20,7 @@
     <Translation ID="ZMD_OPT_ZOK" String="Клавиша-модификатор смещения зонирования" />
     <Translation ID="ZMD_OPT_SHO" String="Параметры видимости панели" />
     <Translation ID="ZMD_OPT_SOR" String="Автоматически показывать панель настроек зонирования при открытии меню дорог " />
+    <Translation ID="ZMD_OPT_SPB" String="Показывать кнопку панели" />
     <Translation ID="ZMD_OPT_POS" String="Расположение панели и кнопки" />
     <Translation ID="ZMD_OPT_RPP" String="Сброс положения панели" />
     <Translation ID="ZMD_OPT_RBP" String="Сброс положения кнопки" />
@@ -59,5 +60,6 @@
     <Translation ID="ZMD_120_4" String="Разрешить отрицательное зонирование (переместить зонирование ближе к дороге)" />
     <Translation ID="ZMD_120_5" String="Добавлена горячая клавиша инструмента зонирования (по умолчанию Alt+Z)" />
     <Translation ID="ZMD_130_0" String="Добавлена регулируемая глубина зонирования" />
+    <Translation ID="ZMD_140_0" String="Добавлена опция отключения кнопки панели (кнопка Unified UI всегда доступна)" />
   </Translations>
 </Language>
