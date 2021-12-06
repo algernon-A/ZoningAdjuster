@@ -26,14 +26,30 @@ namespace ZoningAdjuster
                 else
                 {
                     // No stored reference; try to find it.
+
+                    // Backup component reference; we're looking for RoadsOptionPanel(RoadsPanel) as first preference if it exists, with plain RoadsOptionPanel as the backup. 
+                    UIComponent backupComponent = null;
                     foreach (UIComponent component in UnityEngine.Object.FindObjectsOfType<UIComponent>())
                     {
-                        if (component.name.Equals("RoadsOptionPanel"))
+                        // Try to find RoadsPanel as first preference.
+                        if (component.name.Equals("RoadsOptionPanel(RoadsPanel)"))
                         {
-                            Logging.Message("found RoadsOptionPanel");
+                            Logging.Message("found RoadsOptionPanel(RoadsPanel)");
                             _roadOptionsPanel = component;
                             return component;
                         }
+                        // If that fails, our backup is generic RoadsOptionPanel.
+                        else if (component.name.Equals("RoadsOptionPanel"))
+                        {
+                            Logging.Message("found RoadsOptionPanel)");
+                            backupComponent = component;
+                        }
+                    }
+
+                    // If we got here, then we didn't find RoadsOptionPanel(RoadsPanel); use the backup if we have it.
+                    if (backupComponent != null)
+                    {
+                        return backupComponent;
                     }
                 }
 
