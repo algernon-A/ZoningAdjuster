@@ -60,5 +60,6 @@
     <Translation ID="ZMD_120_4" String="ゾーニングを内側へのセットバックを許可（ゾーニングを道路側に移動）"/>
     <Translation ID="ZMD_120_5" String="ゾーニングツールのホットキーを追加 (デフォルト： Alt+Z)"/>
     <Translation ID="ZMD_130_0" String="調整可能なゾーンの列数を追加"/>
+    <Translation ID="ZMD_140_0" String="パネルボタンを無効にするオプションを追加(Unified UIのボタンは常に利用可能)"/>
   </Translations>
 </Language>
