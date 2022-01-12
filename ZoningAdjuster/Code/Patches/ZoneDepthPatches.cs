@@ -206,7 +206,7 @@ namespace ZoningAdjuster
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static void CalculateImplementation1(ref ZoneBlock instance, ushort blockID, ushort segmentID, ref NetSegment data, ref ulong valid, float minX, float minZ, float maxX, float maxZ)
         {
-            Logging.Error("CalculateImplementation1 reverse Harmony patch wasn't applied", instance.ToString(), blockID.ToString(), segmentID.ToString(), data.ToString(), valid.ToString(), minX.ToString(), minZ.ToString(), maxX.ToString(), maxZ.ToString());
+            Logging.Error("CalculateImplementation1 reverse Harmony patch wasn't applied", instance, blockID, segmentID, data, valid, minX, minZ, maxX, maxZ);
         }
     }
 }

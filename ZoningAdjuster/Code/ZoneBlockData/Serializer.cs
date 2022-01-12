@@ -36,7 +36,7 @@ namespace ZoningAdjuster
                 // Write to savegame.
                 serializableDataManager.SaveData(dataID, stream.ToArray());
 
-                Logging.Message("wrote ", stream.Length.ToString());
+                Logging.Message("wrote ", stream.Length);
             }
         }
 
@@ -64,7 +64,7 @@ namespace ZoningAdjuster
                     // Deserialise savegame settings.
                     DataSerializer.Deserialize<RealPopSerializer>(stream, DataSerializer.Mode.Memory);
 
-                    Logging.Message("read ", stream.Length.ToString());
+                    Logging.Message("read ", stream.Length);
                 }
             }
             else

@@ -1,4 +1,7 @@
-﻿Version 1.4 -
+﻿- Add persistant memory of zone block depths to prevent arbitary resets (only works for newly-created blocks)
+- Update logging framework
+
+Version 1.4 -
 
 - 'Show panel on road menu' option now only shows when roads are selected (not non-zoneable networks such as paths, rails, etc.)
 - Add option to hide legacy panel button (UUI button is always available)

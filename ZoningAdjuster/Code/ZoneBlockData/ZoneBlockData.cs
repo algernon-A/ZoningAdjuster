@@ -178,7 +178,7 @@ namespace ZoningAdjuster
                 zoneBlockFlags[i] = data[i];
             }
 
-            Logging.Message("assigned ", arrayLength.ToString(), " zone block records");
+            Logging.Message("assigned ", arrayLength, " zone block records");
         }
 
 

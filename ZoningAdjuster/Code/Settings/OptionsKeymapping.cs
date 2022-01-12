@@ -44,8 +44,6 @@ namespace ZoningAdjuster
         /// <param name="keyEvent">Keypress event parameter</param>
         public void OnKeyDown(UIKeyEventParameter keyEvent)
         {
-            Logging.Message("keydown ", isPrimed.ToString());
-
             // Only do this if we're primed and the keypress isn't a modifier key.
             if (isPrimed && !IsModifierKey(keyEvent.keycode))
             {

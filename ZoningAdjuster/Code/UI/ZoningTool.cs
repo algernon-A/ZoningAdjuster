@@ -257,7 +257,7 @@ namespace ZoningAdjuster
 		{
 			if (blockID != 0)
 			{
-				Logging.Message("removing zone block ", blockID.ToString());
+				Logging.Message("removing zone block ", blockID);
 
 				Singleton<ZoneManager>.instance.ReleaseBlock(blockID);
 				blockID = 0;

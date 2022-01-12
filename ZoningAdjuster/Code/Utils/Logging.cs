@@ -13,7 +13,6 @@ namespace ZoningAdjuster
         // Logging detail flag.
         internal static bool detailLogging = true;
 
-
         /// <summary>
         /// Prints a single-line debugging message to the Unity output log with an "ERROR: " prefix, regardless of the 'detailed logging' setting.
         /// </summary>
@@ -25,7 +24,7 @@ namespace ZoningAdjuster
         /// Prints a single-line debugging message to the Unity output log, regardless of the 'detailed logging' setting.
         /// </summary>
         /// <param name="messages">Message to log (individual strings will be concatenated)</param>
-        internal static void KeyMessage(params object[] messages) => WriteMessage(String.Empty, messages);
+        internal static void KeyMessage(params string[] messages) => WriteMessage(String.Empty, messages);
 
 
         /// <summary>
