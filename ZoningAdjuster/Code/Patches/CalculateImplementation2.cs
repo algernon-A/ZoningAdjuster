@@ -11,8 +11,6 @@ namespace ZoningAdjuster
     [HarmonyPatch(typeof(ZoneBlock), "CalculateImplementation2")]
     public static class CalcImpl2Patch
     {
-
-
         /// <summary>
         /// Harmony pre-emptive prefix for adjusting zone block creation when two zone blocks are overlapping.
         /// </summary>

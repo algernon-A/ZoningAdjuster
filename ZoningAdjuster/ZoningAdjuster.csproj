@@ -64,6 +64,7 @@
     <Compile Include="Code\Notifications\DontShowAgainMessageBox.cs" />
     <Compile Include="Code\Notifications\WhatsNew.cs" />
     <Compile Include="Code\Notifications\WhatsNewMessageBox.cs" />
+    <Compile Include="Code\Patches\ReleaseBlock.cs" />
     <Compile Include="Code\Patches\CreateBlock.cs" />
     <Compile Include="Code\Patches\CreateSegment.cs" />
     <Compile Include="Code\Patches\Escape.cs" />

@@ -13,11 +13,17 @@ namespace ZoningAdjuster
     };
 
     // Zoning data flags.
-    public enum ZoningAdjusterFlags
+    public enum ZoningAdjusterFlags : byte
     {
-        None = 0x0,
-        PreserveOlder = 0x1,
-        PreserveNewer = 0x2,
+        None = 0x00,
+        PreserveOlder = 0x01,
+        PreserveNewer = 0x02,
+        // Below added in verison 2 data - legacy data will only have the above flags.  Don't rely just on created.
+        Created = 0x04,
+        DepthOne = 0x00,
+        DepthTwo = 0x20,
+        DepthThree = 0x40,
+        DepthFour = 0x60,
     }
 
     /// <summary>
@@ -102,21 +108,58 @@ namespace ZoningAdjuster
         /// <summary>
         /// Records the current zoning settings for the specified block.
         /// </summary>
-        /// <param name="blockID"></param>
+        /// <param name="blockID">Block ID</param>
         internal void SetCurrentMode(ushort blockID)
         {
+            ZoningAdjusterFlags newFlags = ZoningAdjusterFlags.Created;
+
+            // Add preserve newer/older flags as appropriate.
             if (preserveOldZones)
             {
-                zoneBlockFlags[blockID] = (byte)ZoningAdjusterFlags.PreserveOlder;
+                newFlags |= ZoningAdjusterFlags.PreserveOlder;
             }
             else if (preserveNewZones)
             {
-                zoneBlockFlags[blockID] = (byte)ZoningAdjusterFlags.PreserveNewer;
+                newFlags |= ZoningAdjusterFlags.PreserveNewer;
             }
-            else
+
+            // Record zone depth setting.
+            newFlags |= (ZoningAdjusterFlags)(ZoneDepthPatches.zoneDepth << 5);
+
+            // Set created flag.
+            zoneBlockFlags[blockID] = (byte)newFlags;
+        }
+
+
+        /// <summary>
+        /// Gets the effective depth of the given zone block.
+        /// </summary>
+        /// <param name="blockID">Block ID</param>
+        /// <returns>Effective depth od the specified block</returns>
+        internal int GetEffectiveDepth(ushort blockID)
+        {
+            // Get current flags setting.
+            ZoningAdjusterFlags blockFlags = (ZoningAdjusterFlags)zoneBlockFlags[blockID];
+
+            // Check for formal created flag.
+            if ((blockFlags & ZoningAdjusterFlags.Created) == ZoningAdjusterFlags.None)
             {
-                zoneBlockFlags[blockID] = (byte)ZoningAdjusterFlags.None;
+                // Not created - return current depth setting.
+                return ZoneDepthPatches.zoneDepth;
             }
+
+            // If we got here, we retrieved a valid record; return it.
+            return (byte)blockFlags >> 5;
+        }
+
+
+        /// <summary>
+        /// Clears recorded data for the specified block.
+        /// </summary>
+        /// <param name="blockID">Block ID to clear</param>
+        internal void ClearEntry(ushort blockID)
+        {
+            zoneBlockFlags[blockID] = (byte)ZoningAdjusterFlags.None;
         }
 
 

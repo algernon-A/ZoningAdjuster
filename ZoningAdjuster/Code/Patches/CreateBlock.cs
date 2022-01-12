@@ -4,15 +4,15 @@
 namespace ZoningAdjuster
 {
     /// <summary>
-    ///  Harmony postfix for recording current mod settings on block creation.
+    ///  Harmony postfix for releasing block settings on block release.
     /// </summary>
-    [HarmonyPatch(typeof(ZoneManager), nameof(ZoneManager.CreateBlock))]
-    public static class CreateBlockPatch
+    [HarmonyPatch(typeof(ZoneManager), nameof(ZoneManager.ReleaseBlock))]
+    public static class ReleaseBlockPatch
     {
         public static void Postfix(ref ushort block)
         {
-            // Record current mod settings against this zone block ID.
-            ZoneBlockData.Instance.SetCurrentMode(block); 
+            // Clear recorded data for this zone block ID.
+            ZoneBlockData.Instance.ClearEntry(block);
         }
     }
 }

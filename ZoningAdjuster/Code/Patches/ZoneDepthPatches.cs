@@ -124,7 +124,7 @@ namespace ZoningAdjuster
 
                     /*--- Start insert here ---*/
                     // Mark any cells in columns above our set maxmimum zoning depth as invalid.
-                    if (column > zoneDepth)
+                    if (column > ZoneBlockData.Instance.GetEffectiveDepth(blockID))
                     {
                         valid &= (ulong)~(1L << (row << 3 | column));
                     }
