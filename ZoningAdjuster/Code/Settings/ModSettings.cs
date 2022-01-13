@@ -103,7 +103,7 @@ namespace ZoningAdjuster
 
         // Language.
         [XmlElement("Language")]
-        public string XMLLanguage { get => Translations.Language; set => Translations.Language = value; }
+        public string XMLLanguage { get => Translations.CurrentLanguage; set => Translations.CurrentLanguage = value; }
 
 
         // Zoning tool hotkey.

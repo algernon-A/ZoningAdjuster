@@ -1,0 +1,62 @@
+CODE,en
+NAME,English
+ZMD_NAME,Zoning Adjuster
+ZMD_DESC,Allows zoning of 8- and 24- meter wide roads to align with regular-width roads and adds the ability to offset zoning start positions along roads.
+ZMD_PNL_DIS,Disable zoning
+ZMD_PNL_FOR,Force zoning
+ZMD_PNL_DIS_TIP,Disable all zone creation when building roads (zoning can still be added using the Zoning Adjuster tool)
+ZMD_PNL_POZ,Prioritize older roads
+ZMD_PNL_POZ_TIP,Zoning attached to newer roads won't overwrite zoning attached to older roads
+ZMD_PNL_PNZ,Prioritize newer roads
+ZMD_PNL_PNZ_TIP,Zoning attached to older roads won't overwrite zoning attached to newer roads
+ZMD_PNL_PVZ,No priority
+ZMD_PNL_PVZ_TIP,Default game behavior
+ZMD_PNL_SBK,Zoning setback
+ZMD_PNL_SBK_TIP,Adds a gap between the road edge and the zoning grid
+ZMD_PNL_DEP,Zoning depth
+ZMD_PNL_DEP_TIP,Sets the maximim depth of zones (away from the road) in cells
+ZMD_OPT_KEY,Modifier key
+ZMD_OPT_ZOK,Zoning offset modifier key
+ZMD_OPT_SHO,Panel visibility options
+ZMD_OPT_SOR,Automatically show zoning settings panel when the roads menu is open
+ZMD_OPT_SPB,Show legacy panel button
+ZMD_OPT_POS,Panel and button locations
+ZMD_OPT_RPP,Reset panel position
+ZMD_OPT_RBP,Reset button position
+ZMD_SHIFT,Shift
+ZMD_CTRL,Control
+ZMD_ALT,Alt
+TRN_CHOICE,Set language
+TRN_SYS,Use system language
+KEY_KEY,Zoning tool hotkey
+KEY_PRS,Press any key
+MES_CLS,Close
+MES_DSA,Don't show again
+MES_PAGE,Please refer to the mod's Steam Workshop page for further information.
+ZMD_ERR_FAT,"This means that the mod is not able to operate, and has shut down."
+ZMD_ERR_HAR,Zoning Adjuster was unable to complete its required Harmony patches.
+ERR_HAR0,Harmony patching error
+ERR_HAR1,Possible causes of this problem include:
+ERR_HAR2,The required Harmony 2 mod dependency was not installed
+ERR_HAR3,An old and/or broken mod is preventing Harmony 2 from operating properly
+ERR_CON0,Mod conflict detected!
+ERR_CON1,The conflicting mods are:
+ZMD_ERR_CON0,Zoning Adjuster detected a conflict with at least one other mod.
+ZMD_ERR_CON1,These mods must be removed before Zoning Adjuster can operate.
+ZMD_100_0,"New zoning tool for adding, resetting, and removing zoning for any road"
+ZMD_100_1,Zoning tool option: variable zoning setback from road
+ZMD_100_2,Zoning tool option: prioritize zoning by age of road (so zoning for new roads doesn't disrupt zoning attached to existing roads)
+ZMD_102_0,Add option to prioritize zoning of newer roads
+ZMD_110_0,Each newly-created zone block now remembers the priority settings it was created with (i.e. prioritizing newer or older roads) and will retain that priority regardless of any setting changes
+ZMD_110_1,NOTE 1: this only applies to newly-created zone blocks
+ZMD_110_2,NOTE 2: conflicting settings (e.g. a newer road prioritizing older settings next to an older road prioritizing newer settings) will lead to inconsistent results
+ZMD_111_0,Tool button is now moveable (click and drag to move)
+ZMD_111_1,Button and panel positions are saved when exiting the game
+ZMD_120_0,Add option to show/hide settings panel by default when road menu is visible
+ZMD_120_1,Add 'disable zoning' option to disable all automatic zoning (zoning can still be applied manually using the Zoning Adjuster tool)
+ZMD_120_2,Add 'force zoning' option to add zoning on construction to roads without zoning enabled (e.g. highways)
+ZMD_120_3,Add option to toggle single-side zoning (hold Alt key when clicking with the Zoning Adjuster tool)
+ZMD_120_4,Allow negative zoning setback (move zoning closer to the road)
+ZMD_120_5,Add zoning tool hotkey (default Alt-Z)
+ZMD_130_0,Add adjustable zone depth
+ZMD_140_0,Add option to disable panel button (the Unified UI button is always available)

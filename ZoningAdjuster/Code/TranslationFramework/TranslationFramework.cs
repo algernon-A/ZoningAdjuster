@@ -2,10 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
-using System.Xml.Serialization;
-using ICities;
 using ColossalFramework;
-using ColossalFramework.Plugins;
 using ColossalFramework.Globalization;
 
 
@@ -27,11 +24,11 @@ namespace ZoningAdjuster
         /// <returns>Translation (or key if translation failed)</returns>
         public static string Translate(string key) => Instance.Translate(key);
 
-        public static string Language
+        public static string CurrentLanguage
         {
             get
             {
-                return Instance.Language;
+                return Instance.CurrentLanguage;
             }
             set
             {
@@ -48,7 +45,7 @@ namespace ZoningAdjuster
 
 
         /// <summary>
-        /// The current language index number (equals the index number of the language names list provied bye LanguageList).
+        /// The current language index number (equals the index number of the language names list provied by LanguageList).
         /// Useful for easy automatic drop-down language selection menus, working in conjunction with LanguageList:
         /// Set to set the language to the equivalent LanguageList index.
         /// Get to return the LanguageList index of the current languge.
@@ -109,7 +106,7 @@ namespace ZoningAdjuster
         /// <summary>
         /// Returns the current language code if one has specifically been set; otherwise, return "default".
         /// </summary>
-        public string Language => currentIndex < 0 ? "default" : languages.Values[currentIndex].uniqueName;
+        public string CurrentLanguage => currentIndex < 0 ? "default" : languages.Values[currentIndex].uniqueName;
 
 
         /// <summary>
@@ -193,24 +190,16 @@ namespace ZoningAdjuster
                 // Check that the current key is included in the translation.
                 if (currentLanguage.translationDictionary.ContainsKey(key))
                 {
-                    string translation = currentLanguage.translationDictionary[key];
-
-                    if (!string.IsNullOrEmpty(translation))
-                    {
-                        // All good!  Return translation.
-                        return currentLanguage.translationDictionary[key];
-                    }
-
-                    // If we got here, there's a null key.
-                    Logging.Error("null or empty shortened fallback translation for key ", key);
+                    // All good!  Return translation.
+                    return currentLanguage.translationDictionary[key];
                 }
                 else
                 {
                     Logging.Message("no translation for language ", currentLanguage.uniqueName, " found for key " + key);
-                }
 
-                // Attempt fallack translation.
-                return FallbackTranslation(currentLanguage.uniqueName, key);
+                    // Attempt fallack translation.
+                    return FallbackTranslation(currentLanguage.uniqueName, key);
+                }
             }
             else
             {
@@ -324,16 +313,8 @@ namespace ZoningAdjuster
                     Language fallbackLanguage = languages[newName];
                     if (fallbackLanguage.translationDictionary.ContainsKey(key))
                     {
-                        string fallback = fallbackLanguage.translationDictionary[key];
-
-                        if (!string.IsNullOrEmpty(fallback))
-                        {
-                            // All good!  Return translation.
-                            return fallback;
-                        }
-
-                        // If we got here, there's a null key.
-                        Logging.Error("null or empty shortened fallback translation for key ", key);
+                        // All good!  Return translation.
+                        return fallbackLanguage.translationDictionary[key];
                     }
                 }
             }
@@ -343,16 +324,8 @@ namespace ZoningAdjuster
             {
                 if (systemLanguage.translationDictionary.ContainsKey(key))
                 {
-                    string fallback = systemLanguage.translationDictionary[key];
-
-                    if (!string.IsNullOrEmpty(fallback))
-                    {
-                        // All good!  Return translation.
-                        return fallback;
-                    }
-
-                    // If we got here, there's a null key.
-                    Logging.Error("null or empty system fallback translation for key ", key);
+                    // All good!  Return translation.
+                    return systemLanguage.translationDictionary[key];
                 }
             }
 
@@ -360,16 +333,7 @@ namespace ZoningAdjuster
             try
             {
                 Language fallbackLanguage = languages[defaultLanguage];
-                string fallback = fallbackLanguage.translationDictionary.ContainsKey(key) ? fallbackLanguage.translationDictionary[key] : null;
-
-                if (!string.IsNullOrEmpty(fallback))
-                {
-                    // All good!  Return translation.
-                    return fallback;
-                }
-
-                // If we got here, there's a null key.
-                Logging.Error("null or empty default fallback translation for key ", key);
+                return fallbackLanguage.translationDictionary[key];
             }
             catch (Exception e)
             {
@@ -383,7 +347,7 @@ namespace ZoningAdjuster
 
 
         /// <summary>
-        /// Loads languages from XML files.
+        /// Loads languages from CSV files.
         /// </summary>
         private void LoadLanguages()
         {
@@ -391,7 +355,7 @@ namespace ZoningAdjuster
             languages.Clear();
 
             // Get the current assembly path and append our locale directory name.
-            string assemblyPath = GetAssemblyPath();
+            string assemblyPath = ModUtils.GetAssemblyPath();
             if (!assemblyPath.IsNullOrWhiteSpace())
             {
                 string localePath = Path.Combine(assemblyPath, "Translations");
@@ -403,17 +367,144 @@ namespace ZoningAdjuster
                     string[] translationFiles = Directory.GetFiles(localePath);
                     foreach (string translationFile in translationFiles)
                     {
-                        using (StreamReader reader = new StreamReader(translationFile))
+                        // Skip anything that's not marked as a .csv file.
+                        if (!translationFile.EndsWith(".csv"))
                         {
-                            XmlSerializer xmlSerializer = new XmlSerializer(typeof(Language));
-                            if (xmlSerializer.Deserialize(reader) is Language translation)
+                            continue;
+                        }
+
+                        // Read file.
+                        FileStream fileStream = new FileStream(translationFile, FileMode.Open, FileAccess.Read);
+                        using (StreamReader reader = new StreamReader(fileStream))
+                        {
+                            // Create new language instance for this file.
+                            Language thisLanguage = new Language();
+                            string key = null;
+                            bool quoting = false;
+
+                            // Iterate through each line of file.
+                            string line = reader.ReadLine();
+                            while (line != null)
                             {
-                                // Got one!  add it to the list.
-                                languages.Add(translation.uniqueName, translation);
+                                // Are we parsing quoted lines?
+                                if (quoting)
+                                {
+                                    // Parsing a quoted line - make sure we have a valid current key.
+                                    if (!key.IsNullOrWhiteSpace())
+                                    {
+                                        // Yes - if the line ends with a quote, trim the quote and add to existing dictionary entry and stop quoting.
+                                        if (line.EndsWith("\""))
+                                        {
+                                            quoting = false;
+                                            thisLanguage.translationDictionary[key] += line.Substring(0, line.Length - 1);
+                                        }
+                                        else
+                                        {
+                                            // Line doesn't end with a quote - add line to existing dictionary entry and keep going.
+                                            thisLanguage.translationDictionary[key] += line + Environment.NewLine;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    // Not parsing quoted line - look for comma separator on this line.
+                                    int commaPos = line.IndexOf(",");
+                                    if (commaPos > 0)
+                                    {
+                                        // Comma found - split line into key and value, delimited by first comma.
+                                        key = line.Substring(0, commaPos);
+                                        string value = line.Substring(commaPos + 1);
+
+                                        // Don't do anything if either key or value is invalid.
+                                        if (!key.IsNullOrWhiteSpace() && !value.IsNullOrWhiteSpace())
+                                        {
+                                            // Trim quotes off keys.
+                                            if (key.StartsWith("\""))
+                                            {
+                                                // Starts with quotation mark - if it also ends in a quotation mark, strip both quotation marks.
+                                                if (key.EndsWith("\""))
+                                                {
+                                                    key = key.Substring(1, key.Length - 2);
+                                                }
+                                                else
+                                                {
+                                                    // Doesn't end in a quotation mark, so just strip leading quotation mark.
+                                                    key = key.Substring(1);
+                                                }
+                                            }
+
+                                            // Does this value start with a quotation mark?
+                                            if (value.StartsWith("\""))
+                                            {
+                                                // Starts with quotation mark - if it also ends in a quotation mark, strip both quotation marks.
+                                                if (value.EndsWith("\""))
+                                                {
+                                                    value = value.Substring(1, value.Length - 2);
+                                                }
+                                                else
+                                                {
+                                                    // Doesn't end in a quotation mark, so we've (presumably) got a multi-line quoted entry
+                                                    // Flag quoting mode and set initial value to start of quoted string (less leading quotation mark), plus trailing newline.
+                                                    quoting = true;
+                                                    value = value.Substring(1) + Environment.NewLine;
+                                                }
+                                            }
+
+                                            // Check for reserved keywords.
+                                            if (key.Equals(Language.CodeKey))
+                                            {
+                                                // Language code.
+                                                thisLanguage.uniqueName = value;
+                                            }
+                                            else if (key.Equals(Language.NameKey))
+                                            {
+                                                // Language readable name.
+                                                thisLanguage.readableName = value;
+                                            }
+                                            else
+                                            {
+                                                // Try to add key/value pair to translation dictionary.
+                                                if (!thisLanguage.translationDictionary.ContainsKey(key))
+                                                {
+                                                    thisLanguage.translationDictionary.Add(key, value);
+                                                }
+                                                else
+                                                {
+                                                    Logging.Error("duplicate translation key ", key, " in file ", translationFile);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        // No comma delimiter found - append to previous line (if last-used key is valid).
+                                        if (!key.IsNullOrWhiteSpace())
+                                        {
+                                            thisLanguage.translationDictionary[key] += line;
+                                        }
+                                    }
+                                }
+
+                                // Read next line.
+                                line = reader.ReadLine();
+                            }
+
+                            // Did we get a valid dictionary from this?
+                            if (thisLanguage.uniqueName != null && thisLanguage.readableName != null && thisLanguage.translationDictionary.Count > 0)
+                            {
+                                // Yes - add to languages dictionary.
+                                if (!languages.ContainsKey(thisLanguage.uniqueName))
+                                {
+                                    languages.Add(thisLanguage.uniqueName, thisLanguage);
+                                }
+                                else
+                                {
+                                    Logging.Error("duplicate translation file for language ", thisLanguage.uniqueName);
+                                }
                             }
                             else
                             {
-                                Logging.Error("couldn't deserialize translation file '", translationFile);
+                                Logging.Error("file ", translationFile, " did not produce a valid translation dictionary");
                             }
                         }
                     }
@@ -427,42 +518,6 @@ namespace ZoningAdjuster
             {
                 Logging.Error("assembly path was empty");
             }
-        }
-
-
-        /// <summary>
-        /// Returns the filepath of the mod assembly.
-        /// </summary>
-        /// <returns>Mod assembly filepath</returns>
-        private string GetAssemblyPath()
-        {
-            // Get list of currently active plugins.
-            IEnumerable<PluginManager.PluginInfo> plugins = PluginManager.instance.GetPluginsInfo();
-
-            // Iterate through list.
-            foreach (PluginManager.PluginInfo plugin in plugins)
-            {
-                try
-                {
-                    // Get all (if any) mod instances from this plugin.
-                    IUserMod[] mods = plugin.GetInstances<IUserMod>();
-
-                    // Check to see if the primary instance is this mod.
-                    if (mods.FirstOrDefault() is ZoningAdjusterMod)
-                    {
-                        // Found it! Return path.
-                        return plugin.modPath;
-                    }
-                }
-                catch
-                {
-                    // Don't care.
-                }
-            }
-
-            // If we got here, then we didn't find the assembly.
-            Logging.Error("assembly path not found");
-            throw new FileNotFoundException(ZoningAdjusterMod.ModName + ": assembly path not found!");
         }
     }
 }
