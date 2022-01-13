@@ -1,6 +1,6 @@
 ﻿Version 1.5 -
 
-- Add persistant memory of zone block depths to prevent arbitary resets (only works for newly-created blocks)
+- Add persistent memory of zone block depths to prevent arbitary resets (only works for newly-created blocks)
 - Convert translation framework to CSV (for CrowdIn)
 - Update logging framework
 
