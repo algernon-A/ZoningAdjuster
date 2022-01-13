@@ -14,7 +14,7 @@ namespace ZoningAdjuster
     {
         // Unique data ID.
         private readonly string dataID = "ZoningAdjuster";
-        internal const int CurrentDataVersion = 0;
+        internal const int CurrentDataVersion = 1;
 
 
         /// <summary>
@@ -112,9 +112,15 @@ namespace ZoningAdjuster
                 Logging.Message("read data version ", dataVersion.ToString());
 
                 // Make sure we have a matching data version.
-                if (dataVersion == Serializer.CurrentDataVersion)
+                if (dataVersion <= Serializer.CurrentDataVersion)
                 {
                     ZoneBlockData.Instance.ReadData(serializer.ReadByteArray());
+                }
+
+                // If data version is 0, then populate existing zone block depths with default (4).
+                if (dataVersion == 0)
+                {
+                    ZoneBlockData.Instance.DefaultDepths();
                 }
             }
             catch (Exception e)

@@ -183,6 +183,27 @@ namespace ZoningAdjuster
 
 
         /// <summary>
+        /// Populates block data with default depth setting - used when deserializing legacy data.
+        /// </summary>
+        internal void DefaultDepths()
+        {
+            // Local reference.
+            ZoneBlock[] blockBuffer = Singleton<ZoneManager>.instance.m_blocks.m_buffer;
+
+            // Iterate through all zone blocks in game buffer.
+            for (int i = 0; i < blockBuffer.Length; ++i)
+            {
+                // If this block is active, set the zone block flags to include default depth (four cells).
+                if (blockBuffer[i].m_flags != 0)
+                {
+                    Logging.Message("adding default depth flags to zone block ", i);
+                    zoneBlockFlags[i] |= (byte)(ZoningAdjusterFlags.DepthFour | ZoningAdjusterFlags.Created);
+                }
+            }
+        }
+
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         internal ZoneBlockData()
