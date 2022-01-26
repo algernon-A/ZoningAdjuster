@@ -75,6 +75,11 @@ namespace ZoningAdjuster
                             conflictDetected = true;
                             conflictingModNames.Add("Network Extensions 2");
                             break;
+                        case "NetworkExtensions3":
+                            // Network Extensions 3.
+                            conflictDetected = true;
+                            conflictingModNames.Add("Network Extensions 3");
+                            break;
                         case "VanillaGarbageBinBlocker":
                             // Garbage Bin Controller
                             conflictDetected = true;

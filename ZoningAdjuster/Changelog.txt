@@ -1,4 +1,7 @@
-﻿Version 1.5 -
+﻿- Add mod conflict detection for "Network Extensions 3" NExt2 clone
+
+
+Version 1.5 -
 
 - Add persistent memory of zone block depths to prevent arbitary resets (only works for newly-created blocks)
 - Convert translation framework to CSV (for CrowdIn)
