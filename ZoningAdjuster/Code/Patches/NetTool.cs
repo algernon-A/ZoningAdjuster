@@ -10,7 +10,7 @@ namespace ZoningAdjuster
     public static class NetToolPatches
     {
         /// <summary>
-        /// Harmony Postifx to NetTool.Prefab setter, to toggle settings panel status according to if the newly-selected prefab is a road.
+        /// Harmony Postfix to NetTool.Prefab setter, to toggle settings panel status according to if the newly-selected prefab is a road.
         /// </summary>
         /// <param name="value"></param>
         [HarmonyPatch(nameof(NetTool.Prefab), MethodType.Setter)]
@@ -18,7 +18,7 @@ namespace ZoningAdjuster
         public static void SetPrefab(NetInfo value)
         {
             // Is this a road?
-            if (value.GetAI() is RoadAI)
+            if (value?.GetAI() is RoadAI)
             {
                 // Yes - show panel if we've got the setting enabled.
                 if (ModSettings.showOnRoad)

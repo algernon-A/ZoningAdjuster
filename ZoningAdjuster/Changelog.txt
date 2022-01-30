@@ -1,4 +1,7 @@
-﻿Version 1.5.0.1 -
+﻿- Add null check to NetTool.Prefab Postfix
+
+
+Version 1.5.0.1 -
 
 - Add mod conflict detection for "Network Extensions 3" NExt2 clone
 
