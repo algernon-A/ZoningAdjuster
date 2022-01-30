@@ -41,7 +41,7 @@ namespace ZoningAdjuster
                         // If that fails, our backup is generic RoadsOptionPanel.
                         else if (component.name.Equals("RoadsOptionPanel"))
                         {
-                            Logging.Message("found RoadsOptionPanel)");
+                            Logging.Message("found RoadsOptionPanel");
                             backupComponent = component;
                         }
                     }
