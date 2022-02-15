@@ -71,9 +71,12 @@ namespace ZoningAdjuster
                     switch (assembly.GetName().Name)
                     {
                         case "NetworkExtensions2":
-                            // Network Extensions 2.
-                            conflictDetected = true;
-                            conflictingModNames.Add("Network Extensions 2");
+                            // Network Extensions 2 - check version.
+                            if (assembly.GetName().Version <= new System.Version("1.0.0.0"))
+                            {
+                                conflictDetected = true;
+                                conflictingModNames.Add("Network Extensions 2 v1.0");
+                            }
                             break;
                         case "NetworkExtensions3":
                             // Network Extensions 3.
