@@ -1,4 +1,13 @@
-﻿Version 1.5.0.2 -
+﻿Version 1.5.1 -
+
+- Compatibility with new versions of Network Extensions 2
+- Add French and Dutch translations
+- Update translation framework
+- Update CitiesHarmony API to 2.1.0 (Harmony 2.2)
+- Update bundled Unified UI library
+
+
+Version 1.5.0.2 -
 
 - Add null check to NetTool.Prefab Postfix
 
