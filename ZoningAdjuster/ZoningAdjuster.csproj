@@ -96,6 +96,8 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="Translations\fr-FR.csv" />
+    <None Include="Translations\nl-NL.csv" />
     <None Include="packages.config" />
     <None Include="Translations\de-DE.csv" />
     <None Include="Translations\es-ES.csv" />
