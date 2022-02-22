@@ -87,11 +87,11 @@ namespace ZoningAdjuster
         private static bool _showPanelButton = true;
 
 
-        // Version.
+        // File version.
         [XmlAttribute("Version")]
         public int version = 0;
 
-
+        // What's new notification version.
         [XmlElement("WhatsNewVersion")]
         public string XMLWhatsNewVersion { get => whatsNewVersion; set => whatsNewVersion = value; }
 
