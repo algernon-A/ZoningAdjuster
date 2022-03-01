@@ -1,4 +1,7 @@
-﻿Version 1.5.1 -
+﻿- Zoning tool now supports pedestrian paths
+
+
+Version 1.5.1 -
 
 - Compatibility with new versions of Network Extensions 2
 - Add French and Dutch translations

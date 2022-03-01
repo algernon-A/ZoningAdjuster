@@ -195,9 +195,11 @@ namespace ZoningAdjuster
 					NetManager netManager = Singleton<NetManager>.instance;
 					NetSegment[] segmentBuffer = netManager.m_segments.m_buffer;
 					NetSegment segment = segmentBuffer[segmentID];
+					NetAI segmentAI = segment.Info.m_netAI;
 
-					// Only interested in RoadAI, as that's the only one with zoning.
-					if (segment.Info.GetAI() is RoadAI roadAI)
+					// Check for supported network types.
+					RoadAI roadAI = segmentAI as RoadAI;
+					if (roadAI != null || segmentAI is PedestrianPathAI || segmentAI is PedestrianWayAI)
 					{
 						// Determine existing blocks.
 						bool hasLeft = segment.m_blockStartLeft != 0 || segment.m_blockEndLeft != 0;
@@ -218,7 +220,16 @@ namespace ZoningAdjuster
 								OffsetKeyThreading.shiftOffset = true;
                             }
 
-							roadAI.CreateZoneBlocks(segmentID, ref netManager.m_segments.m_buffer[segmentID]);
+							// Create zone block via road AI, if this is a road AI - allow for any other mods with patches attached.
+							if (roadAI != null)
+							{
+								roadAI.CreateZoneBlocks(segmentID, ref netManager.m_segments.m_buffer[segmentID]);
+							}
+							else
+                            {
+								// Non-road AI; call CreateZoneBlocks prefix directory.
+								ZoneBlockPatch.Prefix(segmentID, ref netManager.m_segments.m_buffer[segmentID]);
+                            }
 
 							// If alt key is held down, toggle left/right/both.
 							if (((e.modifiers & EventModifiers.Alt) != EventModifiers.None) && hasLeft)
