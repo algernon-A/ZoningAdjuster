@@ -1,6 +1,6 @@
 "CODE","es"
 "NAME","Español"
-"ZMD_NAME","Ajuste de Zonificación (ZA)"
+"ZMD_NAME","Zoning Adjuster"
 "ZMD_DESC","Permite la zonificación de carreteras de 8 y 24 metros de ancho para alinearlas con carreteras de ancho regular y agrega la capacidad de compensar las posiciones de inicio de zonificación a lo largo de las carreteras."
 "ZMD_PNL_DIS","Deshabilitar zonificación"
 "ZMD_PNL_FOR","Forzar zonificación"
