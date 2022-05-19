@@ -16,7 +16,7 @@ namespace ZoningAdjuster
         internal static string Version => BaseVersion + " " + Beta;
         internal static string Beta => "";
         internal static int BetaVersion => 0;
-        private static string BaseVersion => "1.5.1";
+        private static string BaseVersion => "1.5.2";
 
 
         /// <summary>

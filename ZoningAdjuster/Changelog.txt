@@ -1,4 +1,6 @@
-﻿- Zoning tool now supports pedestrian paths
+﻿Version 1.5.2 -
+
+- Zoning tool now supports pedestrian paths
 - Remove CreateZoneBlock patch when BuildingTool is active
 
 
