@@ -34,7 +34,7 @@ namespace ZoningAdjuster
 
             // Set label and button text.
             label.text = Translations.Translate("KEY_KEY");
-            button.text = SavedInputKey.ToLocalizedString("KEYNAME", ModSettings.CurrentHotkey);
+            button.text = SavedInputKey.ToLocalizedString("KEYNAME", ModSettings.ToolKey);
         }
 
 
@@ -56,7 +56,7 @@ namespace ZoningAdjuster
                 // If escape was entered, we don't change the code.
                 if (keyEvent.keycode == KeyCode.Escape)
                 {
-                    inputKey = ModSettings.CurrentHotkey;
+                    inputKey = ModSettings.ToolKey;
                 }
                 else
                 {
@@ -86,7 +86,7 @@ namespace ZoningAdjuster
                 if (mouseEvent.buttons == UIMouseButton.Left || mouseEvent.buttons == UIMouseButton.Right)
                 {
                     // Not a bindable mouse button - set the button text and cancel priming.
-                    button.text = SavedInputKey.ToLocalizedString("KEYNAME", ModSettings.CurrentHotkey);
+                    button.text = SavedInputKey.ToLocalizedString("KEYNAME", ModSettings.ToolKey);
                     UIView.PopModal();
                     isPrimed = false;
                 }
@@ -143,7 +143,7 @@ namespace ZoningAdjuster
         private void ApplyKey(InputKey key)
         {
             // Apply key to current settings and save.
-            ModSettings.CurrentHotkey = key;
+            ModSettings.ToolKey = key;
             ModSettings.Save();
 
             // Set the label for the new hotkey.

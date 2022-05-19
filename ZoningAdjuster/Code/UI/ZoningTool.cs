@@ -40,7 +40,7 @@ namespace ZoningAdjuster
 				tooltip: Translations.Translate("ZMD_NAME"),
 				tool: this,
 				icon: UUIHelpers.LoadTexture(UUIHelpers.GetFullPath<ZoningAdjusterMod>("Resources", "ZoningAdjusterUUI.png")),
-				hotkeys: new UUIHotKeys { ActivationKey = ModSettings.PanelSavedKey });
+				hotkeys: new UUIHotKeys { ActivationKey = ModSettings.UUIKey });
 		}
 
 		// Ignore anything except segments.
