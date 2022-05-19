@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using CitiesHarmony.API;
+using System.Reflection;
 
 
 namespace ZoningAdjuster
@@ -11,6 +12,10 @@ namespace ZoningAdjuster
     {
         // Unique harmony identifier.
         private const string harmonyID = "algernon-A.csl.zoningadjuster";
+
+        // CreateZoneBlock patch target method.
+
+        private static MethodInfo createZoneBlocks, zoneBlocksPatch;
 
         // Flag.
         internal static bool Patched => _patched;
@@ -34,6 +39,11 @@ namespace ZoningAdjuster
                     Harmony harmonyInstance = new Harmony(harmonyID);
                     harmonyInstance.PatchAll();
                     _patched = true;
+
+                    // Apply CreateZoneBlocks patch.
+                    createZoneBlocks = typeof(RoadAI).GetMethod(nameof(RoadAI.CreateZoneBlocks));
+                    zoneBlocksPatch = typeof(ZoneBlockPatch).GetMethod(nameof(ZoneBlockPatch.Prefix));
+                    PatchCreateZoneBlocks();
                 }
                 else
                 {
@@ -43,6 +53,9 @@ namespace ZoningAdjuster
         }
 
 
+        /// <summary>
+        /// Remove all Harmony patches.
+        /// </summary>
         public static void UnpatchAll()
         {
             // Only unapply if patches appplied.
@@ -55,6 +68,28 @@ namespace ZoningAdjuster
                 harmonyInstance.UnpatchAll(harmonyID);
                 _patched = false;
             }
+        }
+
+
+        /// <summary>
+        /// Applys the CreateZoneBlocks Harmony patch.
+        /// </summary>
+        public static void PatchCreateZoneBlocks()
+        {
+            Logging.KeyMessage("patching UnpatchCreateZoneBlocks");
+            Harmony harmonyInstance = new Harmony(harmonyID);
+            harmonyInstance.Patch(createZoneBlocks, prefix: new HarmonyMethod(zoneBlocksPatch));
+        }
+
+
+        /// <summary>
+        /// Removes the CreateZoneBlocks Harmony patch.
+        /// </summary>
+        public static void UnpatchCreateZoneBlocks()
+        {
+            Logging.KeyMessage("unpatching UnpatchCreateZoneBlocks");
+            Harmony harmonyInstance = new Harmony(harmonyID);
+            harmonyInstance.Unpatch(createZoneBlocks, HarmonyPatchType.Prefix, harmonyID);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿- Zoning tool now supports pedestrian paths
+- Remove CreateZoneBlock patch when BuildingTool is active
 
 
 Version 1.5.1 -

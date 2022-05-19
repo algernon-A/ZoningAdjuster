@@ -8,6 +8,7 @@ namespace ZoningAdjuster
 {
     /// <summary>
     ///  Hamony pre-emptive prefix for adjusting zone block creation.
+    ///  Manually applied and unapplied.
     /// </summary>
     [HarmonyPatch(typeof(RoadAI))]
     [HarmonyPatch("CreateZoneBlocks")]
@@ -323,7 +324,7 @@ namespace ZoningAdjuster
                 // Fix specifically for BadPeanut's 32m roads that have half-widths just under an even 16, but also for any others with similar issues.
                 minHalfWidth = Mathf.RoundToInt(minHalfWidth);
             }
-
+            
             // Local reference.
             ZoneManager zoneManager = Singleton<ZoneManager>.instance;
 
