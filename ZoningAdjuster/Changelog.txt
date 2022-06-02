@@ -1,4 +1,9 @@
-﻿Version 1.5.2 -
+﻿Version 1.5.3 -
+
+- Add specific incompatibility check for Zone It
+
+
+Version 1.5.2 -
 
 - Zoning tool now supports pedestrian paths
 - Remove CreateZoneBlock patch when BuildingTool is active
