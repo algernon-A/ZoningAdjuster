@@ -1,30 +1,7 @@
-﻿using ColossalFramework;
-
-
-namespace ZoningAdjuster
+﻿namespace ZoningAdjuster
 {
-    // Zoning priority indexes.
-    public enum PriorityIndexes
-    {
-        Older = 0,
-        Newer,
-        None,
-        NumPriorities
-    };
-
-    // Zoning data flags.
-    public enum ZoningAdjusterFlags : byte
-    {
-        None = 0x00,
-        PreserveOlder = 0x01,
-        PreserveNewer = 0x02,
-        // Below added in verison 2 data - legacy data will only have the above flags.  Don't rely just on created.
-        Created = 0x04,
-        DepthOne = 0x00,
-        DepthTwo = 0x20,
-        DepthThree = 0x40,
-        DepthFour = 0x60,
-    }
+    using AlgernonCommons;
+    using ColossalFramework;
 
     /// <summary>
     /// Static class containing 
@@ -43,6 +20,28 @@ namespace ZoningAdjuster
         internal byte[] ZoneBlockFlags => zoneBlockFlags;
         private readonly byte[] zoneBlockFlags;
 
+        // Zoning priority indexes.
+        public enum PriorityIndexes
+        {
+            Older = 0,
+            Newer,
+            None,
+            NumPriorities
+        };
+
+        // Zoning data flags.
+        public enum ZoningAdjusterFlags : byte
+        {
+            None = 0x00,
+            PreserveOlder = 0x01,
+            PreserveNewer = 0x02,
+            // Below added in verison 2 data - legacy data will only have the above flags.  Don't rely just on created.
+            Created = 0x04,
+            DepthOne = 0x00,
+            DepthTwo = 0x20,
+            DepthThree = 0x40,
+            DepthFour = 0x60,
+        }
 
         /// <summary>
         /// Gets the current prority state as an index.
@@ -124,7 +123,7 @@ namespace ZoningAdjuster
             }
 
             // Record zone depth setting.
-            newFlags |= (ZoningAdjusterFlags)(ZoneDepthPatches.zoneDepth << 5);
+            newFlags |= (ZoningAdjusterFlags)(ZoneDepthPatches.ZoneDepth << 5);
 
             // Set created flag.
             zoneBlockFlags[blockID] = (byte)newFlags;
@@ -145,7 +144,7 @@ namespace ZoningAdjuster
             if ((blockFlags & ZoningAdjusterFlags.Created) == ZoningAdjusterFlags.None)
             {
                 // Not created - return current depth setting.
-                return ZoneDepthPatches.zoneDepth;
+                return ZoneDepthPatches.ZoneDepth;
             }
 
             // If we got here, we retrieved a valid record; return it.

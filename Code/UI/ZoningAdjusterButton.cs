@@ -1,19 +1,27 @@
-﻿using ColossalFramework.UI;
-using UnityEngine;
-
-/* Inspired by Node Contoller by kian.zarrin, which in turn was "A lot of copy-pasting from Crossings mod by Spectra and Roundabout Mod by Strad." */
-
-namespace ZoningAdjuster
+﻿namespace ZoningAdjuster
 {
+    using AlgernonCommons;
+    using AlgernonCommons.Translation;
+    using AlgernonCommons.UI;
+    using ColossalFramework.UI;
+    using UnityEngine;
+
+    /// <summary>
+    /// The Zoning Adjuster panel button.
+    /// Inspired by Node Contoller by kian.zarrin, which in turn was "A lot of copy-pasting from Crossings mod by Spectra and Roundabout Mod by Strad."
+    /// </summary>
     public class ZoningAdjusterButton : UIButton
     {
-        // Button size.
+        /// <summary>
+        /// Button size.
+        /// </summary>
         internal const float ButtonSize = 36f;
 
-        // Instance reference.
-        internal static ZoningAdjusterButton Instance { get; private set; }
+        /// <summary>
+        /// Gets the button instance.
+        /// </summary>
+        public static ZoningAdjusterButton Instance { get; private set; }
 
-        
         /// <summary>
         /// Sets the button state to indicate when the tool is active.
         /// </summary>
@@ -36,34 +44,6 @@ namespace ZoningAdjuster
             }
         }
 
-
-        /// <summary>
-        /// Creates the button and attaches it to the roads option panel.
-        /// </summary>
-        /// <returns>Button instance</returns>
-        internal static void CreateButton()
-        {
-            // Don't do anything if already created or not ingame, and only create if setting is enabled.
-            if (Instance == null && Loading.IsLoaded && ModSettings.ShowPanelButton)
-            {
-                GameUIComponents.RoadsOptionPanel?.AddUIComponent<ZoningAdjusterButton>();
-            }
-        }
-
-
-        /// <summary>
-        /// Destroys the button.
-        /// </summary>
-        internal static void DestroyButton()
-        {
-            if (Instance != null)
-            {
-                GameObject.Destroy(Instance);
-                Instance = null;
-            }
-        }
-
-
         /// <summary>
         /// Called by Unity before the first frame is rendered.
         /// Used here to perform initial setup when appropriate.
@@ -83,7 +63,7 @@ namespace ZoningAdjuster
             SetPosition();
 
             // Appearance and effects.
-            atlas = Textures.ToolButtonSprites;
+            atlas = UITextures.LoadQuadSpriteAtlas("ZoningAdjusterButton");
             focusedFgSprite = "focused";
             hoveredFgSprite = "hovered";
             disabledBgSprite = "disabled";
@@ -106,6 +86,30 @@ namespace ZoningAdjuster
             eventPositionChanged += PositionChanged;
         }
 
+        /// <summary>
+        /// Creates the button and attaches it to the roads option panel.
+        /// </summary>
+        /// <returns>Button instance</returns>
+        internal static void CreateButton()
+        {
+            // Don't do anything if already created or not ingame, and only create if setting is enabled.
+            if (Instance == null && Loading.IsLoaded && ModSettings.ShowPanelButton)
+            {
+                GameUIComponents.RoadsOptionPanel?.AddUIComponent<ZoningAdjusterButton>();
+            }
+        }
+
+        /// <summary>
+        /// Destroys the button.
+        /// </summary>
+        internal static void DestroyButton()
+        {
+            if (Instance != null)
+            {
+                GameObject.Destroy(Instance);
+                Instance = null;
+            }
+        }
 
         /// <summary>
         /// Sets the button position according to previous state and mod settings.
@@ -124,7 +128,6 @@ namespace ZoningAdjuster
             }
         }
 
-
         /// <summary>
         /// Check that icon is still visible when the screen resolution changes.
         /// Called by the game when the screen resolution changes.
@@ -138,7 +141,6 @@ namespace ZoningAdjuster
             // Reset button position.
             SetPosition();
         }
-
 
         /// <summary>
         /// Position changed event handler, to save new position

@@ -1,77 +1,80 @@
-﻿using ColossalFramework;
-using ColossalFramework.UI;
-using UnityEngine;
-using UnifiedUI.Helpers;
-
-
-namespace ZoningAdjuster
+﻿namespace ZoningAdjuster
 {
+	using AlgernonCommons;
+	using AlgernonCommons.Translation;
+	using AlgernonCommons.UI;
+	using ColossalFramework;
+	using ColossalFramework.UI;
+	using UnifiedUI.Helpers;
+	using UnityEngine;
+
 	/// <summary>
 	/// The zoning selection tool.
 	/// </summary>
 	public class ZoningTool : DefaultTool
 	{
 		// Previous tool state.
-		private static ToolBase previousTool;
-		private bool prevRenderZones;
-
+		private static ToolBase s_previousTool;
+		private bool _prevRenderZones;
 
 		/// <summary>
-		/// Instance reference.
+		/// Gets the active tool instance.
 		/// </summary>
 		public static ZoningTool Instance => ToolsModifierControl.toolController?.gameObject?.GetComponent<ZoningTool>();
 
-
 		/// <summary>
-		/// Initialise the tool.
-		/// Called by unity when the tool is created.
-		/// </summary>
-		protected override void Awake()
-		{
-			base.Awake();
-
-			// Set default cursor.
-			m_cursor = TextureUtils.LoadCursor("ZoningAdjusterCursor.png");
-
-			// Create new UUI button.
-			UIComponent uuiButton = UUIHelpers.RegisterToolButton(
-				name: nameof(ZoningAdjusterMod),
-				groupName: null, // default group
-				tooltip: Translations.Translate("ZMD_NAME"),
-				tool: this,
-				icon: UUIHelpers.LoadTexture(UUIHelpers.GetFullPath<ZoningAdjusterMod>("Resources", "ZoningAdjusterUUI.png")),
-				hotkeys: new UUIHotKeys { ActivationKey = ModSettings.UUIKey });
-		}
-
-		// Ignore anything except segments.
-		public override Building.Flags GetBuildingIgnoreFlags() => Building.Flags.All;
-		public override NetNode.Flags GetNodeIgnoreFlags() => NetNode.Flags.All;
-		public override CitizenInstance.Flags GetCitizenIgnoreFlags() => CitizenInstance.Flags.All;
-		public override DisasterData.Flags GetDisasterIgnoreFlags() => DisasterData.Flags.All;
-		public override District.Flags GetDistrictIgnoreFlags() => District.Flags.All;
-		public override TransportLine.Flags GetTransportIgnoreFlags() => TransportLine.Flags.All;
-		public override VehicleParked.Flags GetParkedVehicleIgnoreFlags() => VehicleParked.Flags.All;
-		public override TreeInstance.Flags GetTreeIgnoreFlags() => TreeInstance.Flags.All;
-		public override Vehicle.Flags GetVehicleIgnoreFlags() => Vehicle.Flags.LeftHandDrive | Vehicle.Flags.Created | Vehicle.Flags.Deleted | Vehicle.Flags.Spawned | Vehicle.Flags.Inverted | Vehicle.Flags.TransferToTarget | Vehicle.Flags.TransferToSource | Vehicle.Flags.Emergency1 | Vehicle.Flags.Emergency2 | Vehicle.Flags.WaitingPath | Vehicle.Flags.Stopped | Vehicle.Flags.Leaving | Vehicle.Flags.Arriving | Vehicle.Flags.Reversed | Vehicle.Flags.TakingOff | Vehicle.Flags.Flying | Vehicle.Flags.Landing | Vehicle.Flags.WaitingSpace | Vehicle.Flags.WaitingCargo | Vehicle.Flags.GoingBack | Vehicle.Flags.WaitingTarget | Vehicle.Flags.Importing | Vehicle.Flags.Exporting | Vehicle.Flags.Parking | Vehicle.Flags.CustomName | Vehicle.Flags.OnGravel | Vehicle.Flags.WaitingLoading | Vehicle.Flags.Congestion | Vehicle.Flags.DummyTraffic | Vehicle.Flags.Underground | Vehicle.Flags.Transition | Vehicle.Flags.InsideBuilding;
-
-
-
-		/// <summary>
-		/// Returns true if the zoning tool is currently active, false otherwise.
+		/// Gets a value indicating whether the tool is currently active (true) or inactive (false).
 		/// </summary>
 		public static bool IsActiveTool => Instance != null && ToolsModifierControl.toolController.CurrentTool == Instance;
 
-
 		/// <summary>
-		/// Called by the game.  Sets which network segments are ignored by the tool (always returns none, i.e. all segments are selectable by the tool).
+		/// Sets which network segments are ignored by the tool (always returns none, i.e. all are selectable by the tool).
 		/// </summary>
-		/// <param name="nameOnly">Always set to false</param>
-		/// <returns>NetSegment.Flags.None</returns>
+		/// <param name="nameOnly">Always set to false.</param>
+		/// <returns>NetSegment.Flags.None.</returns>
 		public override NetSegment.Flags GetSegmentIgnoreFlags(out bool nameOnly)
 		{
 			nameOnly = false;
 			return NetSegment.Flags.None;
 		}
+
+		/// <summary>
+		/// Sets vehicle ingore flags to ignore all vehicles.
+		/// </summary>
+		/// <returns>Vehicle flags ignoring all vehicles.</returns>
+		public override Vehicle.Flags GetVehicleIgnoreFlags() =>
+			Vehicle.Flags.LeftHandDrive
+			| Vehicle.Flags.Created
+			| Vehicle.Flags.Deleted
+			| Vehicle.Flags.Spawned
+			| Vehicle.Flags.Inverted
+			| Vehicle.Flags.TransferToTarget
+			| Vehicle.Flags.TransferToSource
+			| Vehicle.Flags.Emergency1
+			| Vehicle.Flags.Emergency2
+			| Vehicle.Flags.WaitingPath
+			| Vehicle.Flags.Stopped
+			| Vehicle.Flags.Leaving
+			| Vehicle.Flags.Arriving
+			| Vehicle.Flags.Reversed
+			| Vehicle.Flags.TakingOff
+			| Vehicle.Flags.Flying
+			| Vehicle.Flags.Landing
+			| Vehicle.Flags.WaitingSpace
+			| Vehicle.Flags.WaitingCargo
+			| Vehicle.Flags.GoingBack
+			| Vehicle.Flags.WaitingTarget
+			| Vehicle.Flags.Importing
+			| Vehicle.Flags.Exporting
+			| Vehicle.Flags.Parking
+			| Vehicle.Flags.CustomName
+			| Vehicle.Flags.OnGravel
+			| Vehicle.Flags.WaitingLoading
+			| Vehicle.Flags.Congestion
+			| Vehicle.Flags.DummyTraffic
+			| Vehicle.Flags.Underground
+			| Vehicle.Flags.Transition
+			| Vehicle.Flags.InsideBuilding;
 
 
 		/// <summary>
@@ -83,16 +86,36 @@ namespace ZoningAdjuster
 			if (!IsActiveTool)
 			{
 				// Record previous tool.
-				previousTool = ToolsModifierControl.toolController.CurrentTool;
-				ToolsModifierControl.toolController.CurrentTool = ZoningTool.Instance;
+				s_previousTool = ToolsModifierControl.toolController.CurrentTool;
+				ToolsModifierControl.toolController.CurrentTool = Instance;
 			}
 			else
 			{
 				// Revert to previously selected tool.
-				ToolsModifierControl.toolController.CurrentTool = previousTool;
+				ToolsModifierControl.toolController.CurrentTool = s_previousTool;
 			}
 		}
 
+		/// <summary>
+		/// Initialise the tool.
+		/// Called by unity when the tool is created.
+		/// </summary>
+		protected override void Awake()
+		{
+			base.Awake();
+
+			// Set default cursor.
+			m_cursor = UITextures.LoadCursor("ZoningAdjusterCursor.png");
+
+			// Create new UUI button.
+			UIComponent uuiButton = UUIHelpers.RegisterToolButton(
+				name: nameof(Mod),
+				groupName: null, // default group
+				tooltip: Translations.Translate("ZMD_NAME"),
+				tool: this,
+				icon: UUIHelpers.LoadTexture(UUIHelpers.GetFullPath<Mod>("Resources", "ZoningAdjusterUUI.png")),
+				hotkeys: new UUIHotKeys { ActivationKey = ModSettings.ToolKey });
+		}
 
 		/// <summary>
 		/// Unity late update handling.
@@ -106,32 +129,30 @@ namespace ZoningAdjuster
 			ToolBase.ForceInfoMode(InfoManager.InfoMode.None, InfoManager.SubInfoMode.None);
 		}
 
-
 		/// <summary>
 		/// Called by game when tool is enabled.
 		/// </summary>
 		protected override void OnEnable()
 		{
-			Logging.Message("tool enabled");
-			base.OnEnable();
-
-			// Don't do anything further if game isn't loaded.
+			// Don't do anything if game isn't loaded.
 			if (!Loading.IsLoaded)
 			{
 				return;
 			}
 
+			Logging.Message("tool enabled");
+			base.OnEnable();
+
 			// Create zoning settings panel if it isn't already created, and in any case make sure it's visible.
 			ZoningSettingsPanel.Create();
 
 			// Show zone grids when tool is active.
-			prevRenderZones = Singleton<TerrainManager>.instance.RenderZones;
+			_prevRenderZones = Singleton<TerrainManager>.instance.RenderZones;
 			Singleton<TerrainManager>.instance.RenderZones = true;
 
 			// Set button state to indicate tool is active.
 			ZoningAdjusterButton.ToolActive = true;
 		}
-
 
 		/// <summary>
 		/// Called by game when tool is disabled.
@@ -143,7 +164,7 @@ namespace ZoningAdjuster
 			base.OnDisable();
 
 			// Restore zone grid showing to previous state.
-			Singleton<TerrainManager>.instance.RenderZones = prevRenderZones;
+			Singleton<TerrainManager>.instance.RenderZones = _prevRenderZones;
 
 			// Set panel button state to indicate tool no longer active.
 			ZoningAdjusterButton.ToolActive = false;
@@ -151,7 +172,6 @@ namespace ZoningAdjuster
 			// Close panel.
 			ZoningSettingsPanel.Close();
 		}
-
 
 		/// <summary>
 		/// Tool GUI event processing.
@@ -178,9 +198,6 @@ namespace ZoningAdjuster
 			ushort segmentID = m_hoverInstance.NetSegment;
 			if (segmentID != 0)
 			{
-				// We have a hovered network; set the cursor to the light cursor.
-				//m_cursor = lightCursor;
-
 				// Check for mousedown events.
 				if (e.type == EventType.MouseDown && e.button == 0 || e.button == 1)
 				{
@@ -258,7 +275,6 @@ namespace ZoningAdjuster
 				}
 			}
 		}
-
 
 		/// <summary>
 		/// Removes a zoning block.

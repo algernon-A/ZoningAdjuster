@@ -1,14 +1,14 @@
-﻿using ICities;
-using ZoningAdjuster.MessageBox;
-
-
-namespace ZoningAdjuster
+﻿namespace ZoningAdjuster
 {
+    using AlgernonCommons;
+    using AlgernonCommons.Notifications;
+    using AlgernonCommons.Translation;
+    using ICities;
 
-	/// <summary>
-	/// Main loading class: the mod runs from here.
-	/// </summary>
-	public class Loading : LoadingExtensionBase
+    /// <summary>
+    /// Main loading class: the mod runs from here.
+    /// </summary>
+    public sealed class Loading : LoadingExtensionBase
     {
         // Status flags.
         private static bool harmonyLoaded = false;
@@ -38,12 +38,12 @@ namespace ZoningAdjuster
                 harmonyLoaded = true;
 
                 // Unload Harmony patches and exit before doing anything further.
-                Patcher.UnpatchAll();
+                Patcher.Instance.UnpatchAll();
                 return;
             }
 
             // Ensure that Harmony patches have been applied.
-            harmonyLoaded = Patcher.Patched;
+            harmonyLoaded = Patcher.Instance.Patched;
             if (!harmonyLoaded)
             {
                 Logging.Error("Harmony patches not applied; aborting");
@@ -51,13 +51,13 @@ namespace ZoningAdjuster
             }
 
             // Check for mod conflicts.
-            if (ModUtils.IsModConflict())
+            if (ConflictDetection.IsModConflict())
             {
                 // Conflict detected.
                 conflictingMod = true;
 
                 // Unload Harmony patches and exit before doing anything further.
-                Patcher.UnpatchAll();
+                Patcher.Instance.UnpatchAll();
                 return;
             }
         }
@@ -78,16 +78,16 @@ namespace ZoningAdjuster
 				Logging.Error("Harmony patches not applied; aborting");
 
 				// Display warning message.
-				ListMessageBox harmonyBox = MessageBoxBase.ShowModal<ListMessageBox>();
+				ListNotification harmonyNotification = NotificationBase.ShowNotification<ListNotification>();
 
-				// Key text items.
-				harmonyBox.AddParas(Translations.Translate("ERR_HAR0"), Translations.Translate("ZMD_ERR_HAR"), Translations.Translate("ZMD_ERR_FAT"), Translations.Translate("ERR_HAR1"));
+                // Key text items.
+                harmonyNotification.AddParas(Translations.Translate("ERR_HAR0"), Translations.Translate("ZMD_ERR_HAR"), Translations.Translate("ZMD_ERR_FAT"), Translations.Translate("ERR_HAR1"));
 
-				// List of dot points.
-				harmonyBox.AddList(Translations.Translate("ERR_HAR2"), Translations.Translate("ERR_HAR3"));
+                // List of dot points.
+                harmonyNotification.AddList(Translations.Translate("ERR_HAR2"), Translations.Translate("ERR_HAR3"));
 
-				// Closing para.
-				harmonyBox.AddParas(Translations.Translate("MES_PAGE"));
+                // Closing para.
+                harmonyNotification.AddParas(Translations.Translate("MES_PAGE"));
 
 				// Don't do anything further.
 				return;
@@ -96,17 +96,17 @@ namespace ZoningAdjuster
 			// Check to see if a conflicting mod has been detected.
 			if (conflictingMod)
 			{
-				// Mod conflict detected - display warning notification and exit.
-				ListMessageBox modConflictBox = MessageBoxBase.ShowModal<ListMessageBox>();
+                // Mod conflict detected - display warning notification and exit.
+                ListNotification modConflictNotification = NotificationBase.ShowNotification<ListNotification>();
 
-				// Key text items.
-				modConflictBox.AddParas(Translations.Translate("ERR_CON0"), Translations.Translate("ZMD_ERR_CON0"), Translations.Translate("ZMD_ERR_FAT"), Translations.Translate("ERR_CON1"));
+                // Key text items.
+                modConflictNotification.AddParas(Translations.Translate("ERR_CON0"), Translations.Translate("ZMD_ERR_CON0"), Translations.Translate("ZMD_ERR_FAT"), Translations.Translate("ERR_CON1"));
 
-				// Add conflicting mod name(s).
-				modConflictBox.AddList(ModUtils.conflictingModNames.ToArray());
+                // Add conflicting mod name(s).
+                modConflictNotification.AddList(ConflictDetection.ConflictingModNames.ToArray());
 
-				// Closing para.
-				modConflictBox.AddParas(Translations.Translate("ZMD_ERR_CON1"));
+                // Closing para.
+                modConflictNotification.AddParas(Translations.Translate("ZMD_ERR_CON1"));
 
                 // Don't do anything further.
                 return;

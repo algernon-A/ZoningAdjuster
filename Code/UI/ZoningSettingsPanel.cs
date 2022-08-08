@@ -1,10 +1,12 @@
-﻿using System;
-using UnityEngine;
-using ColossalFramework.UI;
-
-
-namespace ZoningAdjuster
+﻿namespace ZoningAdjuster
 {
+    using System;
+    using AlgernonCommons;
+    using AlgernonCommons.Translation;
+    using AlgernonCommons.UI;
+    using ColossalFramework.UI;
+    using UnityEngine;
+
     /// <summary>
     /// The zoning settings panel.
     /// </summary>
@@ -110,12 +112,12 @@ namespace ZoningAdjuster
             SetPosition();
 
             // Appearance.
-            atlas = TextureUtils.InGameAtlas;
+            atlas = UITextures.InGameAtlas;
             backgroundSprite = "SubcategoriesPanel";
             clipChildren = true;
              
             // Title.
-            UILabel titleLabel = UIControls.AddLabel(this, 0f, Margin, Translations.Translate("ZMD_NAME"));
+            UILabel titleLabel = UILabels.AddLabel(this, 0f, Margin, Translations.Translate("ZMD_NAME"), PanelWidth - Margin - Margin);
             titleLabel.textAlignment = UIHorizontalAlignment.Center;
             titleLabel.width = PanelWidth;
 
@@ -123,7 +125,7 @@ namespace ZoningAdjuster
             UISprite titleSprite = this.AddUIComponent<UISprite>();
             titleSprite.size = new Vector2(24f, 24f);
             titleSprite.relativePosition = new Vector2(4f, 5f);
-            titleSprite.atlas = Textures.ToolButtonSprites;
+            titleSprite.atlas = UITextures.LoadQuadSpriteAtlas("ZoningAdjusterButton");
             titleSprite.spriteName = "normal";
 
             // Drag bar (sizing takes place after priority checkboxes to allow for any width adjustments for longer translation strings).
@@ -134,7 +136,7 @@ namespace ZoningAdjuster
             dragHandle.target = this;
 
             // Disable zoning checkbox.
-            disableCheck = UIControls.LabelledCheckBox(this, Margin, DisableCheckY, Translations.Translate("ZMD_PNL_DIS"), tooltip: Translations.Translate("ZMD_PNL_DIS_TIP"));
+            disableCheck = UICheckBoxes.AddLabelledCheckBox(this, Margin, DisableCheckY, Translations.Translate("ZMD_PNL_DIS"), tooltip: Translations.Translate("ZMD_PNL_DIS_TIP"));
             disableCheck.isChecked = ModSettings.disableZoning;
             disableCheck.eventCheckChanged += (control, isChecked) =>
             {
@@ -148,7 +150,7 @@ namespace ZoningAdjuster
             };
 
             // Force zoning checkbox.
-            forceCheck = UIControls.LabelledCheckBox(this, Margin, ForceCheckY, Translations.Translate("ZMD_PNL_FOR"), tooltip: Translations.Translate("ZMD_PNL_DIS_TIP"));
+            forceCheck = UICheckBoxes.AddLabelledCheckBox(this, Margin, ForceCheckY, Translations.Translate("ZMD_PNL_FOR"), tooltip: Translations.Translate("ZMD_PNL_DIS_TIP"));
             forceCheck.isChecked = ModSettings.forceZoning;
             forceCheck.eventCheckChanged += (control, isChecked) =>
             {
@@ -165,11 +167,11 @@ namespace ZoningAdjuster
             this.width = Mathf.Max(this.width, forceCheck.width + (Margin * 2f), disableCheck.width + (Margin * 2f));
 
             // Priority checkboxes.
-            priorityChecks = new UICheckBox[(int)PriorityIndexes.NumPriorities];
+            priorityChecks = new UICheckBox[(int)ZoneBlockData.PriorityIndexes.NumPriorities];
             int currentPriority = ZoneBlockData.Instance.GetCurrentPriority();
             for (int i = 0; i < priorityChecks.Length; ++i)
             {
-                priorityChecks[i] = UIControls.LabelledCheckBox(this, Margin, priorityCheckY[i], Translations.Translate(priorityNames[i]), tooltip: Translations.Translate(priorityNames[i] + "_TIP"));
+                priorityChecks[i] = UICheckBoxes.AddLabelledCheckBox(this, Margin, priorityCheckY[i], Translations.Translate(priorityNames[i]), tooltip: Translations.Translate(priorityNames[i] + "_TIP"));
                 priorityChecks[i].objectUserData = i;
                 priorityChecks[i].isChecked = i == currentPriority;
                 priorityChecks[i].eventCheckChanged += PriorityCheckChanged;
@@ -193,7 +195,7 @@ namespace ZoningAdjuster
             UISlider zoneDepthSlider = AddSlider("ZMD_PNL_DEP", ZoneDepthSliderY, "ZMD_PNL_DEP_TIP", true);
             zoneDepthSlider.eventValueChanged += (control, value) =>
             {
-                ZoneDepthPatches.zoneDepth = (byte)Mathf.Clamp(value -1, 0f, 3f);
+                ZoneDepthPatches.ZoneDepth = (byte)Mathf.Clamp(value -1, 0f, 3f);
             };
 
             // Bring to front.
@@ -249,7 +251,7 @@ namespace ZoningAdjuster
                 if (isChecked)
                 {
                     // Iterate through all checkboxes.
-                    for (int i = 0; i < (int)PriorityIndexes.NumPriorities; ++i)
+                    for (int i = 0; i < (int)ZoneBlockData.PriorityIndexes.NumPriorities; ++i)
                     {
                         // If it's not this checkbox, uncheck it.
                         if (i != index)
@@ -265,7 +267,7 @@ namespace ZoningAdjuster
                 {
                     // Checkbox has been deselected; make sure that at least one other is still selected, otherwise we re-select this one.
                     // Iterate through all checkboxes.
-                    for (int i = 0; i < (int)PriorityIndexes.NumPriorities; ++i)
+                    for (int i = 0; i < (int)ZoneBlockData.PriorityIndexes.NumPriorities; ++i)
                     {
                         // If any are checked, we're done here; return.
                         if (priorityChecks[i].isChecked)
@@ -300,7 +302,7 @@ namespace ZoningAdjuster
 
             // Slider panel.
             UIPanel sliderPanel = this.AddUIComponent<UIPanel>();
-            sliderPanel.atlas = TextureUtils.InGameAtlas;
+            sliderPanel.atlas = UITextures.InGameAtlas;
             sliderPanel.backgroundSprite = "GenericPanel";
             sliderPanel.color = new Color32(206, 206, 206, 255);
             sliderPanel.size = new Vector2(this.width - (Margin * 2), SliderPanelHeight);
@@ -309,7 +311,7 @@ namespace ZoningAdjuster
 
             // Slider value label.
             UILabel valueLabel = sliderPanel.AddUIComponent<UILabel>();
-            valueLabel.atlas = TextureUtils.InGameAtlas;
+            valueLabel.atlas = UITextures.InGameAtlas;
             valueLabel.backgroundSprite = "TextFieldPanel";
             valueLabel.verticalAlignment = UIVerticalAlignment.Bottom;
             valueLabel.textAlignment = UIHorizontalAlignment.Center;
@@ -327,14 +329,14 @@ namespace ZoningAdjuster
 
             // Setback slider track.
             UISlicedSprite sliderSprite = newSlider.AddUIComponent<UISlicedSprite>();
-            sliderSprite.atlas = TextureUtils.InGameAtlas;
+            sliderSprite.atlas = UITextures.InGameAtlas;
             sliderSprite.spriteName = "BudgetSlider";
             sliderSprite.size = new Vector2(newSlider.width, 9f);
             sliderSprite.relativePosition = new Vector2(0f, 4f);
 
             // Setback slider thumb.
             UISlicedSprite sliderThumb = newSlider.AddUIComponent<UISlicedSprite>();
-            sliderThumb.atlas = TextureUtils.InGameAtlas;
+            sliderThumb.atlas = UITextures.InGameAtlas;
             sliderThumb.spriteName = "SliderBudget";
             newSlider.thumbObject = sliderThumb;
 
@@ -354,7 +356,7 @@ namespace ZoningAdjuster
                 newSlider.maxValue = 4;
 
                 // +1 to account for zero-basing.
-                newSlider.value = ZoneDepthPatches.zoneDepth + 1;
+                newSlider.value = ZoneDepthPatches.ZoneDepth + 1;
             }
             else
             {

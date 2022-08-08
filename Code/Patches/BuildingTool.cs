@@ -1,8 +1,7 @@
-﻿using HarmonyLib;
-
-
-namespace ZoningAdjuster
+﻿namespace ZoningAdjuster
 {
+    using HarmonyLib;
+
     /// <summary>
     /// Harmony patches to the building tool to disable custom zoning options when the building tool is selected.
     /// </summary>
@@ -16,9 +15,8 @@ namespace ZoningAdjuster
         [HarmonyPrefix]
         public static void OnEnable()
         {
-            Patcher.UnpatchCreateZoneBlocks();
+            Patcher.Instance.UnpatchCreateZoneBlocks();
         }
-
 
         /// <summary>
         /// Harmony Prefix patch to BuildingTool.OnEnable to reappky zoning creation patches when the building tool is activated.
@@ -27,7 +25,7 @@ namespace ZoningAdjuster
         [HarmonyPrefix]
         public static void OnDisable()
         {
-            Patcher.PatchCreateZoneBlocks();
+            Patcher.Instance.PatchCreateZoneBlocks();
         }
     }
 }

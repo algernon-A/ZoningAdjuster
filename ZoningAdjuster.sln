@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZoningAdjuster", "ZoningAdjuster.csproj", "{6DC395EF-2B95-41E2-A0B7-2A5372079F5F}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "AlgernonCommonsPatchingShared", "..\AlgernonCommons\AlgernonCommonsPatchingShared.shproj", "{25AEF446-6F0D-43A8-BB84-D1306789B68C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,7 @@ Global
 		SolutionGuid = {BA8EBABC-CD61-412B-A05D-14B40FCBA09B}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\AlgernonCommons\AlgernonCommonsPatchingShared.projitems*{25aef446-6f0d-43a8-bb84-d1306789b68c}*SharedItemsImports = 13
 		..\AlgernonCommons\AlgernonCommonsPatchingShared.projitems*{6dc395ef-2b95-41e2-a0b7-2a5372079f5f}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

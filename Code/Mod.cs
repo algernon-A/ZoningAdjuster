@@ -1,82 +1,92 @@
-﻿using ICities;
-using ColossalFramework.UI;
-using CitiesHarmony.API;
-
-
-namespace ZoningAdjuster
+﻿namespace ZoningAdjuster
 {
-    public class ZoningAdjusterMod : IUserMod
+    using AlgernonCommons;
+    using AlgernonCommons.Patching;
+    using AlgernonCommons.Translation;
+    using AlgernonCommons.UI;
+    using ColossalFramework.UI;
+    using ICities;
+
+    /// <summary>
+    /// The base mod class for instantiation by the game.
+    /// </summary>
+    public sealed class Mod : PatcherMod, IUserMod
     {
-        // Public mod name and description.
-        public string Name => ModName + " " + Version;
-        public string Description => Translations.Translate("ZMD_DESC");
-
-        // Internal and private name and version components.
-        internal static string ModName => "Zoning Adjuster";
-        internal static string Version => BaseVersion + " " + Beta;
-        internal static string Beta => "";
-        internal static int BetaVersion => 0;
-        private static string BaseVersion => "1.5.3";
-
+        // Mod name.
+        private static readonly string ModName = "Zoning Adjuster";
 
         /// <summary>
-        /// Called by the game when the mod is disabled.
+        /// Gets the mod's name for logging purposes.
         /// </summary>
-        public void OnDisabled()
-        {
-            // Unapply Harmony patches via Cities Harmony.
-            if (HarmonyHelper.IsHarmonyInstalled)
-            {
-                Patcher.UnpatchAll();
-            }
-        }
+        public override string LogName => ModName;
 
+        /// <summary>
+        /// Gets the mod's unique Harmony identfier.
+        /// </summary>
+        public override string HarmonyID => "algernon-A.csl.zoningadjuster";
+
+        /// <summary>
+        /// Gets the mod's display name.
+        /// </summary>
+        public override string Name => ModName + ' ' + AssemblyUtils.TrimmedCurrentVersion;
+
+        /// <summary>
+        /// Gets the mod's description for display in the content manager.
+        /// </summary>
+        public string Description => Translations.Translate("ZMD_DESC");
 
         /// <summary>
         /// Called by the game when the mod is enabled.
         /// </summary>
-        public void OnEnabled()
+        public override void OnEnabled()
         {
             // Initialize zoneing block data.
             new ZoneBlockData();
 
-            // Apply Harmony patches via Cities Harmony.
-            // Called here instead of OnCreated to allow the auto-downloader to do its work prior to launch.
-            HarmonyHelper.DoOnHarmonyReady(() => Patcher.PatchAll());
+            base.OnEnabled();
 
-            // Load the settings file.
-            ModSettings.Load();
+            // Add the options panel event handler for the start screen (to enable/disable options panel based on visibility).
+            // First, check to see if UIView is ready.
+            if (UIView.GetAView() != null)
+            {
+                // It's ready - attach the hook now.
+                OptionsPanelManager<OptionsPanel>.OptionsEventHook();
+            }
+            else
+            {
+                // Otherwise, queue the hook for when the intro's finished loading.
+                LoadingManager.instance.m_introLoaded += OptionsPanelManager<OptionsPanel>.OptionsEventHook;
+            }
         }
-
 
         /// <summary>
         /// Called by the game when the mod options panel is setup.
         /// </summary>
+        /// <param name="helper">UI helper instance.</param>
         public void OnSettingsUI(UIHelperBase helper)
         {
-            // Offset key.
-            UIHelperBase keyGroup = helper.AddGroup(Translations.Translate("ZMD_OPT_KEY"));
-            string[] keyOptions = new string[] { Translations.Translate("ZMD_SHIFT"), Translations.Translate("ZMD_CTRL"), Translations.Translate("ZMD_ALT") };
-            UIDropDown offsetKeyDropDown = (UIDropDown)keyGroup.AddDropdown(Translations.Translate("ZMD_OPT_ZOK"), keyOptions, OffsetKeyThreading.offsetModifier, (value) => { OffsetKeyThreading.offsetModifier = value; ModSettings.Save(); });
-
-            // Tool activation hotkey.
-            offsetKeyDropDown.parent.parent.gameObject.AddComponent<OptionsKeymapping>();
-
-            // Panel/button visibility.
-            UIHelperBase showGroup = helper.AddGroup(Translations.Translate("ZMD_OPT_SHO"));
-            showGroup.AddCheckbox(Translations.Translate("ZMD_OPT_SOR"), ModSettings.showOnRoad, (isChecked) => { ModSettings.showOnRoad = isChecked; ModSettings.Save(); });
-            showGroup.AddCheckbox(Translations.Translate("ZMD_OPT_SPB"), ModSettings.ShowPanelButton, (isChecked) => { ModSettings.ShowPanelButton = isChecked; ModSettings.Save(); });
-
-            // Reset panel and button positions.
-            UIHelperBase positionGroup = helper.AddGroup(Translations.Translate("ZMD_OPT_POS"));
-            positionGroup.AddButton(Translations.Translate("ZMD_OPT_RPP"), delegate { ModSettings.panelX = -1; ZoningSettingsPanel.Panel?.SetPosition(); ModSettings.panelX = -1; ModSettings.Save(); });
-            positionGroup.AddButton(Translations.Translate("ZMD_OPT_RBP"), delegate { ModSettings.buttonX = -1; ZoningAdjusterButton.Instance?.SetPosition(); });
-
-            // Language options.
-            UIHelperBase languageGroup = helper.AddGroup(Translations.Translate("TRN_CHOICE"));
-            UIDropDown languageDropDown = (UIDropDown)languageGroup.AddDropdown(Translations.Translate("TRN_CHOICE"), Translations.LanguageList, Translations.Index, (value) => { Translations.Index = value; ModSettings.Save(); });
-            languageDropDown.autoSize = false;
-            languageDropDown.width = 270f;
+            // Create options panel.
+            OptionsPanelManager<OptionsPanel>.Setup(helper);
         }
+
+        /// <summary>
+        /// Saves settings file.
+        /// </summary>
+        public override void SaveSettings() => ModSettings.Save();
+
+        /// <summary>
+        /// Loads settings file.
+        /// </summary>
+        public override void LoadSettings() => ModSettings.Load();
+
+        /// <summary>
+        /// Apply Harmony patches.
+        /// </summary>
+        protected override void ApplyPatches() => Patcher.Instance.PatchAll();
+
+        /// <summary>
+        /// Remove Harmony patches.
+        /// </summary>
+        protected override void RemovePatches() => Patcher.Instance.UnpatchAll();
     }
 }

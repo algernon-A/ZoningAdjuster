@@ -1,14 +1,15 @@
-﻿using ColossalFramework.UI;
-
-
-namespace ZoningAdjuster
+﻿namespace ZoningAdjuster
 {
+    using AlgernonCommons;
+    using ColossalFramework.UI;
+
     /// <summary>
     /// Static class to get references to game UI components.
     /// </summary>
-    class GameUIComponents
+    internal static class GameUIComponents
     {
         // Game's RoadOptionsPanel.
+        private static UIComponent s_roadOptionsPanel;
 
         /// <summary>
         /// Returns the game's RoadOptionPanel.
@@ -19,9 +20,9 @@ namespace ZoningAdjuster
             get
             {
                 // Check to see if we've already got a reference; if so, return it.
-                if (_roadOptionsPanel != null)
+                if (s_roadOptionsPanel != null)
                 {
-                    return _roadOptionsPanel;
+                    return s_roadOptionsPanel;
                 }
                 else
                 {
@@ -35,7 +36,7 @@ namespace ZoningAdjuster
                         if (component.name.Equals("RoadsOptionPanel(RoadsPanel)"))
                         {
                             Logging.Message("found RoadsOptionPanel(RoadsPanel)");
-                            _roadOptionsPanel = component;
+                            s_roadOptionsPanel = component;
                             return component;
                         }
                         // If that fails, our backup is generic RoadsOptionPanel.
@@ -58,6 +59,5 @@ namespace ZoningAdjuster
                 return null;
             }
         }
-        private static UIComponent _roadOptionsPanel;
     }
 }

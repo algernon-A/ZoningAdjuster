@@ -1,24 +1,25 @@
-﻿using System.Runtime.CompilerServices;
-using UnityEngine;
-using ColossalFramework;
-using ColossalFramework.Math;
-using HarmonyLib;
-
-
-
-namespace ZoningAdjuster
+﻿namespace ZoningAdjuster
 {
+    using System.Runtime.CompilerServices;
+    using AlgernonCommons;
+    using ColossalFramework;
+    using ColossalFramework.Math;
+    using HarmonyLib;
+    using UnityEngine;
+
     /// <summary>
     ///  Harmony patches to implement variable zone depth.
     /// </summary>
     [HarmonyPatch(typeof(ZoneBlock))]
     public static class ZoneDepthPatches
     {
-        // Number of columns per zone block (always 4).
+        /// <summary>
+        /// Number of columns per zone block (always 4).
+        /// </summary>
         public const uint COLUMN_COUNT = 4;
 
         // Current mod maximum zone depth setting (zero-based).
-        internal static byte zoneDepth = 3;
+        internal static byte ZoneDepth { get; set; } = 3;
 
         /// <summary>
         /// Pre-emptive Harmony patch for ZoneManager.CalculateBlock1.

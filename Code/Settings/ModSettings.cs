@@ -1,19 +1,20 @@
-﻿using System;
-using System.IO;
-using System.ComponentModel;
-using System.Xml.Serialization;
-using UnityEngine;
-using ColossalFramework;
-
-
-namespace ZoningAdjuster
+﻿namespace ZoningAdjuster
 {
+    using System;
+    using System.IO;
+    using System.Xml.Serialization;
+    using AlgernonCommons;
+    using AlgernonCommons.Keybinding;
+    using AlgernonCommons.XML;
+    using ColossalFramework;
+    using UnityEngine;
+
     /// <summary>
-    /// Static class to hold global mod settings.
+    /// Global mod settings.
     /// </summary>
     /// 
     [XmlRoot(ElementName = "ZoningAdjuster", Namespace = "")]
-    public class ModSettings
+    public class ModSettings : SettingsXMLBase
     {
         // Settings file name.
         [XmlIgnore]
@@ -26,12 +27,6 @@ namespace ZoningAdjuster
         // Full userdir settings file name.
         [XmlIgnore]
         private static readonly string SettingsFile = Path.Combine(UserSettingsDir, SettingsFileName);
-
-        // What's new notification version.
-        [XmlIgnore]
-        internal static string whatsNewVersion = "0.0";
-        [XmlIgnore]
-        internal static int whatsNewBetaVersion = 0;
 
         // Panel postion.
         [XmlIgnore]
@@ -57,11 +52,10 @@ namespace ZoningAdjuster
 
         // UUI hotkey.
         [XmlIgnore]
-        private static readonly UnsavedInputKey uuiKey = new UnsavedInputKey(name: "Transfer Controller hotkey", keyCode: KeyCode.Z, control: false, shift: false, alt: true);
-
+        private static readonly UnsavedInputKey UUIKey = new UnsavedInputKey(name: "Zoning Adjuster hotkey", keyCode: KeyCode.Z, control: false, shift: false, alt: true);
 
         /// <summary>
-        /// Sets panel button visibility.
+        /// Gets or sets a value indicating whether the legacy panel button should be visible.
         /// </summary>
         [XmlIgnore]
         internal static bool ShowPanelButton
@@ -86,93 +80,74 @@ namespace ZoningAdjuster
         [XmlIgnore]
         private static bool _showPanelButton = true;
 
-
-        // File version.
+        /// <summary>
+        /// Gets or sets the current configuration file version.
+        /// </summary>
         [XmlAttribute("Version")]
-        public int version = 0;
-
-        // What's new notification version.
-        [XmlElement("WhatsNewVersion")]
-        public string XMLWhatsNewVersion { get => whatsNewVersion; set => whatsNewVersion = value; }
-
-
-        [XmlElement("WhatsNewBetaVersion")]
-        [DefaultValue(0)]
-        public int XMLWhatsNewBetaVersion { get => whatsNewBetaVersion; set => whatsNewBetaVersion = value; }
-
-
-        // Language.
-        [XmlElement("Language")]
-        public string XMLLanguage { get => Translations.CurrentLanguage; set => Translations.CurrentLanguage = value; }
-
-
-        // Zoning tool hotkey.
+        public int Version { get; set; } = 0;
+        
+        /// <summary>
+        /// Gets or sets the tool hotkey.
+        /// </summary>
         [XmlElement("PanelKey")]
-        public KeyBinding XMLPanelKey
+        public Keybinding XMLToolKey
         {
-            get => uuiKey.KeyBinding;
+            get => UUIKey.Keybinding;
 
-            set => uuiKey.KeyBinding = value;
+            set => UUIKey.Keybinding = value;
         }
 
-
-        // Offset modifier key.
+        /// <summary>
+        /// Gets or sets the offset modifier key.
+        /// </summary>
         [XmlElement("OffsetKey")]
         public int XMLOffsetModifier { get => OffsetKeyThreading.offsetModifier; set => OffsetKeyThreading.offsetModifier = value; }
 
-
-        // Show panel on road tool.
+        /// <summary>
+        /// Gets or sets a value indicating whether the Zoning Adjuste panel should be shown when the road tool is active.
+        /// </summary>
         [XmlElement("ShowOnRoad")]
         public bool XMLShowOnRoad { get => showOnRoad; set => showOnRoad = value; }
 
-
-        // Panel X postion.
+        /// <summary>
+        /// Gets or sets the panel's saved X-position.
+        /// </summary>
         [XmlElement("PanelX")]
         public float XMLPanelX { get => panelX; set => panelX = value; }
 
-
-        // Panel Y postion.
+        /// <summary>
+        /// Gets or sets the panel's saved Y-position.
+        /// </summary>
         [XmlElement("PanelY")]
         public float XMLPanelY { get => panelY; set => panelY = value; }
 
-
-        // Button X postion.
+        /// <summary>
+        /// Gets or sets the panel buttons's saved X-position.
+        /// </summary>
         [XmlElement("ButtonX")]
         public float XMLButtonX { get => buttonX; set => buttonX = value; }
 
-
-        // Button Ypostion.
+        /// <summary>
+        /// Gets or sets the panel buttons's saved Y-position.
+        /// </summary>
         [XmlElement("ButtonY")]
         public float XMLButtonY { get => buttonY; set => buttonY = value; }
 
-
-        // Show panel button.
+        /// <summary>
+        /// Gets or sets a value indicating whether the legacy panel button should be visible.
+        /// </summary>
         [XmlElement("ShowPanelButton")]
         public bool XMLShowPanelButton { get => ShowPanelButton; set => ShowPanelButton = value; }
 
-
         /// <summary>
-        /// Current hotkey as UUI UnsavedInputKey.
+        /// Gets the current hotkey as a UUI UnsavedInputKey.
         /// </summary>
         [XmlIgnore]
-        internal static UnsavedInputKey UUIKey => uuiKey;
-
-
-        /// <summary>
-        /// The current hotkey settings as ColossalFramework InputKey.
-        /// </summary>
-        [XmlIgnore]
-        internal static InputKey ToolKey
-        {
-            get => uuiKey.value;
-
-            set => uuiKey.value = value;
-        }
-
+        internal static UnsavedInputKey ToolKey => UUIKey;
 
         /// <summary>
         /// Load settings from XML file.
-        /// </summary>
+        /// </summary>S
         internal static void Load()
         {
             try
@@ -232,69 +207,6 @@ namespace ZoningAdjuster
             {
                 Logging.LogException(e, "exception saving XML settings file");
             }
-        }
-    }
-
-
-    /// <summary>
-    /// Basic keybinding class - code and modifiers.
-    /// </summary>
-    public class KeyBinding
-    {
-        [XmlAttribute("KeyCode")]
-        public int keyCode;
-
-        [XmlAttribute("Control")]
-        public bool control;
-
-        [XmlAttribute("Shift")]
-        public bool shift;
-
-        [XmlAttribute("Alt")]
-        public bool alt;
-
-
-        /// <summary>
-        /// Encode keybinding as saved input key for UUI.
-        /// </summary>
-        /// <returns></returns>
-        internal InputKey Encode() => SavedInputKey.Encode((KeyCode)keyCode, control, shift, alt);
-    }
-
-
-    /// <summary>
-    /// UUI unsaved input key.
-    /// </summary>
-    public class UnsavedInputKey : UnifiedUI.Helpers.UnsavedInputKey
-    {
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="name">Reference name</param>
-        /// <param name="keyCode">Keycode</param>
-        /// <param name="control">Control modifier key status</param>
-        /// <param name="shift">Shift modifier key status</param>
-        /// <param name="alt">Alt modifier key status</param>
-        public UnsavedInputKey(string name, KeyCode keyCode, bool control, bool shift, bool alt) :
-            base(keyName: name, modName: "Repaint", Encode(keyCode, control: control, shift: shift, alt: alt))
-        {
-        }
-
-
-        /// <summary>
-        /// Called by UUI when a key conflict is resolved.
-        /// Used here to save the new key setting.
-        /// </summary>
-        public override void OnConflictResolved() => ModSettings.Save();
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public KeyBinding KeyBinding
-        {
-            get => new KeyBinding { keyCode = (int)Key, control = Control, shift = Shift, alt = Alt };
-            set => this.value = value.Encode();
         }
     }
 }

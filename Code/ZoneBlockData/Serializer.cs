@@ -1,16 +1,16 @@
-﻿using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using ICities;
-using ColossalFramework.IO;
-
-
-namespace ZoningAdjuster
+﻿namespace ZoningAdjuster
 {
+    using System;
+    using System.IO;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using AlgernonCommons;
+    using ColossalFramework.IO;
+    using ICities;
+
     /// <summary>
     /// Handles savegame data saving and loading.
     /// </summary>
-    public class Serializer : SerializableDataExtensionBase
+    public sealed class Serializer : SerializableDataExtensionBase
     {
         // Unique data ID.
         private readonly string dataID = "ZoningAdjuster";

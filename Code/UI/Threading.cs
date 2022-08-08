@@ -1,20 +1,32 @@
-﻿using UnityEngine;
-using ICities;
-
-
-namespace ZoningAdjuster
+﻿namespace ZoningAdjuster
 {
+    using UnityEngine;
+    using ICities;
+
     /// <summary>
     /// UI thread for offset key processing.
     /// </summary>
     public class OffsetKeyThreading : ThreadingExtensionBase
     {
-        // Enum for offset modifier key.
+        /// <summary>
+        /// Enum for offset modifier key.
+        /// </summary>
         public enum ModifierEnum
         {
-            shift = 0,
-            ctrl,
-            alt
+            /// <summary>
+            /// Shift key.
+            /// </summary>
+            Shift = 0,
+
+            /// <summary>
+            /// Control key.
+            /// </summary>
+            Ctrl,
+
+            /// <summary>
+            /// Alt key/
+            /// </summary>
+            Alt,
         }
 
 
@@ -42,13 +54,13 @@ namespace ZoningAdjuster
                 bool offsetKeyPressed = false;
                 switch (offsetModifier)
                 {
-                    case (int)ModifierEnum.shift:
+                    case (int)ModifierEnum.Shift:
                         offsetKeyPressed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
                         break;
-                    case (int)ModifierEnum.ctrl:
+                    case (int)ModifierEnum.Ctrl:
                         offsetKeyPressed = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
                         break;
-                    case (int)ModifierEnum.alt:
+                    case (int)ModifierEnum.Alt:
                         offsetKeyPressed = Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt) || Input.GetKey(KeyCode.AltGr);
                         break;
                 }
