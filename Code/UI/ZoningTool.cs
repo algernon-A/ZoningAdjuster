@@ -298,6 +298,9 @@
 		/// </summary>
 		protected override void OnEnable()
 		{
+			// Call base even before loaded checks to properly initialize tool.
+			base.OnEnable();
+
 			// Don't do anything if game isn't loaded.
 			if (!Loading.IsLoaded)
 			{
@@ -305,7 +308,6 @@
 			}
 
 			Logging.Message("tool enabled");
-			base.OnEnable();
 
 			// Create zoning settings panel if it isn't already created, and in any case make sure it's visible.
 			ZoningSettingsPanel.Create();
