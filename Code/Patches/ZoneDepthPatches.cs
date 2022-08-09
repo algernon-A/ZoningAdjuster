@@ -1,4 +1,9 @@
-﻿namespace ZoningAdjuster
+﻿// <copyright file="ZoneDepthPatches.cs" company="algernon (K. Algernon A. Sheppard)">
+// Copyright (c) algernon (K. Algernon A. Sheppard). All rights reserved.
+// Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
+// </copyright>
+
+namespace ZoningAdjuster
 {
     using System.Runtime.CompilerServices;
     using AlgernonCommons;
@@ -16,9 +21,11 @@
         /// <summary>
         /// Number of columns per zone block (always 4).
         /// </summary>
-        public const uint COLUMN_COUNT = 4;
-
-        // Current mod maximum zone depth setting (zero-based).
+        public const uint ColumnCount = 4;
+        
+        /// <summary>
+        /// Gets or sets the current zone depth setting (in cells).
+        /// </summary>
         internal static byte ZoneDepth { get; set; } = 3;
 
         /// <summary>
@@ -54,10 +61,10 @@
             // area of the zone block (8x4 cells)
             Quad2 zoneBlockQuad = new Quad2()
             {
-                a = positionXZ - COLUMN_COUNT * columnDirection - COLUMN_COUNT * rowDirection,
-                b = positionXZ + 0f * columnDirection - COLUMN_COUNT * rowDirection, // TODO change 0f to 4f to support 8 tiles deep zones
-                c = positionXZ + 0f * columnDirection + (float)(rowCount - COLUMN_COUNT) * rowDirection, // TODO change 0f to 4f to support 8 tiles deep zones
-                d = positionXZ - COLUMN_COUNT * columnDirection + (float)(rowCount - COLUMN_COUNT) * rowDirection
+                a = positionXZ - (ColumnCount * columnDirection) - (ColumnCount * rowDirection),
+                b = positionXZ + (0f * columnDirection) - (ColumnCount * rowDirection), // TODO change 0f to 4f to support 8 tiles deep zones
+                c = positionXZ + (0f * columnDirection) + ((float)(rowCount - ColumnCount) * rowDirection), // TODO change 0f to 4f to support 8 tiles deep zones
+                d = positionXZ - (ColumnCount * columnDirection) + ((float)(rowCount - ColumnCount) * rowDirection),
             };
 
             Vector2 quadMin = zoneBlockQuad.Min();
@@ -66,10 +73,10 @@
             NetManager netManager = Singleton<NetManager>.instance;
 
             // Calculate which net segment grid cells are touched by this zone block.
-            int gridMinX = Mathf.Max((int)(((double)quadMin.x - 64.0d) / 64.0d + 135.0d), 0);
-            int gridMinY = Mathf.Max((int)(((double)quadMin.y - 64.0d) / 64.0d + 135.0d), 0);
-            int gridMaxX = Mathf.Min((int)(((double)quadMax.x + 64.0d) / 64.0d + 135.0d), 269);
-            int gridMaxY = Mathf.Min((int)(((double)quadMax.y + 64.0d) / 64.0d + 135.0d), 269);
+            int gridMinX = Mathf.Max((int)((((double)quadMin.x - 64.0d) / 64.0d) + 135.0d), 0);
+            int gridMinY = Mathf.Max((int)((((double)quadMin.y - 64.0d) / 64.0d) + 135.0d), 0);
+            int gridMaxX = Mathf.Min((int)((((double)quadMax.x + 64.0d) / 64.0d) + 135.0d), 269);
+            int gridMaxY = Mathf.Min((int)((((double)quadMax.y + 64.0d) / 64.0d) + 135.0d), 269);
 
             // This bitmask stores which which cells are "valid" and which are "invalid" 
             // (e.g. colliding with existing buildings or height too steep)
@@ -92,7 +99,7 @@
                 // Calculate terrain height of the row (5 columns away from zone block origin, which is where the road is).
                 float height = Singleton<TerrainManager>.instance.SampleRawHeightSmooth(VectorUtils.X_Y(positionXZ + rowMiddleLength - 5f * columnDirection));
 
-                for (int column = 0; (long)column < COLUMN_COUNT; ++column)
+                for (int column = 0; (long)column < ColumnCount; ++column)
                 {
                     // Calculate 2 relative column positions: 
                     // * one 0.1m from previous column
@@ -116,7 +123,7 @@
                             a = positionXZ + columnNearPreviousLength + rowNearPreviousLength,
                             b = positionXZ + columnNearNextLength + rowNearPreviousLength,
                             c = positionXZ + columnNearNextLength + rowNearNextLength,
-                            d = positionXZ + columnNearPreviousLength + rowNearNextLength
+                            d = positionXZ + columnNearPreviousLength + rowNearNextLength,
                         }))
                         {
                             valid &= (ulong)~(1L << (row << 3 | column));
@@ -124,6 +131,7 @@
                     }
 
                     /*--- Start insert here ---*/
+
                     // Mark any cells in columns above our set maxmimum zoning depth as invalid.
                     if (column > ZoneBlockData.Instance.GetEffectiveDepth(blockID))
                     {
@@ -158,6 +166,7 @@
                                 CalculateImplementation1(ref __instance, blockID, segmentID, ref netManager.m_segments.m_buffer[(int)segmentID], ref valid, quadMin.x, quadMin.y, quadMax.x, quadMax.y);
                             }
                         }
+
                         // Next segment in grid cell (linked list).
                         segmentID = netManager.m_segments.m_buffer[(int)segmentID].m_nextGridSegment;
 

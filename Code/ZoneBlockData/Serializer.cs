@@ -1,6 +1,10 @@
-﻿namespace ZoningAdjuster
+﻿// <copyright file="Serializer.cs" company="algernon (K. Algernon A. Sheppard)">
+// Copyright (c) algernon (K. Algernon A. Sheppard). All rights reserved.
+// Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
+// </copyright>
+
+namespace ZoningAdjuster
 {
-    using System;
     using System.IO;
     using System.Runtime.Serialization.Formatters.Binary;
     using AlgernonCommons;
@@ -12,10 +16,14 @@
     /// </summary>
     public sealed class Serializer : SerializableDataExtensionBase
     {
-        // Unique data ID.
-        private readonly string dataID = "ZoningAdjuster";
+        /// <summary>
+        /// Current data version.
+        /// </summary>
         internal const int CurrentDataVersion = 1;
 
+        // Unique data ID.
+        private readonly string oldDataID = "ZoningAdjuster";
+        private readonly string newDataID = "ZoningAdjusterData";
 
         /// <summary>
         /// Serializes data to the savegame.
@@ -25,7 +33,6 @@
         {
             base.OnSaveData();
 
-
             using (MemoryStream stream = new MemoryStream())
             {
                 BinaryFormatter formatter = new BinaryFormatter();
@@ -34,12 +41,11 @@
                 DataSerializer.Serialize(stream, DataSerializer.Mode.Memory, CurrentDataVersion, new RealPopSerializer());
 
                 // Write to savegame.
-                serializableDataManager.SaveData(dataID, stream.ToArray());
+                serializableDataManager.SaveData(newDataID, stream.ToArray());
 
                 Logging.Message("wrote ", stream.Length);
             }
         }
-
 
         /// <summary>
         /// Deserializes data from a savegame (or initialises new data structures when none available).
@@ -51,7 +57,7 @@
             base.OnLoadData();
 
             // Read data from savegame.
-            byte[] data = serializableDataManager.LoadData(dataID);
+            byte[] data = serializableDataManager.LoadData(oldDataID);
 
             // Check to see if anything was read.
             if (data != null && data.Length != 0)
@@ -69,73 +75,28 @@
             }
             else
             {
-                // No data read.
-                Logging.Message("no data read");
-            }
-        }
-    }
+                data = serializableDataManager.LoadData(newDataID);
 
-
-    /// <summary>
-    ///  Savegame (de)serialisation for settings.
-    /// </summary>
-    public class RealPopSerializer : IDataContainer
-    {
-        /// <summary>
-        /// Serialise to savegame.
-        /// </summary>
-        /// <param name="serializer">Data serializer</param>
-        public void Serialize(DataSerializer serializer)
-        {
-            Logging.Message("writing data to save file");
-
-            // Write data version.
-            serializer.WriteInt32(Serializer.CurrentDataVersion);
-
-            // Write block data.
-            serializer.WriteByteArray(ZoneBlockData.Instance.ZoneBlockFlags);
-        }
-
-
-        /// <summary>
-        /// Deseralise from savegame.
-        /// </summary>
-        /// <param name="serializer">Data serializer</param>
-        public void Deserialize(DataSerializer serializer)
-        {
-            Logging.Message("deserializing data from save file");
-
-            try
-            {
-                // Read data version.
-                int dataVersion = serializer.ReadInt32();
-                Logging.Message("read data version ", dataVersion.ToString());
-
-                // Make sure we have a matching data version.
-                if (dataVersion <= Serializer.CurrentDataVersion)
+                // Check to see if anything was read.
+                if (data != null && data.Length != 0)
                 {
-                    ZoneBlockData.Instance.ReadData(serializer.ReadByteArray());
+                    // Data was read - go ahead and deserialise.
+                    using (MemoryStream stream = new MemoryStream(data))
+                    {
+                        BinaryFormatter formatter = new BinaryFormatter();
+
+                        // Deserialise savegame settings.
+                        DataSerializer.Deserialize<RealPopSerializer>(stream, DataSerializer.Mode.Memory);
+
+                        Logging.Message("read ", stream.Length);
+                    }
                 }
-
-                // If data version is 0, then populate existing zone block depths with default (4).
-                if (dataVersion == 0)
+                else
                 {
-                    ZoneBlockData.Instance.DefaultDepths();
+                    // No data read.
+                    Logging.Message("no data read");
                 }
             }
-            catch (Exception e)
-            {
-                Logging.LogException(e, "exception deserializing savegame data");
-            }
-        }
-
-
-        /// <summary>
-        /// Performs post-serialization data management.  Nothing to do here (yet).
-        /// </summary>
-        /// <param name="serializer">Data serializer</param>
-        public void AfterDeserialize(DataSerializer serializer)
-        {
         }
     }
 }

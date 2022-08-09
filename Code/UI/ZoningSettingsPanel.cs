@@ -1,4 +1,9 @@
-﻿namespace ZoningAdjuster
+﻿// <copyright file="ZoningSettingsPanel.cs" company="algernon (K. Algernon A. Sheppard)">
+// Copyright (c) algernon (K. Algernon A. Sheppard). All rights reserved.
+// Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
+// </copyright>
+
+namespace ZoningAdjuster
 {
     using System;
     using AlgernonCommons;
@@ -13,96 +18,47 @@
     public class ZoningSettingsPanel : UIPanel
     {
         // Layout constants.
-        const float Margin = 8f;
-        const float CheckHeight = 20f;
-        const float PanelWidth = 230f;
-        const float TitleHeight = 40f;
-        const float SliderLabelHeight = 20f;
-        const float SliderPanelHeight = 36f;
-        const float DisableCheckY = TitleHeight;
-        const float ForceCheckY = DisableCheckY + CheckHeight;
-        const float OldCheckY = ForceCheckY + 30f;
-        const float NewCheckY = OldCheckY + CheckHeight;
-        const float NoCheckY = NewCheckY + CheckHeight;
-        const float SetbackSliderY = NoCheckY + 30f;
-        const float ZoneDepthSliderY = SetbackSliderY + SliderLabelHeight + SliderPanelHeight + (Margin * 2f);
-        const float PanelHeight = ZoneDepthSliderY + SliderLabelHeight + SliderPanelHeight + Margin;
+        private const float Margin = 8f;
+        private const float CheckHeight = 20f;
+        private const float PanelWidth = 230f;
+        private const float TitleHeight = 40f;
+        private const float SliderLabelHeight = 20f;
+        private const float SliderPanelHeight = 36f;
+        private const float DisableCheckY = TitleHeight;
+        private const float ForceCheckY = DisableCheckY + CheckHeight;
+        private const float OldCheckY = ForceCheckY + 30f;
+        private const float NewCheckY = OldCheckY + CheckHeight;
+        private const float NoCheckY = NewCheckY + CheckHeight;
+        private const float SetbackSliderY = NoCheckY + 30f;
+        private const float ZoneDepthSliderY = SetbackSliderY + SliderLabelHeight + SliderPanelHeight + (Margin * 2f);
+        private const float PanelHeight = ZoneDepthSliderY + SliderLabelHeight + SliderPanelHeight + Margin;
+
+        // Instance references.
+        private static GameObject s_gameObject;
+        private static ZoningSettingsPanel s_panel;
 
         // Zoning age priority checkboxes.
-        private readonly string[] priorityNames =
+        private readonly string[] _priorityNames =
         {
             "ZMD_PNL_POZ",
             "ZMD_PNL_PNZ",
-            "ZMD_PNL_PVZ"
+            "ZMD_PNL_PVZ",
         };
-        private readonly float[] priorityCheckY =
+
+        private readonly float[] _priorityCheckY =
         {
             OldCheckY,
             NewCheckY,
-            NoCheckY
+            NoCheckY,
         };
 
         // Panel components.
-        private readonly UICheckBox[] priorityChecks;
-        private readonly UICheckBox disableCheck, forceCheck;
-
-        // Instance references.
-        private static GameObject uiGameObject;
-        private static ZoningSettingsPanel panel;
-        internal static ZoningSettingsPanel Panel => panel;
-
+        private readonly UICheckBox[] _priorityChecks;
+        private readonly UICheckBox _disableCheck;
+        private readonly UICheckBox _forceCheck;
 
         /// <summary>
-        /// Creates the panel object in-game and displays it.
-        /// </summary>
-        internal static void Create()
-        {
-            try
-            {
-                Logging.Message("creating ZoningSettingsPanel");
-
-                // If no GameObject instance already set, create one.
-                if (uiGameObject == null)
-                {
-                    // Give it a unique name for easy finding with ModTools.
-                    uiGameObject = new GameObject("ZoningSettingsPanel");
-                    uiGameObject.transform.parent = UIView.GetAView().transform;
-
-                    // Create new panel instance and add it to GameObject.
-                    panel = uiGameObject.AddComponent<ZoningSettingsPanel>();
-                    panel.transform.parent = uiGameObject.transform.parent;
-                }
-            }
-            catch (Exception e)
-            {
-                Logging.LogException(e, "exception creating ZoningSettingsPanel");
-            }
-        }
-
-
-        /// <summary>
-        /// Closes the panel by destroying the object (removing any ongoing UI overhead).
-        /// </summary>
-        internal static void Close()
-        {
-            // Don't do anything if no panel.
-            if (panel == null )
-            {
-                return;
-            }
-
-            // Destroy game objects.
-            GameObject.Destroy(panel);
-            GameObject.Destroy(uiGameObject);
-
-            // Let the garbage collector do its work (and also let us know that we've closed the object).
-            panel = null;
-            uiGameObject = null;
-        }
-
-
-        /// <summary>
-        /// Constructor.
+        /// Initializes a new instance of the <see cref="ZoningSettingsPanel"/> class.
         /// </summary>
         public ZoningSettingsPanel()
         {
@@ -115,7 +71,7 @@
             atlas = UITextures.InGameAtlas;
             backgroundSprite = "SubcategoriesPanel";
             clipChildren = true;
-             
+
             // Title.
             UILabel titleLabel = UILabels.AddLabel(this, 0f, Margin, Translations.Translate("ZMD_NAME"), PanelWidth - Margin - Margin);
             titleLabel.textAlignment = UIHorizontalAlignment.Center;
@@ -136,48 +92,48 @@
             dragHandle.target = this;
 
             // Disable zoning checkbox.
-            disableCheck = UICheckBoxes.AddLabelledCheckBox(this, Margin, DisableCheckY, Translations.Translate("ZMD_PNL_DIS"), tooltip: Translations.Translate("ZMD_PNL_DIS_TIP"));
-            disableCheck.isChecked = ModSettings.disableZoning;
-            disableCheck.eventCheckChanged += (control, isChecked) =>
+            _disableCheck = UICheckBoxes.AddLabelledCheckBox(this, Margin, DisableCheckY, Translations.Translate("ZMD_PNL_DIS"), tooltip: Translations.Translate("ZMD_PNL_DIS_TIP"));
+            _disableCheck.isChecked = ModSettings.DisableZoning;
+            _disableCheck.eventCheckChanged += (control, isChecked) =>
             {
-                ModSettings.disableZoning = isChecked;
+                ModSettings.DisableZoning = isChecked;
 
                 // Disable forced zoning check if this is selected
                 if (isChecked)
                 {
-                    forceCheck.isChecked = false;
+                    _forceCheck.isChecked = false;
                 }
             };
 
             // Force zoning checkbox.
-            forceCheck = UICheckBoxes.AddLabelledCheckBox(this, Margin, ForceCheckY, Translations.Translate("ZMD_PNL_FOR"), tooltip: Translations.Translate("ZMD_PNL_DIS_TIP"));
-            forceCheck.isChecked = ModSettings.forceZoning;
-            forceCheck.eventCheckChanged += (control, isChecked) =>
+            _forceCheck = UICheckBoxes.AddLabelledCheckBox(this, Margin, ForceCheckY, Translations.Translate("ZMD_PNL_FOR"), tooltip: Translations.Translate("ZMD_PNL_DIS_TIP"));
+            _forceCheck.isChecked = ModSettings.ForceZoning;
+            _forceCheck.eventCheckChanged += (control, isChecked) =>
             {
-                ModSettings.forceZoning = isChecked;
+                ModSettings.ForceZoning = isChecked;
 
                 // Disable disable zoning check if this is selected
                 if (isChecked)
                 {
-                    disableCheck.isChecked = false;
+                    _disableCheck.isChecked = false;
                 }
             };
 
             // Accomodate longer translation strings.
-            this.width = Mathf.Max(this.width, forceCheck.width + (Margin * 2f), disableCheck.width + (Margin * 2f));
+            this.width = Mathf.Max(this.width, _forceCheck.width + (Margin * 2f), _disableCheck.width + (Margin * 2f));
 
             // Priority checkboxes.
-            priorityChecks = new UICheckBox[(int)ZoneBlockData.PriorityIndexes.NumPriorities];
+            _priorityChecks = new UICheckBox[(int)ZoneBlockData.PriorityIndexes.NumPriorities];
             int currentPriority = ZoneBlockData.Instance.GetCurrentPriority();
-            for (int i = 0; i < priorityChecks.Length; ++i)
+            for (int i = 0; i < _priorityChecks.Length; ++i)
             {
-                priorityChecks[i] = UICheckBoxes.AddLabelledCheckBox(this, Margin, priorityCheckY[i], Translations.Translate(priorityNames[i]), tooltip: Translations.Translate(priorityNames[i] + "_TIP"));
-                priorityChecks[i].objectUserData = i;
-                priorityChecks[i].isChecked = i == currentPriority;
-                priorityChecks[i].eventCheckChanged += PriorityCheckChanged;
+                _priorityChecks[i] = UICheckBoxes.AddLabelledCheckBox(this, Margin, _priorityCheckY[i], Translations.Translate(_priorityNames[i]), tooltip: Translations.Translate(_priorityNames[i] + "_TIP"));
+                _priorityChecks[i].objectUserData = i;
+                _priorityChecks[i].isChecked = i == currentPriority;
+                _priorityChecks[i].eventCheckChanged += PriorityCheckChanged;
 
                 // Accomodate longer translation strings.
-                this.width = Mathf.Max(this.width, priorityChecks[i].width + (Margin * 2f));
+                this.width = Mathf.Max(this.width, _priorityChecks[i].width + (Margin * 2f));
             }
 
             // Drag bar sizing (after priority checkboxes to allow for any width adjustments for longer translation strings).
@@ -188,14 +144,14 @@
             UISlider setbackSlider = AddSlider("ZMD_PNL_SBK", SetbackSliderY, "ZMD_PNL_SBK_TIP", false);
             setbackSlider.eventValueChanged += (control, value) =>
             {
-                ZoneBlockPatch.setback = value;
+                CreateZoneBlocks.Setback = value;
             };
 
             // Zoning depth slider control - same appearance as Fine Road Tool's, for consistency.
             UISlider zoneDepthSlider = AddSlider("ZMD_PNL_DEP", ZoneDepthSliderY, "ZMD_PNL_DEP_TIP", true);
             zoneDepthSlider.eventValueChanged += (control, value) =>
             {
-                ZoneDepthPatches.ZoneDepth = (byte)Mathf.Clamp(value -1, 0f, 3f);
+                ZoneDepthPatches.ZoneDepth = (byte)Mathf.Clamp(value - 1, 0f, 3f);
             };
 
             // Bring to front.
@@ -205,6 +161,57 @@
             eventPositionChanged += PositionChanged;
         }
 
+        /// <summary>
+        /// Gets the active panel instance.
+        /// </summary>
+        internal static ZoningSettingsPanel Panel => s_panel;
+
+        /// <summary>
+        /// Creates the panel object in-game and displays it.
+        /// </summary>
+        internal static void Create()
+        {
+            try
+            {
+                Logging.Message("creating ZoningSettingsPanel");
+
+                // If no GameObject instance already set, create one.
+                if (s_gameObject == null)
+                {
+                    // Give it a unique name for easy finding with ModTools.
+                    s_gameObject = new GameObject("ZoningSettingsPanel");
+                    s_gameObject.transform.parent = UIView.GetAView().transform;
+
+                    // Create new panel instance and add it to GameObject.
+                    s_panel = s_gameObject.AddComponent<ZoningSettingsPanel>();
+                    s_panel.transform.parent = s_gameObject.transform.parent;
+                }
+            }
+            catch (Exception e)
+            {
+                Logging.LogException(e, "exception creating ZoningSettingsPanel");
+            }
+        }
+
+        /// <summary>
+        /// Closes the panel by destroying the object (removing any ongoing UI overhead).
+        /// </summary>
+        internal static void Close()
+        {
+            // Don't do anything if no panel.
+            if (s_panel == null)
+            {
+                return;
+            }
+
+            // Destroy game objects.
+            Destroy(s_panel);
+            Destroy(s_gameObject);
+
+            // Let the garbage collector do its work (and also let us know that we've closed the object).
+            s_panel = null;
+            s_gameObject = null;
+        }
 
         /// <summary>
         /// Sets the panel position according to previous state and mod settings.
@@ -212,36 +219,34 @@
         internal void SetPosition()
         {
             // Restore previous position if we had one ((ModSettings.panelX isn't negative), otherwise position it in default position above panel button.
-            if (ModSettings.panelX < 0)
+            if (ModSettings.PanelX < 0)
             {
                 // Default position is above the game's RoadOptionPanel, level with the zoning button's place (regardless of whether or not zoning button is shown).
                 absolutePosition = GameUIComponents.RoadsOptionPanel.absolutePosition - new Vector3((-ZoningAdjusterButton.ButtonSize - 1f) * 2f, PanelHeight + Margin);
             }
             else
             {
-                absolutePosition = new Vector2(ModSettings.panelX, ModSettings.panelY);
+                absolutePosition = new Vector2(ModSettings.PanelX, ModSettings.PanelY);
             }
         }
 
-
         /// <summary>
-        /// Position changed event handler, to save new position
+        /// Position changed event handler, to save new position.
         /// </summary>
-        /// <param name="control">Calling component (unused)</param>
-        /// <param name="position">New position (unused)</param>
+        /// <param name="control">Calling component (unused).</param>
+        /// <param name="position">New position (unused).</param>
         private void PositionChanged(UIComponent control, Vector2 position)
         {
-            ModSettings.panelX = this.absolutePosition.x;
-            ModSettings.panelY = this.absolutePosition.y;
+            ModSettings.PanelX = this.absolutePosition.x;
+            ModSettings.PanelY = this.absolutePosition.y;
             ModSettings.Save();
         }
-
 
         /// <summary>
         /// Priority check changed event handler.
         /// </summary>
-        /// <param name="control">Calling component</param>
-        /// <param name="isChecked">New checked state</param>
+        /// <param name="control">Calling component.</param>
+        /// <param name="isChecked">New checked state.</param>
         private void PriorityCheckChanged(UIComponent control, bool isChecked)
         {
             // Get stored index from control user data.
@@ -256,7 +261,7 @@
                         // If it's not this checkbox, uncheck it.
                         if (i != index)
                         {
-                            priorityChecks[i].isChecked = false;
+                            _priorityChecks[i].isChecked = false;
                         }
                     }
 
@@ -270,7 +275,7 @@
                     for (int i = 0; i < (int)ZoneBlockData.PriorityIndexes.NumPriorities; ++i)
                     {
                         // If any are checked, we're done here; return.
-                        if (priorityChecks[i].isChecked)
+                        if (_priorityChecks[i].isChecked)
                         {
                             return;
                         }
@@ -282,22 +287,18 @@
             }
         }
 
-
         /// <summary>
         /// Adds a labelled slider control to the panel at the specified postion.
         /// </summary>
-        /// <param name="textKey">Label translation key</param>
-        /// <param name="yPos">Relative Y position</param>
-        /// <param name="toolTipKey">Tooltip translation key</param>
-        /// <param name="isDepthSlider">True if this is a zone depth slider, false otherwise</param>
-        /// <returns>New UISlider with Fine Road Tool appearance</returns>
+        /// <param name="textKey">Label translation key.</param>
+        /// <param name="yPos">Relative Y position.</param>
+        /// <param name="toolTipKey">Tooltip translation key.</param>
+        /// <param name="isDepthSlider">True if this is a zone depth slider, false otherwise.</param>
+        /// <returns>New UISlider with Fine Road Tool appearance.</returns>
         private UISlider AddSlider(string textKey, float yPos, string toolTipKey, bool isDepthSlider)
         {
             // Slider label.
-            UILabel setbackLabel = this.AddUIComponent<UILabel>();
-            setbackLabel.textScale = 0.9f;
-            setbackLabel.text = Translations.Translate(textKey);
-            setbackLabel.relativePosition = new Vector2(Margin, yPos);
+            UILabel setbackLabel = UILabels.AddLabel(this, Margin, yPos, Translations.Translate(textKey), textScale: 0.9f);
             setbackLabel.SendToBack();
 
             // Slider panel.
@@ -310,42 +311,25 @@
             sliderPanel.tooltip = Translations.Translate(toolTipKey);
 
             // Slider value label.
-            UILabel valueLabel = sliderPanel.AddUIComponent<UILabel>();
+            UILabel valueLabel = UILabels.AddLabel(sliderPanel, sliderPanel.width - Margin, 10f, "0", textScale: 0.9f);
             valueLabel.atlas = UITextures.InGameAtlas;
             valueLabel.backgroundSprite = "TextFieldPanel";
             valueLabel.verticalAlignment = UIVerticalAlignment.Bottom;
             valueLabel.textAlignment = UIHorizontalAlignment.Center;
-            valueLabel.textScale = 0.7f;
             valueLabel.autoSize = false;
             valueLabel.color = new Color32(91, 97, 106, 255);
             valueLabel.size = new Vector2(38, 15);
             valueLabel.relativePosition = new Vector2(sliderPanel.width - valueLabel.width - Margin, 10f);
 
             // Slider control - same appearance as Fine Road Tool's, for consistency.
-            UISlider newSlider = sliderPanel.AddUIComponent<UISlider>();
+            UISlider newSlider = UISliders.AddBudgetSlider(sliderPanel, Margin, Margin, sliderPanel.width - valueLabel.width - (Margin * 3), 4f);
             newSlider.name = "ZoningSetbackSlider";
-            newSlider.size = new Vector2(sliderPanel.width - valueLabel.width - (Margin * 3), 18f);
-            newSlider.relativePosition = new Vector2(Margin, Margin);
-
-            // Setback slider track.
-            UISlicedSprite sliderSprite = newSlider.AddUIComponent<UISlicedSprite>();
-            sliderSprite.atlas = UITextures.InGameAtlas;
-            sliderSprite.spriteName = "BudgetSlider";
-            sliderSprite.size = new Vector2(newSlider.width, 9f);
-            sliderSprite.relativePosition = new Vector2(0f, 4f);
-
-            // Setback slider thumb.
-            UISlicedSprite sliderThumb = newSlider.AddUIComponent<UISlicedSprite>();
-            sliderThumb.atlas = UITextures.InGameAtlas;
-            sliderThumb.spriteName = "SliderBudget";
-            newSlider.thumbObject = sliderThumb;
 
             // Is this a zone depth slider?
             if (isDepthSlider)
             {
-
                 // Event handler to update value.
-                newSlider.eventValueChanged += (control, value) =>
+                newSlider.eventValueChanged += (c, value) =>
                 {
                     valueLabel.text = ((int)value).ToString();
                 };
@@ -361,7 +345,7 @@
             else
             {
                 // Event handler to update value.
-                newSlider.eventValueChanged += (control, value) =>
+                newSlider.eventValueChanged += (c, value) =>
                 {
                     valueLabel.text = value.ToString() + "m";
                 };
@@ -370,7 +354,7 @@
                 newSlider.stepSize = 0.5f;
                 newSlider.minValue = -4f;
                 newSlider.maxValue = 8f;
-                newSlider.value = ZoneBlockPatch.setback;
+                newSlider.value = CreateZoneBlocks.Setback;
             }
 
             return newSlider;

@@ -1,4 +1,9 @@
-﻿namespace ZoningAdjuster
+﻿// <copyright file="ConflictDetection.cs" company="algernon (K. Algernon A. Sheppard)">
+// Copyright (c) algernon (K. Algernon A. Sheppard). All rights reserved.
+// Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
+// </copyright>
+
+namespace ZoningAdjuster
 {
     using System.Collections.Generic;
     using System.Reflection;
@@ -42,6 +47,7 @@
                                 conflictDetected = true;
                                 s_conflictingModNames.Add("Network Extensions 2 v1.0");
                             }
+
                             break;
                         case "NetworkExtensions3":
                             // Network Extensions 3.
@@ -65,6 +71,7 @@
                                 conflictDetected = true;
                                 s_conflictingModNames.Add("Painter");
                             }
+
                             break;
                     }
                 }

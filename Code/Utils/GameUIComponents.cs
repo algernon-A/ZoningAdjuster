@@ -1,4 +1,9 @@
-﻿namespace ZoningAdjuster
+﻿// <copyright file="GameUIComponents.cs" company="algernon (K. Algernon A. Sheppard)">
+// Copyright (c) algernon (K. Algernon A. Sheppard). All rights reserved.
+// Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
+// </copyright>
+
+namespace ZoningAdjuster
 {
     using AlgernonCommons;
     using ColossalFramework.UI;
@@ -12,9 +17,8 @@
         private static UIComponent s_roadOptionsPanel;
 
         /// <summary>
-        /// Returns the game's RoadOptionPanel.
+        /// Gets the game's RoadsOptionPanel.
         /// </summary>
-        /// <returns>RoadOptionPanel as UIComponent (null if not found)</returns>
         internal static UIComponent RoadsOptionPanel
         {
             get
@@ -28,7 +32,7 @@
                 {
                     // No stored reference; try to find it.
 
-                    // Backup component reference; we're looking for RoadsOptionPanel(RoadsPanel) as first preference if it exists, with plain RoadsOptionPanel as the backup. 
+                    // Backup component reference; we're looking for RoadsOptionPanel(RoadsPanel) as first preference if it exists, with plain RoadsOptionPanel as the backup.
                     UIComponent backupComponent = null;
                     foreach (UIComponent component in UnityEngine.Object.FindObjectsOfType<UIComponent>())
                     {
@@ -39,6 +43,7 @@
                             s_roadOptionsPanel = component;
                             return component;
                         }
+
                         // If that fails, our backup is generic RoadsOptionPanel.
                         else if (component.name.Equals("RoadsOptionPanel"))
                         {

@@ -1,8 +1,13 @@
-﻿namespace ZoningAdjuster
+﻿// <copyright file="Patcher.cs" company="algernon (K. Algernon A. Sheppard)">
+// Copyright (c) algernon (K. Algernon A. Sheppard). All rights reserved.
+// Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
+// </copyright>
+
+namespace ZoningAdjuster
 {
+    using System.Reflection;
     using AlgernonCommons;
     using AlgernonCommons.Patching;
-    using System.Reflection;
     using CitiesHarmony.API;
     using HarmonyLib;
 
@@ -61,7 +66,7 @@
 
                     // Apply CreateZoneBlocks patch.
                     _createZoneBlocks = typeof(RoadAI).GetMethod(nameof(RoadAI.CreateZoneBlocks));
-                    _zoneBlocksPatch = typeof(ZoneBlockPatch).GetMethod(nameof(ZoneBlockPatch.Prefix));
+                    _zoneBlocksPatch = typeof(CreateZoneBlocks).GetMethod(nameof(CreateZoneBlocks.Prefix));
                     PatchCreateZoneBlocks();
                 }
                 else

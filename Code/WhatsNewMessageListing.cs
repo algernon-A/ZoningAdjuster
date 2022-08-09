@@ -1,4 +1,9 @@
-﻿namespace ZoningAdjuster
+﻿// <copyright file="WhatsNewMessageListing.cs" company="algernon (K. Algernon A. Sheppard)">
+// Copyright (c) algernon (K. Algernon A. Sheppard). All rights reserved.
+// Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
+// </copyright>
+
+namespace ZoningAdjuster
 {
     using System;
     using AlgernonCommons.Notifications;
@@ -9,9 +14,9 @@
     internal class WhatsNewMessageListing
     {
         /// <summary>
-        /// List of versions and associated update message lines (as translation keys).
+        /// Gets the list of versions and associated update message lines (as translation keys).
         /// </summary>
-        internal readonly WhatsNewMessage[] Messages = new WhatsNewMessage[]
+        internal WhatsNewMessage[] Messages => new WhatsNewMessage[]
         {
             new WhatsNewMessage
             {
@@ -19,8 +24,8 @@
                 MessagesAreKeys = true,
                 Messages = new string[]
                 {
-                    "ZMD_140_0"
-                }
+                    "ZMD_140_0",
+                },
             },
             new WhatsNewMessage
             {
@@ -28,8 +33,8 @@
                 MessagesAreKeys = true,
                 Messages = new string[]
                 {
-                    "ZMD_130_0"
-                }
+                    "ZMD_130_0",
+                },
             },
             new WhatsNewMessage
             {
@@ -42,8 +47,8 @@
                     "ZMD_120_2",
                     "ZMD_120_3",
                     "ZMD_120_4",
-                    "ZMD_120_5"
-                }
+                    "ZMD_120_5",
+                },
             },
             new WhatsNewMessage
             {
@@ -52,8 +57,8 @@
                 Messages = new string[]
                 {
                     "ZMD_111_0",
-                    "ZMD_111_1"
-                }
+                    "ZMD_111_1",
+                },
             },
             new WhatsNewMessage
             {
@@ -63,8 +68,8 @@
                 {
                     "ZMD_110_0",
                     "ZMD_110_1",
-                    "ZMD_110_2"
-                }
+                    "ZMD_110_2",
+                },
             },
             new WhatsNewMessage
             {
@@ -72,8 +77,8 @@
                 MessagesAreKeys = true,
                 Messages = new string[]
                 {
-                    "ZMD_102_0"
-                }
+                    "ZMD_102_0",
+                },
             },
             new WhatsNewMessage
             {
@@ -83,9 +88,9 @@
                 {
                     "ZMD_100_0",
                     "ZMD_100_1",
-                    "ZMD_100_2"
-                }
-            }
+                    "ZMD_100_2",
+                },
+            },
         };
     }
 }

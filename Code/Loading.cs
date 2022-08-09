@@ -1,4 +1,9 @@
-﻿namespace ZoningAdjuster
+﻿// <copyright file="Loading.cs" company="algernon (K. Algernon A. Sheppard)">
+// Copyright (c) algernon (K. Algernon A. Sheppard). All rights reserved.
+// Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
+// </copyright>
+
+namespace ZoningAdjuster
 {
     using AlgernonCommons;
     using AlgernonCommons.Notifications;
@@ -14,12 +19,10 @@
         private static bool harmonyLoaded = false;
         private static bool conflictingMod = false;
 
-
         /// <summary>
-        /// Current loading state.
+        /// Gets a value indicating whether the mod has finished loading.
         /// </summary>
         internal static bool IsLoaded { get; private set; } = false;
-
 
         /// <summary>
         /// Called by the game when the mod is initialised at the start of the loading process.
@@ -62,23 +65,22 @@
             }
         }
 
-
         /// <summary>
         /// Called by the game when level loading is complete.
         /// </summary>
         /// <param name="mode">Loading mode (e.g. game, editor, scenario, etc.)</param>
         public override void OnLevelLoaded(LoadMode mode)
-		{
-			base.OnLevelLoaded(mode);
+        {
+            base.OnLevelLoaded(mode);
 
-			// Check to see that Harmony 2 was properly loaded.
-			if (!harmonyLoaded)
-			{
-				// Harmony 2 wasn't loaded.
-				Logging.Error("Harmony patches not applied; aborting");
+            // Check to see that Harmony 2 was properly loaded.
+            if (!harmonyLoaded)
+            {
+                // Harmony 2 wasn't loaded.
+                Logging.Error("Harmony patches not applied; aborting");
 
-				// Display warning message.
-				ListNotification harmonyNotification = NotificationBase.ShowNotification<ListNotification>();
+                // Display warning message.
+                ListNotification harmonyNotification = NotificationBase.ShowNotification<ListNotification>();
 
                 // Key text items.
                 harmonyNotification.AddParas(Translations.Translate("ERR_HAR0"), Translations.Translate("ZMD_ERR_HAR"), Translations.Translate("ZMD_ERR_FAT"), Translations.Translate("ERR_HAR1"));
@@ -89,13 +91,13 @@
                 // Closing para.
                 harmonyNotification.AddParas(Translations.Translate("MES_PAGE"));
 
-				// Don't do anything further.
-				return;
-			}
+                // Don't do anything further.
+                return;
+            }
 
-			// Check to see if a conflicting mod has been detected.
-			if (conflictingMod)
-			{
+            // Check to see if a conflicting mod has been detected.
+            if (conflictingMod)
+            {
                 // Mod conflict detected - display warning notification and exit.
                 ListNotification modConflictNotification = NotificationBase.ShowNotification<ListNotification>();
 
@@ -118,15 +120,14 @@
             // Set loaded status.
             IsLoaded = true;
 
-			// Add panel button.
-			ZoningAdjusterButton.CreateButton();
+            // Add panel button.
+            ZoningAdjusterButton.CreateButton();
 
-			// Display update notification.
-			WhatsNew.ShowWhatsNew();
+            // Display update notification.
+            WhatsNew.ShowWhatsNew();
 
             Logging.Message("loading complete");
-		}
-
+        }
 
         /// <summary>
         /// Called by the game when exiting a level.

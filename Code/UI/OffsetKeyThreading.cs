@@ -1,7 +1,12 @@
-﻿namespace ZoningAdjuster
+﻿// <copyright file="OffsetKeyThreading.cs" company="algernon (K. Algernon A. Sheppard)">
+// Copyright (c) algernon (K. Algernon A. Sheppard). All rights reserved.
+// Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
+// </copyright>
+
+namespace ZoningAdjuster
 {
-    using UnityEngine;
     using ICities;
+    using UnityEngine;
 
     /// <summary>
     /// UI thread for offset key processing.
@@ -34,6 +39,7 @@
             /// </summary>
             Alt,
         }
+
         /// <summary>
         /// Gets a value indicating whether the offset modfifier key is currently pressed.
         /// </summary>
@@ -47,8 +53,8 @@
         /// <summary>
         /// Look for offset modifier keypress.
         /// </summary>
-        /// <param name="realTimeDelta">Real time elapsed since last update</param>
-        /// <param name="simulationTimeDelta">Simulation time elapsed since last update</param>
+        /// <param name="realTimeDelta">Real time elapsed since last update.</param>
+        /// <param name="simulationTimeDelta">Simulation time elapsed since last update.</param>
         public override void OnUpdate(float realTimeDelta, float simulationTimeDelta)
         {
             // Check offset key status.
