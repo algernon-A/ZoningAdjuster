@@ -1,6 +1,6 @@
 ﻿namespace ZoningAdjuster
 {
-    using AlgernonCommons;
+    using AlgernonCommons.Notifications;
     using AlgernonCommons.Patching;
     using AlgernonCommons.Translation;
     using AlgernonCommons.UI;
@@ -12,13 +12,10 @@
     /// </summary>
     public sealed class Mod : PatcherMod, IUserMod
     {
-        // Mod name.
-        private static readonly string ModName = "Zoning Adjuster";
-
         /// <summary>
-        /// Gets the mod's name for logging purposes.
+        /// Gets the mod's base display name (name only).
         /// </summary>
-        public override string LogName => ModName;
+        public override string BaseName => "Zoning Adjuster";
 
         /// <summary>
         /// Gets the mod's unique Harmony identfier.
@@ -26,21 +23,21 @@
         public override string HarmonyID => "algernon-A.csl.zoningadjuster";
 
         /// <summary>
-        /// Gets the mod's display name.
-        /// </summary>
-        public override string Name => ModName + ' ' + AssemblyUtils.TrimmedCurrentVersion;
-
-        /// <summary>
         /// Gets the mod's description for display in the content manager.
         /// </summary>
         public string Description => Translations.Translate("ZMD_DESC");
+
+        /// <summary>
+        /// Gets the mod's what's new message array.
+        /// </summary>
+        public override WhatsNewMessage[] WhatsNewMessages => new WhatsNewMessageListing().Messages;
 
         /// <summary>
         /// Called by the game when the mod is enabled.
         /// </summary>
         public override void OnEnabled()
         {
-            // Initialize zoneing block data.
+            // Initialize zoning block data.
             new ZoneBlockData();
 
             base.OnEnabled();
