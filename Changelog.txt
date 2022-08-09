@@ -1,4 +1,5 @@
-﻿- Refactor ZoningTool
+﻿- Fix zoning overlay sometimes not updating when zoning blocks are removed (rounding error in game code, now compensated for in mod)
+- Refactor ZoningTool
 - Implement AlgernonCommons
 - Update UUI
 

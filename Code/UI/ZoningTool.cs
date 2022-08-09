@@ -4,6 +4,7 @@
 	using AlgernonCommons.Translation;
 	using AlgernonCommons.UI;
 	using ColossalFramework;
+	using ColossalFramework.Math;
 	using ColossalFramework.UI;
 	using UnifiedUI.Helpers;
 	using UnityEngine;
@@ -228,9 +229,12 @@
 							// Restore 'disable zoning' state.
 							ModSettings.disableZoning = zoningDisabled;
 						}
-						
-						// Update renderer.
-						segment.UpdateZones(_segmentID);
+
+						// Update renderer - expand bounds outward to catch rounding errors.
+						Vector3 min = segment.m_bounds.min - Vector3.one;
+						Vector3 max = segment.m_bounds.max + Vector3.one;
+						Quad2 quad = new Quad2(new Vector2(min.x, min.z), new Vector2(min.x, max.z), new Vector2(max.x, max.z), new Vector2(max.x, min.z));
+						Singleton<ZoneManager>.instance.UpdateBlocks(quad);
 					}
 
 					// Clear segment reference to indicate that work is donw.
