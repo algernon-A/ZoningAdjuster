@@ -50,8 +50,6 @@
         /// </summary>
         public override void Start()
         {
-            Logging.Message("ZoningAdjusterButton start");
-
             base.Start();
 
             // Instance.

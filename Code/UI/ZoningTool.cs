@@ -15,7 +15,6 @@
 	public class ZoningTool : DefaultTool
 	{
 		// Previous tool state.
-		private static ToolBase s_previousTool;
 		private bool _prevRenderZones;
 
 		// UI thread to simulation thread communicatrion.
@@ -251,14 +250,13 @@
 			// Activate zoning tool if it isn't already; if already active, deactivate it by selecting the previously active tool instead.
 			if (!IsActiveTool)
 			{
-				// Record previous tool.
-				s_previousTool = ToolsModifierControl.toolController.CurrentTool;
+				// Activate tool.
 				ToolsModifierControl.toolController.CurrentTool = Instance;
 			}
 			else
 			{
-				// Revert to previously selected tool.
-				ToolsModifierControl.toolController.CurrentTool = s_previousTool;
+				// Activate default tool.
+				ToolsModifierControl.SetTool<DefaultTool>();
 			}
 		}
 
