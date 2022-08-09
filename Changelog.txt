@@ -1,4 +1,6 @@
-﻿- Update UUI
+﻿- Refactor ZoningTool
+- Implement AlgernonCommons
+- Update UUI
 
 
 Version 1.5.3 -

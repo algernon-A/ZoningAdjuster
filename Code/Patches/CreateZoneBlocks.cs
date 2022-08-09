@@ -339,7 +339,7 @@ namespace ZoningAdjuster
             if (minHalfWidth % 8 != 0)
             {
                 // Calculated halfwidth is not a multiple of eight; offset by 4m, or 0m if shiftOffset is set.
-                if (!OffsetKeyThreading.shiftOffset)
+                if (!OffsetKeyThreading.ShiftOffset)
                 {
                     startOffset = 4f;
                 }
@@ -347,7 +347,7 @@ namespace ZoningAdjuster
             else
             {
                 // Calculated halfwidth is a multiple of eight; default offset is zero, or 4m if shiftOffset is set.
-                if (OffsetKeyThreading.shiftOffset)
+                if (OffsetKeyThreading.ShiftOffset)
                 {
                     startOffset = 4f;
                 }

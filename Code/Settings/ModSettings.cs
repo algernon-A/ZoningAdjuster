@@ -6,7 +6,6 @@
     using AlgernonCommons;
     using AlgernonCommons.Keybinding;
     using AlgernonCommons.XML;
-    using ColossalFramework;
     using UnityEngine;
 
     /// <summary>
@@ -101,7 +100,7 @@
         /// Gets or sets the offset modifier key.
         /// </summary>
         [XmlElement("OffsetKey")]
-        public int XMLOffsetModifier { get => OffsetKeyThreading.offsetModifier; set => OffsetKeyThreading.offsetModifier = value; }
+        public int XMLOffsetModifier { get => OffsetKeyThreading.OffsetModifier; set => OffsetKeyThreading.OffsetModifier = value; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the Zoning Adjuste panel should be shown when the road tool is active.

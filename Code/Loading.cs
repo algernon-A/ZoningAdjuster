@@ -124,9 +124,6 @@
 			// Display update notification.
 			WhatsNew.ShowWhatsNew();
 
-            // Activate UI thread.
-            OffsetKeyThreading.operating = true;
-
             Logging.Message("loading complete");
 		}
 
@@ -140,9 +137,6 @@
 
             // Clear loading status.
             IsLoaded = false;
-
-            // Deactivate UI thread.
-            OffsetKeyThreading.operating = false;
 
             // Destroy panel button.
             ZoningAdjusterButton.DestroyButton();

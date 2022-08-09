@@ -17,6 +17,14 @@
 		private static ToolBase s_previousTool;
 		private bool _prevRenderZones;
 
+		// UI thread to simulation thread communicatrion.
+		private ushort _segmentID = 0;
+		private bool _buttonZero = false;
+		private bool _buttonOne = false;
+		private bool _shiftOffset = false;
+		private bool _altPressed = false;
+		private object _simulationLock = new object();
+
 		/// <summary>
 		/// Gets the active tool instance.
 		/// </summary>
@@ -28,7 +36,79 @@
 		public static bool IsActiveTool => Instance != null && ToolsModifierControl.toolController.CurrentTool == Instance;
 
 		/// <summary>
-		/// Sets which network segments are ignored by the tool (always returns none, i.e. all are selectable by the tool).
+		/// Gets a value indicating whether terrain is ignored by the tool (always returns true, i.e. terrain is ignored by the tool).
+		/// </summary>
+		/// <returns>True.</returns>
+		public override bool GetTerrainIgnore() => true;
+
+		/// <summary>
+		/// Gets which net nodes are ignored by the tool (always returns all, i.e. none are selectable by the tool).
+		/// </summary>
+		/// <returns>NetNode.Flags.All.</returns>
+		public override NetNode.Flags GetNodeIgnoreFlags() => NetNode.Flags.All;
+
+		/// <summary>
+		/// Gets which buildings are ignored by the tool (always returns all, i.e. none are selectable by the tool).
+		/// </summary>
+		/// <returns>NetSegment.Flags.All.</returns>
+		public override Building.Flags GetBuildingIgnoreFlags() => Building.Flags.All;
+
+		/// <summary>
+		/// Gets which trees are ignored by the tool (always returns all, i.e. none are selectable by the tool).
+		/// </summary>
+		/// <returns>TreeInstance.Flags.All.</returns>
+		public override global::TreeInstance.Flags GetTreeIgnoreFlags() => global::TreeInstance.Flags.All;
+
+		/// <summary>
+		/// Gets which props are ignored by the tool (always returns all, i.e. none are selectable by the tool).
+		/// </summary>
+		/// <returns>PropInstance.Flags.All.</returns>
+		public override PropInstance.Flags GetPropIgnoreFlags() => PropInstance.Flags.All;
+
+		/// <summary>
+		/// Gets which parked vehicles are ignored by the tool (always returns all, i.e. none are selectable by the tool).
+		/// </summary>
+		/// <returns>VehicleParked.Flags.All.</returns>
+		public override VehicleParked.Flags GetParkedVehicleIgnoreFlags() => VehicleParked.Flags.All;
+
+		/// <summary>
+		/// Gets which citizens are ignored by the tool (always returns all, i.e. none are selectable by the tool).
+		/// </summary>
+		/// <returns>CitizenInstance.Flags.All.</returns>
+		public override CitizenInstance.Flags GetCitizenIgnoreFlags() => CitizenInstance.Flags.All;
+
+		/// <summary>
+		/// Gets which transport lines are ignored by the tool (always returns all, i.e. none are selectable by the tool).
+		/// </summary>
+		/// <returns>TransportLine.Flags.All.</returns>
+		public override TransportLine.Flags GetTransportIgnoreFlags() => TransportLine.Flags.All;
+
+		/// <summary>
+		/// Gets a value indicating which transport types are supported by the tool (always returns zero, i.e. no transport type is supported by the tool).
+		/// </summary>
+		/// <returns>Zero.</returns>
+		public override int GetTransportTypes() => 0;
+
+		/// <summary>
+		/// Gets which districts are ignored by the tool (always returns all, i.e. none are selectable by the tool).
+		/// </summary>
+		/// <returns>District.Flags.All.</returns>
+		public override District.Flags GetDistrictIgnoreFlags() => District.Flags.All;
+
+		/// <summary>
+		/// Gets which parks are ignored by the tool (always returns all, i.e. none are selectable by the tool).
+		/// </summary>
+		/// <returns>DistrictPark.Flags.All.</returns>
+		public override DistrictPark.Flags GetParkIgnoreFlags() => DistrictPark.Flags.All;
+
+		/// <summary>
+		/// Gets which disasters are ignored by the tool (always returns all, i.e. none are selectable by the tool).
+		/// </summary>
+		/// <returns>DisasterData.Flags.All.</returns>
+		public override DisasterData.Flags GetDisasterIgnoreFlags() => DisasterData.Flags.All;
+
+		/// <summary>
+		/// Gets which network segments are ignored by the tool (always returns none, i.e. all are selectable by the tool).
 		/// </summary>
 		/// <param name="nameOnly">Always set to false.</param>
 		/// <returns>NetSegment.Flags.None.</returns>
@@ -76,11 +156,93 @@
 			| Vehicle.Flags.Transition
 			| Vehicle.Flags.InsideBuilding;
 
-
 		/// <summary>
-		/// Toggles the current tool to/from the zoning tool.
+		/// Called by the game every simulation step.
+		/// Used to perform any zone manipulations from the simulation thread.
 		/// </summary>
-		internal static void ToggleTool()
+		public override void SimulationStep()
+        {
+            base.SimulationStep();
+
+			// Thread locking.
+			lock(_simulationLock)
+			{
+				// Check to see if there's any valid segment.
+				if (_segmentID != 0)
+				{
+					// Store current 'disable zoning' state and temporarily disable.
+					bool zoningDisabled = ModSettings.disableZoning;
+					ModSettings.disableZoning = false;
+
+					// Local references.
+					NetManager netManager = Singleton<NetManager>.instance;
+					NetSegment[] segmentBuffer = netManager.m_segments.m_buffer;
+					ref NetSegment segment = ref segmentBuffer[_segmentID];
+					NetAI segmentAI = segment.Info.m_netAI;
+
+					// Check for supported network types.
+					RoadAI roadAI = segmentAI as RoadAI;
+					if (roadAI != null || segmentAI is PedestrianPathAI || segmentAI is PedestrianWayAI)
+					{
+						// Determine existing blocks.
+						bool hasLeft = segment.m_blockStartLeft != 0 || segment.m_blockEndLeft != 0;
+						bool hasRight = segment.m_blockStartRight != 0 || segment.m_blockEndRight != 0;
+
+						// Remove any attached zone blocks.
+						RemoveLeftZoneBlocks(_segmentID, ref segment);
+						RemoveRightZoneBlocks(_segmentID, ref segment);
+
+						// Replace with new zone blocks if the button click was with the primary mouse button.
+						if (_buttonZero)
+						{
+							// Create zone block via road AI, if this is a road AI - allow for any other mods with patches attached.
+							if (roadAI != null)
+							{
+								roadAI.CreateZoneBlocks(_segmentID, ref segment);
+							}
+							else
+							{
+								// Non-road AI; call CreateZoneBlocks prefix directory.
+								ZoneBlockPatch.Prefix(_segmentID, ref segment);
+							}
+
+							// If alt key is held down, toggle left/right/both.
+							if (_altPressed)
+							{
+								// Default right->both is already done at this stage; to do both->left and left->right we need to remove a side.
+								if (hasLeft)
+								{
+									if (hasRight)
+									{
+										// Both->left.
+										RemoveRightZoneBlocks(_segmentID, ref segment);
+									}
+									else
+									{
+										// Left->right.
+										RemoveLeftZoneBlocks(_segmentID, ref segment);
+									}
+								}
+							}
+
+							// Restore 'disable zoning' state.
+							ModSettings.disableZoning = zoningDisabled;
+						}
+						
+						// Update renderer.
+						segment.UpdateZones(_segmentID);
+					}
+
+					// Clear segment reference to indicate that work is donw.
+					_segmentID = 0;
+				}
+			}
+		}
+
+        /// <summary>
+        /// Toggles the current tool to/from the zoning tool.
+        /// </summary>
+        internal static void ToggleTool()
 		{
 			// Activate zoning tool if it isn't already; if already active, deactivate it by selecting the previously active tool instead.
 			if (!IsActiveTool)
@@ -126,7 +288,7 @@
 			base.OnToolLateUpdate();
 
 			// Force the info mode to none.
-			ToolBase.ForceInfoMode(InfoManager.InfoMode.None, InfoManager.SubInfoMode.None);
+			ForceInfoMode(InfoManager.InfoMode.None, InfoManager.SubInfoMode.None);
 		}
 
 		/// <summary>
@@ -204,90 +366,58 @@
 					// Got one; use the event.
 					UIInput.MouseUsed();
 
-					// Store current 'disable zoning' state and temporarily disable.
-					bool zoningDisabled = ModSettings.disableZoning;
-					ModSettings.disableZoning = false;
-
-					// Local references.
-					NetManager netManager = Singleton<NetManager>.instance;
-					NetSegment[] segmentBuffer = netManager.m_segments.m_buffer;
-					NetSegment segment = segmentBuffer[segmentID];
-					NetAI segmentAI = segment.Info.m_netAI;
-
-					// Check for supported network types.
-					RoadAI roadAI = segmentAI as RoadAI;
-					if (roadAI != null || segmentAI is PedestrianPathAI || segmentAI is PedestrianWayAI)
+					// Need to update zoning via simulation thread - set the fields for SimulationStep to pick up.
+					lock (_simulationLock)
 					{
-						// Determine existing blocks.
-						bool hasLeft = segment.m_blockStartLeft != 0 || segment.m_blockEndLeft != 0;
-						bool hasRight = segment.m_blockStartRight != 0 || segment.m_blockEndRight != 0;
-
-						// Remove any attached zone blocks.
-						RemoveZoneBlock(ref segment.m_blockStartLeft);
-						RemoveZoneBlock(ref segment.m_blockStartRight);
-						RemoveZoneBlock(ref segment.m_blockEndLeft);
-						RemoveZoneBlock(ref segment.m_blockEndRight);
-
-						// Replace with new zone blocks if the button click was with the primary mouse button.
-						if (e.button == 0)
-						{
-							// If shift key is held down, toggle offset.
-							if ((e.modifiers & EventModifiers.Shift) != EventModifiers.None)
-                            {
-								OffsetKeyThreading.shiftOffset = true;
-                            }
-
-							// Create zone block via road AI, if this is a road AI - allow for any other mods with patches attached.
-							if (roadAI != null)
-							{
-								roadAI.CreateZoneBlocks(segmentID, ref netManager.m_segments.m_buffer[segmentID]);
-							}
-							else
-                            {
-								// Non-road AI; call CreateZoneBlocks prefix directory.
-								ZoneBlockPatch.Prefix(segmentID, ref netManager.m_segments.m_buffer[segmentID]);
-                            }
-
-							// If alt key is held down, toggle left/right/both.
-							if (((e.modifiers & EventModifiers.Alt) != EventModifiers.None) && hasLeft)
-							{
-								if (hasRight)
-								{
-									// Both->left.
-									RemoveZoneBlock(ref netManager.m_segments.m_buffer[segmentID].m_blockStartRight);
-									RemoveZoneBlock(ref netManager.m_segments.m_buffer[segmentID].m_blockEndRight);
-								}
-								else
-								{
-									// Left->right.
-									RemoveZoneBlock(ref netManager.m_segments.m_buffer[segmentID].m_blockStartLeft);
-									RemoveZoneBlock(ref netManager.m_segments.m_buffer[segmentID].m_blockEndLeft);
-								}
-							}
-
-							// Reset shift offset.
-							OffsetKeyThreading.shiftOffset = false;
-
-							// Restore 'disable zoning' state.
-							ModSettings.disableZoning = zoningDisabled;
-						}
+						_segmentID = segmentID;
+						_buttonZero = e.button == 0;
+						_buttonOne = e.button == 1;
+						_shiftOffset = OffsetKeyThreading.ShiftOffset;
+						_altPressed = (e.modifiers & EventModifiers.Alt) != EventModifiers.None;
 					}
 				}
 			}
 		}
 
 		/// <summary>
-		/// Removes a zoning block.
+		/// Removes the left-side zoning blocks from a segment.
 		/// </summary>
-		/// <param name="blockID">Zoning block reference to remove (will be set to zero)</param>
-		private void RemoveZoneBlock(ref ushort blockID)
+		/// <param name="segmentID">Segment ID.</param>
+		/// <param name="segment">Segment data reference.</param>
+		private void RemoveLeftZoneBlocks(ushort segmentID, ref NetSegment segment)
 		{
-			if (blockID != 0)
+			// Release blocks.
+			ZoneManager zoneManager = Singleton<ZoneManager>.instance;
+			if (segment.m_blockStartLeft != 0)
 			{
-				Logging.Message("removing zone block ", blockID);
+				zoneManager.ReleaseBlock(segment.m_blockStartLeft);
+				segment.m_blockStartLeft = 0;
+			}
+			if (segment.m_blockEndLeft != 0)
+			{
+				zoneManager.ReleaseBlock(segment.m_blockEndLeft);
+				segment.m_blockEndLeft = 0;
+			}
+		}
 
-				Singleton<ZoneManager>.instance.ReleaseBlock(blockID);
-				blockID = 0;
+		/// <summary>
+		/// Removes the right-side zoning blocks from a segment.
+		/// </summary>
+		/// <param name="segmentID">Segment ID.</param>
+		/// <param name="segment">Segment data reference.</param>
+		private void RemoveRightZoneBlocks(ushort segmentID, ref NetSegment segment)
+		{
+			// Release blocks.
+			ZoneManager zoneManager = Singleton<ZoneManager>.instance;
+			if (segment.m_blockStartRight != 0)
+			{
+				zoneManager.ReleaseBlock(segment.m_blockStartRight);
+				segment.m_blockStartRight = 0;
+			}
+			if (segment.m_blockEndRight != 0)
+			{
+				zoneManager.ReleaseBlock(segment.m_blockEndRight);
+				segment.m_blockEndRight = 0;
 			}
 		}
 	}

@@ -34,7 +34,7 @@
             // Offset key.
             UIHelper keyGroup = helper.AddGroup(Translations.Translate("ZMD_OPT_KEY")) as UIHelper;
             string[] keyOptions = new string[] { Translations.Translate("ZMD_SHIFT"), Translations.Translate("ZMD_CTRL"), Translations.Translate("ZMD_ALT") };
-            UIDropDown offsetKeyDropDown = (UIDropDown)keyGroup.AddDropdown(Translations.Translate("ZMD_OPT_ZOK"), keyOptions, OffsetKeyThreading.offsetModifier, (value) => OffsetKeyThreading.offsetModifier = value);
+            UIDropDown offsetKeyDropDown = (UIDropDown)keyGroup.AddDropdown(Translations.Translate("ZMD_OPT_ZOK"), keyOptions, OffsetKeyThreading.OffsetModifier, (value) => OffsetKeyThreading.OffsetModifier = value);
 
             // Hotkey control.
             OptionsKeymapping keyMapping = (keyGroup.self as UIComponent).gameObject.AddComponent<UUIKeymapping>();
