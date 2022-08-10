@@ -322,7 +322,7 @@ namespace ZoningAdjuster
             valueLabel.relativePosition = new Vector2(sliderPanel.width - valueLabel.width - Margin, 10f);
 
             // Slider control - same appearance as Fine Road Tool's, for consistency.
-            UISlider newSlider = UISliders.AddBudgetSlider(sliderPanel, Margin, Margin, sliderPanel.width - valueLabel.width - (Margin * 3), 4f);
+            UISlider newSlider = UISliders.AddBudgetSlider(sliderPanel, Margin, 9f, sliderPanel.width - valueLabel.width - (Margin * 3), 4f);
             newSlider.name = "ZoningSetbackSlider";
 
             // Is this a zone depth slider?
