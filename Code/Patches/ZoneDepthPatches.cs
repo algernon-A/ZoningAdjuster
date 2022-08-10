@@ -22,7 +22,7 @@ namespace ZoningAdjuster
         /// Number of columns per zone block (always 4).
         /// </summary>
         public const uint ColumnCount = 4;
-        
+
         /// <summary>
         /// Gets or sets the current zone depth setting (in cells).
         /// </summary>
@@ -33,11 +33,12 @@ namespace ZoningAdjuster
         /// Updates the "valid" bitmask for a zoning block; called by ZoneManager when blocks are created.
         /// Thanks to boformer for the analysis of the game code.
         /// </summary>
-        /// <param name="__instance">Zone block instance reference</param>
-        /// <param name="blockID">Zone block ID</param>
-        /// <returns>Always false (never execute original method)</returns>
+        /// <param name="__instance">Zone block instance reference.</param>
+        /// <param name="blockID">Zone block ID.</param>
+        /// <returns>Always false (never execute original method).</returns>
         [HarmonyPatch("CalculateBlock1")]
         [HarmonyPrefix]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules", "SA1313:Parameter names should begin with lower-case letter", Justification = "Harmony")]
         public static bool CalculateBlock1(ref ZoneBlock __instance, ushort blockID)
         {
             // Don't do anything with zone blocks which are not in use.
@@ -78,7 +79,7 @@ namespace ZoningAdjuster
             int gridMaxX = Mathf.Min((int)((((double)quadMax.x + 64.0d) / 64.0d) + 135.0d), 269);
             int gridMaxY = Mathf.Min((int)((((double)quadMax.y + 64.0d) / 64.0d) + 135.0d), 269);
 
-            // This bitmask stores which which cells are "valid" and which are "invalid" 
+            // This bitmask stores which which cells are "valid" and which are "invalid"
             // (e.g. colliding with existing buildings or height too steep)
             // This mask limits the maximum size of a zone block to 64 cells (e.g. 8x8)
             // Sort order: (row 8|col 8)(row 8|col 7)...(row 8|col 2)(row 8|col 1)(row 7|col 4)(row 7|col 3)...(row 1|col 1)
@@ -88,8 +89,8 @@ namespace ZoningAdjuster
             // Mark cells which are on too steep terrain or outside of the purchased tiles as invalid.
             for (int row = 0; row < rowCount; ++row)
             {
-                // Calculate 3 relative row positions: 
-                // * One in between 2 cell grid points 
+                // Calculate 3 relative row positions:
+                // * One in between 2 cell grid points
                 // * one 0.1m from previous row
                 // * one 0.1m from next row
                 Vector2 rowMiddleLength = ((float)row - 3.5f) * rowDirection;
@@ -97,11 +98,11 @@ namespace ZoningAdjuster
                 Vector2 rowNearNextLength = ((float)row - 3.1f) * rowDirection;
 
                 // Calculate terrain height of the row (5 columns away from zone block origin, which is where the road is).
-                float height = Singleton<TerrainManager>.instance.SampleRawHeightSmooth(VectorUtils.X_Y(positionXZ + rowMiddleLength - 5f * columnDirection));
+                float height = Singleton<TerrainManager>.instance.SampleRawHeightSmooth(VectorUtils.X_Y(positionXZ + rowMiddleLength - (5f * columnDirection)));
 
                 for (int column = 0; (long)column < ColumnCount; ++column)
                 {
-                    // Calculate 2 relative column positions: 
+                    // Calculate 2 relative column positions:
                     // * one 0.1m from previous column
                     // * one 0.1m from next column
                     Vector2 columnNearPreviousLength = ((float)column - 3.9f) * columnDirection;
@@ -111,8 +112,9 @@ namespace ZoningAdjuster
                     float cellHeight = Singleton<TerrainManager>.instance.SampleRawHeightSmooth(VectorUtils.X_Y(positionXZ + rowMiddleLength + columnNearNextLength));
 
                     // If the height difference between road and cell is greater than 8m, mark the cell as invalid.
-                    if ((double)Mathf.Abs(cellHeight - height) > 8.0) // TODO maybe this should be raised for 8 cell deep zones?
+                    if ((double)Mathf.Abs(cellHeight - height) > 8.0)
                     {
+                        // TODO maybe this should be raised for 8 cell deep zones?
                         valid &= (ulong)~(1L << (row << 3 | column));
                     }
                     else if (quadOutOfArea)
@@ -137,6 +139,7 @@ namespace ZoningAdjuster
                     {
                         valid &= (ulong)~(1L << (row << 3 | column));
                     }
+
                     /*--- Finish insert here ---*/
                 }
             }
@@ -147,7 +150,7 @@ namespace ZoningAdjuster
                 for (int gridX = gridMinX; gridX <= gridMaxX; ++gridX)
                 {
                     // Cycle through all net segments in the grid cell.
-                    ushort segmentID = netManager.m_segmentGrid[gridY * 270 + gridX];
+                    ushort segmentID = netManager.m_segmentGrid[(gridY * 270) + gridX];
                     int counter = 0;
                     while ((int)segmentID != 0)
                     {
@@ -198,19 +201,18 @@ namespace ZoningAdjuster
             return false;
         }
 
-
         /// <summary>
         /// Harmony reverse patch to access private method ZoneBlock.CalculateImplementation1.
         /// </summary>
-        /// <param name="instance">Zone block instance reference</param>
-        /// <param name="blockID">Zone block ID</param>
-        /// <param name="segmentID">Net segment ID</param>
-        /// <param name="data">Net segment data</param>
-        /// <param name="valid">Zone block valid flags</param>
-        /// <param name="minX">Zone block minimum X position</param>
-        /// <param name="minZ">Zone block minimum Z position</param>
-        /// <param name="maxX">Zone block maximum X position</param>
-        /// <param name="maxZ">Zone block maximum Z position</param>
+        /// <param name="instance">Zone block instance reference.</param>
+        /// <param name="blockID">Zone block ID.</param>
+        /// <param name="segmentID">Net segment ID.</param>
+        /// <param name="data">Net segment data.</param>
+        /// <param name="valid">Zone block valid flags.</param>
+        /// <param name="minX">Zone block minimum X position.</param>
+        /// <param name="minZ">Zone block minimum Z position.</param>
+        /// <param name="maxX">Zone block maximum X position.</param>
+        /// <param name="maxZ">Zone block maximum Z position.</param>
         [HarmonyReversePatch]
         [HarmonyPatch("CalculateImplementation1")]
         [MethodImpl(MethodImplOptions.NoInlining)]
