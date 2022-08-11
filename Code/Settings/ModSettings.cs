@@ -214,12 +214,8 @@ namespace ZoningAdjuster
         {
             try
             {
-                // Pretty straightforward.
-                using (StreamWriter writer = new StreamWriter(SettingsFile))
-                {
-                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(ModSettings));
-                    xmlSerializer.Serialize(writer, new ModSettings());
-                }
+                // Save settings file.
+                XMLFileUtils.Save<ModSettings>(SettingsFile);
 
                 // Cleaning up after ourselves - delete any old config file in the application direcotry.
                 if (File.Exists(SettingsFileName))

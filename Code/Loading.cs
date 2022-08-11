@@ -8,6 +8,7 @@ namespace ZoningAdjuster
     using AlgernonCommons;
     using AlgernonCommons.Notifications;
     using AlgernonCommons.Translation;
+    using AlgernonCommons.UI;
     using ICities;
 
     /// <summary>
@@ -119,6 +120,9 @@ namespace ZoningAdjuster
 
             // Set loaded status.
             IsLoaded = true;
+
+            // Set up options panel event handler.
+            OptionsPanelManager<OptionsPanel>.OptionsEventHook();
 
             // Add panel button.
             ZoningAdjusterButton.CreateButton();
