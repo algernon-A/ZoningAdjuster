@@ -1,4 +1,9 @@
-﻿Version 1.5.4.1 hotfix -
+﻿1.5.4.2 -
+
+- Update AlgernonCommons
+
+
+Version 1.5.4.1 hotfix -
 
 - Fix options panel not displaying in-game
 
