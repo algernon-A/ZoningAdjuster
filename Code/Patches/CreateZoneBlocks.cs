@@ -15,8 +15,6 @@ namespace ZoningAdjuster
     ///  Hamony pre-emptive prefix for adjusting zone block creation.
     ///  Manually applied and unapplied.
     /// </summary>
-    [HarmonyPatch(typeof(RoadAI))]
-    [HarmonyPatch("CreateZoneBlocks")]
     public static class CreateZoneBlocks
     {
         private const float MinHalfwidthTinyCurve = 6f;

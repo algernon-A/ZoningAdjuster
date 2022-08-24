@@ -158,14 +158,18 @@ namespace ZoningAdjuster
             {
                 _showPanelButton = value;
 
-                // Create or destroy panel button based on new state.
-                if (value)
+                // Don't do anything if game not loaded.
+                if (Loading.IsLoaded)
                 {
-                    ZoningAdjusterButton.CreateButton();
-                }
-                else
-                {
-                    ZoningAdjusterButton.DestroyButton();
+                    // Create or destroy panel button based on new state.
+                    if (value)
+                    {
+                        ZoningAdjusterButton.CreateButton();
+                    }
+                    else
+                    {
+                        ZoningAdjusterButton.DestroyButton();
+                    }
                 }
             }
         }

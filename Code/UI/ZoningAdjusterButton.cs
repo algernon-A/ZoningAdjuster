@@ -95,7 +95,7 @@ namespace ZoningAdjuster
         internal static void CreateButton()
         {
             // Don't do anything if already created or not ingame, and only create if setting is enabled.
-            if (Instance == null && Loading.IsLoaded && ModSettings.ShowPanelButton)
+            if (Instance == null && ModSettings.ShowPanelButton)
             {
                 GameUIComponents.RoadsOptionPanel?.AddUIComponent<ZoningAdjusterButton>();
             }

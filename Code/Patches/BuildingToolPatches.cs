@@ -5,6 +5,7 @@
 
 namespace ZoningAdjuster
 {
+    using AlgernonCommons.Patching;
     using HarmonyLib;
 
     /// <summary>
@@ -20,7 +21,7 @@ namespace ZoningAdjuster
         [HarmonyPrefix]
         public static void OnEnable()
         {
-            Patcher.Instance.UnpatchCreateZoneBlocks();
+            PatcherManager<Patcher>.Instance.UnpatchCreateZoneBlocks();
         }
 
         /// <summary>
@@ -30,7 +31,7 @@ namespace ZoningAdjuster
         [HarmonyPrefix]
         public static void OnDisable()
         {
-            Patcher.Instance.PatchCreateZoneBlocks();
+            PatcherManager<Patcher>.Instance.PatchCreateZoneBlocks();
         }
     }
 }

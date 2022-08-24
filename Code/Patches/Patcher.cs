@@ -23,27 +23,11 @@ namespace ZoningAdjuster
         /// <summary>
         /// Initializes a new instance of the <see cref="Patcher"/> class.
         /// </summary>
-        /// <param name="harmonyID">This mod's unique Harmony identifier.</param>
-        public Patcher(string harmonyID)
-            : base(harmonyID)
+        public Patcher()
+            : base()
         {
-        }
-
-        /// <summary>
-        /// Gets the active instance reference.
-        /// </summary>
-        public static new Patcher Instance
-        {
-            get
-            {
-                // Auto-initializing getter.
-                if (s_instance == null)
-                {
-                    s_instance = new Patcher(PatcherMod.Instance.HarmonyID);
-                }
-
-                return s_instance as Patcher;
-            }
+            _createZoneBlocks = typeof(RoadAI).GetMethod(nameof(RoadAI.CreateZoneBlocks));
+            _zoneBlocksPatch = typeof(CreateZoneBlocks).GetMethod(nameof(CreateZoneBlocks.Prefix));
         }
 
         /// <summary>
@@ -95,5 +79,11 @@ namespace ZoningAdjuster
             Harmony harmonyInstance = new Harmony(HarmonyID);
             harmonyInstance.Unpatch(_createZoneBlocks, HarmonyPatchType.Prefix, HarmonyID);
         }
+
+        /// <summary>
+        /// Peforms any additional actions (such as custom patching) after PatchAll is called.
+        /// </summary>
+        /// <param name="harmonyInstance">Haromny instance for patching.</param>
+        protected override void OnPatchAll(Harmony harmonyInstance) => PatchCreateZoneBlocks();
     }
 }
