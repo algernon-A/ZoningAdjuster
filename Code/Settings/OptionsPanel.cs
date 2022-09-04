@@ -12,7 +12,7 @@ namespace ZoningAdjuster
     using ICities;
 
     /// <summary>
-    /// Transfer Controller options panel.
+    /// The mod's options panel.
     /// </summary>
     public class OptionsPanel : UIPanel
     {
