@@ -8,7 +8,6 @@ namespace ZoningAdjuster
 {
     using ColossalFramework;
     using ColossalFramework.Math;
-    using HarmonyLib;
     using UnityEngine;
 
     /// <summary>
@@ -51,11 +50,11 @@ namespace ZoningAdjuster
                 Vector3 endDirection = data.m_endDirection;
                 if (NetSegment.IsStraight(startPosition, startDirection, endPosition, endDirection))
                 {
-                    StraightZoneBlocks(info, randomizer, ref data, startNode, endNode);
+                    StraightZoneBlocks(info, randomizer, segment, ref data, startNode, endNode);
                 }
                 else
                 {
-                    CurvedZoneBlocks(info, randomizer, ref data);
+                    CurvedZoneBlocks(info, randomizer, segment, ref data);
                 }
             }
 
@@ -68,8 +67,9 @@ namespace ZoningAdjuster
         /// </summary>
         /// <param name="info">Network prefab.</param>
         /// <param name="randomizer">Randomizer.</param>
+        /// <param name="segmentID">Segment ID.</param>
         /// <param name="segment">Network segment.</param>
-        private static void CurvedZoneBlocks(NetInfo info, Randomizer randomizer, ref NetSegment segment)
+        private static void CurvedZoneBlocks(NetInfo info, Randomizer randomizer, ushort segmentID, ref NetSegment segment)
         {
 #pragma warning disable IDE0018 // Inline variable declaration
 
@@ -139,6 +139,7 @@ namespace ZoningAdjuster
                     Singleton<ZoneManager>.instance.CreateBlock(
                         out segment.m_blockStartRight,
                         ref randomizer,
+                        segmentID,
                         position3,
                         angle,
                         insideBlockRows,
@@ -150,6 +151,7 @@ namespace ZoningAdjuster
                     Singleton<ZoneManager>.instance.CreateBlock(
                         out segment.m_blockStartLeft,
                         ref randomizer,
+                        segmentID,
                         position3,
                         angle,
                         insideBlockRows,
@@ -173,6 +175,7 @@ namespace ZoningAdjuster
                         Singleton<ZoneManager>.instance.CreateBlock(
                             out segment.m_blockEndRight,
                             ref randomizer,
+                            segmentID,
                             position4,
                             angle2,
                             insideBlockRows,
@@ -184,6 +187,7 @@ namespace ZoningAdjuster
                         Singleton<ZoneManager>.instance.CreateBlock(
                             out segment.m_blockEndLeft,
                             ref randomizer,
+                            segmentID,
                             position4,
                             angle2,
                             insideBlockRows,
@@ -239,6 +243,7 @@ namespace ZoningAdjuster
                     Singleton<ZoneManager>.instance.CreateBlock(
                         out segment.m_blockStartLeft,
                         ref randomizer,
+                        segmentID,
                         position5,
                         angle3,
                         outsideBlockRows,
@@ -250,6 +255,7 @@ namespace ZoningAdjuster
                     Singleton<ZoneManager>.instance.CreateBlock(
                         out segment.m_blockStartRight,
                         ref randomizer,
+                        segmentID,
                         position5,
                         angle3,
                         outsideBlockRows,
@@ -271,6 +277,7 @@ namespace ZoningAdjuster
                     Singleton<ZoneManager>.instance.CreateBlock(
                         out segment.m_blockEndLeft,
                         ref randomizer,
+                        segmentID,
                         position6,
                         angle4,
                         outsideBlockRows,
@@ -282,6 +289,7 @@ namespace ZoningAdjuster
                     Singleton<ZoneManager>.instance.CreateBlock(
                         out segment.m_blockEndRight,
                         ref randomizer,
+                        segmentID,
                         position6,
                         angle4,
                         outsideBlockRows,
@@ -297,10 +305,11 @@ namespace ZoningAdjuster
         /// </summary>
         /// <param name="info">Network prefab.</param>
         /// <param name="randomizer">Randomizer.</param>
+        /// <param name="segmentID">Segment ID.</param>
         /// <param name="segment">Segment data.</param>
         /// <param name="startNode">Segment start node.</param>
         /// <param name="endNode">Segment end node.</param>
-        private static void StraightZoneBlocks(NetInfo info, Randomizer randomizer, ref NetSegment segment, NetNode startNode, NetNode endNode)
+        private static void StraightZoneBlocks(NetInfo info, Randomizer randomizer, ushort segmentID, ref NetSegment segment, NetNode startNode, NetNode endNode)
         {
             // Zoning cell size, in metres.
             const float CellSize = 8f;
@@ -383,12 +392,12 @@ namespace ZoningAdjuster
                 // Left side of road.
                 Vector3 leftOffset = new Vector3((startDirection.x * MaxExtent) - (startDirection.z * maxDistance), 0f, (startDirection.z * MaxExtent) + (startDirection.x * maxDistance));
                 Vector3 position = startPosition + leftOffset;
-                zoneManager.CreateBlock(out segment.m_blockStartLeft, ref randomizer, position, startAngle, segmentStartRows, distance, segment.m_buildIndex);
+                zoneManager.CreateBlock(out segment.m_blockStartLeft, ref randomizer, segmentID, position, startAngle, segmentStartRows, distance, segment.m_buildIndex);
 
                 // Right side of road.
                 Vector3 rightOffset = new Vector3((startDirection.x * (float)(segmentStartRows - 4) * CellSize) + (startDirection.z * maxDistance), 0f, (startDirection.z * (float)(segmentStartRows - 4) * CellSize) - (startDirection.x * maxDistance));
                 position = startPosition + rightOffset;
-                zoneManager.CreateBlock(out segment.m_blockStartRight, ref randomizer, position, startAngle + 3.14159274f, segmentStartRows, distance, segment.m_buildIndex);
+                zoneManager.CreateBlock(out segment.m_blockStartRight, ref randomizer, segmentID, position, startAngle + 3.14159274f, segmentStartRows, distance, segment.m_buildIndex);
             }
 
             // Add second group of eight (if any).
@@ -399,12 +408,12 @@ namespace ZoningAdjuster
                 // Left side of road.
                 Vector3 leftOffset = new Vector3((endDirection.x * (((float)(segmentEndRows - 4) * CellSize) + endOffset)) + (endDirection.z * maxDistance), 0f, (endDirection.z * (((float)(segmentEndRows - 4) * CellSize) + endOffset)) - (endDirection.x * maxDistance));
                 Vector3 position = endPosition + leftOffset;
-                zoneManager.CreateBlock(out segment.m_blockEndLeft, ref randomizer, position, endAngle + 3.14159274f, segmentEndRows, distance, segment.m_buildIndex + 1u);
+                zoneManager.CreateBlock(out segment.m_blockEndLeft, ref randomizer, segmentID, position, endAngle + 3.14159274f, segmentEndRows, distance, segment.m_buildIndex + 1u);
 
                 // Right side of road.
                 Vector3 rightOffset = new Vector3((endDirection.x * (MaxExtent + endOffset)) - (endDirection.z * maxDistance), 0f, (endDirection.z * (MaxExtent + endOffset)) + (endDirection.x * maxDistance));
                 position = endPosition + rightOffset;
-                zoneManager.CreateBlock(out segment.m_blockEndRight, ref randomizer, position, endAngle, segmentEndRows, distance, segment.m_buildIndex + 1u);
+                zoneManager.CreateBlock(out segment.m_blockEndRight, ref randomizer, segmentID, position, endAngle, segmentEndRows, distance, segment.m_buildIndex + 1u);
             }
         }
     }

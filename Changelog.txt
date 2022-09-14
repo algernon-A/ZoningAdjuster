@@ -1,4 +1,9 @@
-﻿1.5.4.2 -
+﻿1.5.5 -
+
+- Compatibility updates for game version 1.15
+
+
+1.5.4.2 -
 
 - Update AlgernonCommons
 
