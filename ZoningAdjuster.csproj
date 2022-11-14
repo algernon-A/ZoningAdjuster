@@ -7,7 +7,7 @@
 		<Authors>algernon</Authors>
 		<Copyright>Copyright © 2021-22 algernon</Copyright>
 		<Product>$(Title)</Product>
-		<Version>1.5.6</Version>
+		<Version>1.5.7</Version>
 		<ManagedDLLPath>$(MSBuildProgramFiles32)/Steam/steamapps/common/Cities_Skylines/Cities_Data/Managed</ManagedDLLPath>
 		<AssemblySearchPaths>
 			$(AssemblySearchPaths);
