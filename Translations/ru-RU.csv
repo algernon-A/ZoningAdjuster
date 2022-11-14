@@ -35,7 +35,7 @@
 "UNABLE_TO_OPERATE","Это означает, что мод не может работать и отключился.","Warning message letting the user know that the mod can't work."
 "HARMONY_ERROR","Zoning Adjuster не смог завершить необходимые исправления Harmony.","Warning message that a patching problem was detected, and the mod can't operate."
 "HARMONY_PROBLEM_CAUSES","Возможные причины этой проблемы:","Header for list of possible causes of Harmony errors."
-"HARMONY_NOT_INSTALLED","Требуемый мод Harmony 2 не был установлен","Possible cause of Harmony error - Harmony not installed."
+"HARMONY_NOT_INSTALLED","Необходимый обязательный мод Harmony 2 не был установлен","Possible cause of Harmony error - Harmony not installed."
 "HARMONY_MOD_ERROR","Старый и/или сломанный мод мешает правильной работе Harmony 2","Possible cause of Harmony error - a broken mod (not this one) can cause things to stop working."
 "HARMONY_MOD_CONFLICT","Другой мод, возможно, пытается применить конфликтующее исправление Harmony","Possible cause of Harmony error - two mods trying to patch the same thing at once."
 "CONFLICT_DETECTED","Обнаружен конфликт модов!","Warning message that a mod conflict was detected."
