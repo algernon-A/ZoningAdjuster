@@ -370,7 +370,7 @@ namespace ZoningAdjuster
             if (segmentID != 0)
             {
                 // Check for mousedown events.
-                if (e.type == EventType.MouseDown && (e.button == 0 || e.button == 1))
+                    if ((e.type == EventType.MouseDown && (e.button == 0 || e.button == 1)) || _altPressed)
                 {
                     // Got one; use the event.
                     UIInput.MouseUsed();
