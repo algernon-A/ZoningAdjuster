@@ -19,16 +19,16 @@ namespace ZoningAdjuster
     /// </summary>
     public class ZoningTool : DefaultTool
     {
-        // Previous tool state.
-        private bool _prevRenderZones;
-
-        // UI thread to simulation thread communicatrion.
+        // UI thread to simulation thread communication.
+        private readonly object _simulationLock = new object();
         private ushort _segmentID = 0;
         private bool _buttonZero = false;
         private bool _buttonOne = false;
         private bool _shiftOffset = false;
         private bool _altPressed = false;
-        private object _simulationLock = new object();
+
+        // Previous tool state.
+        private bool _prevRenderZones;
 
         /// <summary>
         /// Gets the active tool instance.

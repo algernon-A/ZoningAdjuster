@@ -9,7 +9,7 @@ namespace ZoningAdjuster
     using ColossalFramework;
 
     /// <summary>
-    /// Static class containing.
+    /// Zone block stat class.
     /// </summary>
     internal class ZoneBlockData
     {
