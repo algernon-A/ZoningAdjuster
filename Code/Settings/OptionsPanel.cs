@@ -27,8 +27,8 @@ namespace ZoningAdjuster
             UIHelper helper = new UIHelper(this);
 
             // Language options.
-            UIHelperBase languageGroup = helper.AddGroup(Translations.Translate("TRN_CHOICE"));
-            UIDropDown languageDropDown = (UIDropDown)languageGroup.AddDropdown(Translations.Translate("TRN_CHOICE"), Translations.LanguageList, Translations.Index, (value) =>
+            UIHelperBase languageGroup = helper.AddGroup(Translations.Translate("LANGUAGE_CHOICE"));
+            UIDropDown languageDropDown = (UIDropDown)languageGroup.AddDropdown(Translations.Translate("LANGUAGE_CHOICE"), Translations.LanguageList, Translations.Index, (value) =>
             {
                 Translations.Index = value;
                 OptionsPanelManager<OptionsPanel>.LocaleChanged();

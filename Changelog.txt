@@ -1,4 +1,7 @@
-﻿1.5.7 -
+﻿- Implement core translations
+
+
+1.5.7 -
 
 - Update AlgernonCommons
 
