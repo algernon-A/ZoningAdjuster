@@ -1,4 +1,4 @@
-﻿// <copyright file="RealPopSerializer.cs" company="algernon (K. Algernon A. Sheppard)">
+﻿// <copyright file="DataContainer.cs" company="algernon (K. Algernon A. Sheppard)">
 // Copyright (c) algernon (K. Algernon A. Sheppard). All rights reserved.
 // Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -12,7 +12,7 @@ namespace ZoningAdjuster
     /// <summary>
     ///  Savegame (de)serialisation for settings.
     /// </summary>
-    public sealed class RealPopSerializer : IDataContainer
+    public sealed class DataContainer : IDataContainer
     {
         /// <summary>
         /// Serialise to savegame.
@@ -20,7 +20,13 @@ namespace ZoningAdjuster
         /// <param name="serializer">Data serializer.</param>
         public void Serialize(DataSerializer serializer)
         {
-            // Empty; we use the new serializer from now on.
+            Logging.Message("writing data to save file");
+
+            // Write data version.
+            serializer.WriteInt32(Serializer.CurrentDataVersion);
+
+            // Write block data.
+            serializer.WriteByteArray(ZoneBlockData.Instance.ZoneBlockFlags);
         }
 
         /// <summary>
@@ -38,16 +44,13 @@ namespace ZoningAdjuster
                 Logging.Message("read data version ", dataVersion.ToString());
 
                 // Make sure we have a matching data version.
-                if (dataVersion <= Serializer.CurrentDataVersion)
+                if (dataVersion < Serializer.CurrentDataVersion)
                 {
-                    ZoneBlockData.Instance.ReadLegacyData(serializer.ReadByteArray());
+                    Logging.Error("invalid data version ", dataVersion, " aborting load");
+                    return;
                 }
 
-                // If data version is 0, then populate existing zone block depths with default (4).
-                if (dataVersion == 0)
-                {
-                    ZoneBlockData.Instance.DefaultDepths();
-                }
+                ZoneBlockData.Instance.ReadData(serializer.ReadByteArray());
             }
             catch (Exception e)
             {

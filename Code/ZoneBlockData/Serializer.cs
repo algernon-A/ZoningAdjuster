@@ -6,7 +6,6 @@
 namespace ZoningAdjuster
 {
     using System.IO;
-    using System.Runtime.Serialization.Formatters.Binary;
     using AlgernonCommons;
     using ColossalFramework.IO;
     using ICities;
@@ -19,11 +18,12 @@ namespace ZoningAdjuster
         /// <summary>
         /// Current data version.
         /// </summary>
-        internal const int CurrentDataVersion = 1;
+        internal const int CurrentDataVersion = 2;
 
         // Unique data ID.
         private readonly string oldDataID = "ZoningAdjuster";
         private readonly string newDataID = "ZoningAdjusterData";
+        private readonly string v2DataID = "ZoningAdjusterData2";
 
         /// <summary>
         /// Serializes data to the savegame.
@@ -35,13 +35,11 @@ namespace ZoningAdjuster
 
             using (MemoryStream stream = new MemoryStream())
             {
-                BinaryFormatter formatter = new BinaryFormatter();
-
                 // Serialise savegame settings.
-                DataSerializer.Serialize(stream, DataSerializer.Mode.Memory, CurrentDataVersion, new RealPopSerializer());
+                DataSerializer.Serialize(stream, DataSerializer.Mode.Memory, CurrentDataVersion, new DataContainer());
 
                 // Write to savegame.
-                serializableDataManager.SaveData(newDataID, stream.ToArray());
+                serializableDataManager.SaveData(v2DataID, stream.ToArray());
 
                 Logging.Message("wrote ", stream.Length);
             }
@@ -59,14 +57,14 @@ namespace ZoningAdjuster
             // Read data from savegame.
             byte[] data = serializableDataManager.LoadData(oldDataID);
 
-            // Check to see if anything was read.
+            // Check to see if anything was read - start with trying original data ID.
             if (data != null && data.Length != 0)
             {
+                Logging.Message("found legacy data");
+
                 // Data was read - go ahead and deserialise.
                 using (MemoryStream stream = new MemoryStream(data))
                 {
-                    BinaryFormatter formatter = new BinaryFormatter();
-
                     // Deserialise savegame settings.
                     DataSerializer.Deserialize<RealPopSerializer>(stream, DataSerializer.Mode.Memory);
 
@@ -75,16 +73,17 @@ namespace ZoningAdjuster
             }
             else
             {
+                // Trying next generation data ID.
                 data = serializableDataManager.LoadData(newDataID);
 
                 // Check to see if anything was read.
                 if (data != null && data.Length != 0)
                 {
+                    Logging.Message("found next gen legacy data");
+
                     // Data was read - go ahead and deserialise.
                     using (MemoryStream stream = new MemoryStream(data))
                     {
-                        BinaryFormatter formatter = new BinaryFormatter();
-
                         // Deserialise savegame settings.
                         DataSerializer.Deserialize<RealPopSerializer>(stream, DataSerializer.Mode.Memory);
 
@@ -93,8 +92,28 @@ namespace ZoningAdjuster
                 }
                 else
                 {
-                    // No data read.
-                    Logging.Message("no data read");
+                    // Try third generation data ID.
+                    data = serializableDataManager.LoadData(v2DataID);
+
+                    // Check to see if anything was read.
+                    if (data != null && data.Length != 0)
+                    {
+                        Logging.Message("found v2 data");
+
+                        // Data was read - go ahead and deserialise.
+                        using (MemoryStream stream = new MemoryStream(data))
+                        {
+                            // Deserialise savegame settings.
+                            DataSerializer.Deserialize<DataContainer>(stream, DataSerializer.Mode.Memory);
+
+                            Logging.Message("read ", stream.Length);
+                        }
+                    }
+                    else
+                    {
+                        // No data read.
+                        Logging.Message("no data read");
+                    }
                 }
             }
         }

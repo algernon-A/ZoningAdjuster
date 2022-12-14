@@ -340,7 +340,9 @@ namespace ZoningAdjuster
                 newSlider.maxValue = 4;
 
                 // +1 to account for zero-basing.
-                newSlider.value = ZoneDepthPatches.ZoneDepth + 1;
+                int initialValue = ZoneDepthPatches.ZoneDepth + 1;
+                newSlider.value = initialValue;
+                valueLabel.text = initialValue.ToString();
             }
             else
             {

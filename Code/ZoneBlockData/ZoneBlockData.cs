@@ -132,24 +132,24 @@ namespace ZoningAdjuster
         }
 
         /// <summary>
-        /// Returns whether or not the given block is set to preserve older zoning.
+        /// Returns whether or not the given network segment is set to preserve older zoning.
         /// </summary>
-        /// <param name="blockID">Block ID.</param>
+        /// <param name="segmentID">Network segment ID.</param>
         /// <returns>True if older zoning is preserved for this block, false otherwise.</returns>
-        internal bool PreserveOlder(ushort blockID) => (_zoneBlockFlags[blockID] & (ushort)ZoningAdjusterFlags.PreserveOlder) != 0;
+        internal bool PreserveOlder(ushort segmentID) => (_zoneBlockFlags[segmentID] & (ushort)ZoningAdjusterFlags.PreserveOlder) != 0;
 
         /// <summary>
-        /// Returns whether or not the given block is set to preserve newer zoning.
+        /// Returns whether or not the given network segment is set to preserve newer zoning.
         /// </summary>
-        /// <param name="blockID">Block ID.</param>
-        /// <returns>True if newer zoning is preserved for this block, false otherwise.</returns>
-        internal bool PreserveNewer(ushort blockID) => (_zoneBlockFlags[blockID] & (ushort)ZoningAdjusterFlags.PreserveNewer) != 0;
+        /// <param name="segmentID">Network segment ID.</param>
+        /// <returns>True if newer zoning is preserved for this segment, false otherwise.</returns>
+        internal bool PreserveNewer(ushort segmentID) => (_zoneBlockFlags[segmentID] & (ushort)ZoningAdjusterFlags.PreserveNewer) != 0;
 
         /// <summary>
-        /// Records the current zoning settings for the specified block.
+        /// Records the current zoning settings for the specified network segment.
         /// </summary>
-        /// <param name="blockID">Block ID.</param>
-        internal void SetCurrentMode(ushort blockID)
+        /// <param name="segmentID">Network segment ID.</param>
+        internal void SetCurrentMode(ushort segmentID)
         {
             ZoningAdjusterFlags newFlags = ZoningAdjusterFlags.Created;
 
@@ -167,37 +167,55 @@ namespace ZoningAdjuster
             newFlags |= (ZoningAdjusterFlags)(ZoneDepthPatches.ZoneDepth << 5);
 
             // Set created flag.
-            _zoneBlockFlags[blockID] = (byte)newFlags;
+            _zoneBlockFlags[segmentID] = (byte)newFlags;
         }
 
         /// <summary>
-        /// Gets the effective depth of the given zone block.
+        /// Gets the effective depth of the given segment.
         /// </summary>
-        /// <param name="blockID">Block ID.</param>
-        /// <returns>Effective depth od the specified block.</returns>
-        internal int GetEffectiveDepth(ushort blockID)
+        /// <param name="segmentID">Network segment ID.</param>
+        /// <returns>Effective depth of the specified segment.</returns>
+        internal int GetEffectiveDepth(ushort segmentID)
         {
-            // Get current flags setting.
-            ZoningAdjusterFlags blockFlags = (ZoningAdjusterFlags)_zoneBlockFlags[blockID];
-
-            // Check for formal created flag.
-            if ((blockFlags & ZoningAdjusterFlags.Created) == ZoningAdjusterFlags.None)
+            // Only return custom values for recorded segment IDs.
+            // Zone blocks created before 1.15 won't have linked segment IDs - any with ZA settings should have had IDs added by the legacy deserializer.
+            if (segmentID != 0)
             {
-                // Not created - return current depth setting.
-                return ZoneDepthPatches.ZoneDepth;
+                Logging.KeyMessage("getting effective depth for segment ", segmentID);
+
+                // Get current flags setting.
+                ZoningAdjusterFlags blockFlags = (ZoningAdjusterFlags)_zoneBlockFlags[segmentID];
+
+                // Check for formal created flag.
+                if ((blockFlags & ZoningAdjusterFlags.Created) != 0)
+                {
+                    Logging.KeyMessage("found effective depth ", (byte)blockFlags >> 5);
+
+                    // We retrieved a valid record; return it.
+                    return (byte)blockFlags >> 5;
+                }
+
+                // Not created - is this the current segment selected by the tool?
+                if (segmentID != 0 & ZoningTool.CurrentSegment == segmentID)
+                {
+                    Logging.KeyMessage("found current segment: using current depth ", ZoneDepthPatches.ZoneDepth);
+
+                    // Yes - return current depth setting.
+                    return ZoneDepthPatches.ZoneDepth;
+                }
             }
 
-            // If we got here, we retrieved a valid record; return it.
-            return (byte)blockFlags >> 5;
+            // If we got here, vanilla zone block depth should be used (no custom settings or not currently selected segment).
+            return 4;
         }
 
         /// <summary>
-        /// Clears recorded data for the specified block.
+        /// Clears recorded data for the specified segment.
         /// </summary>
-        /// <param name="blockID">Block ID to clear.</param>
-        internal void ClearEntry(ushort blockID)
+        /// <param name="segmentID">Segment ID to clear.</param>
+        internal void ClearEntry(ushort segmentID)
         {
-            _zoneBlockFlags[blockID] = (byte)ZoningAdjusterFlags.None;
+            _zoneBlockFlags[segmentID] = (byte)ZoningAdjusterFlags.None;
         }
 
         /// <summary>
@@ -219,6 +237,55 @@ namespace ZoningAdjuster
         }
 
         /// <summary>
+        /// Populates the zone block data array with data from savefile deserialization.
+        /// </summary>
+        /// <param name="data">Savefile data.</param>
+        internal void ReadLegacyData(byte[] data)
+        {
+            Logging.KeyMessage("reading legacy data");
+
+            // Read length is the shortest of the internal array length or the data length.
+            int arrayLength = System.Math.Min(_zoneBlockFlags.Length, data.Length);
+
+            // Zone block flags.
+            byte[] legacyFlags = new byte[arrayLength];
+
+            // Populate internal array from savegame.
+            for (int i = 0; i < arrayLength; ++i)
+            {
+                legacyFlags[i] = data[i];
+            }
+
+            Logging.KeyMessage("read ", arrayLength, " legacy zone block records");
+
+            // Map legacy zone indexes to network indexes.
+            int assignedCount = 0;
+            NetSegment[] segments = Singleton<NetManager>.instance.m_segments.m_buffer;
+            ZoneBlock[] zoneBlocks = Singleton<ZoneManager>.instance.m_blocks.m_buffer;
+            for (ushort i = 0; i < segments.Length; ++i)
+            {
+                // Look for valid segments.
+                if ((segments[i].m_flags & NetSegment.Flags.Created) != 0)
+                {
+                    ConvertToSegment(i, segments[i].m_blockStartLeft, legacyFlags, zoneBlocks);
+                    ConvertToSegment(i, segments[i].m_blockStartRight, legacyFlags, zoneBlocks);
+                    ConvertToSegment(i, segments[i].m_blockEndLeft, legacyFlags, zoneBlocks);
+                    ConvertToSegment(i, segments[i].m_blockEndRight, legacyFlags, zoneBlocks);
+                }
+            }
+
+            Logging.KeyMessage("allocated ", assignedCount, " new segment records");
+
+            for (int i = 0; i < legacyFlags.Length; ++i)
+            {
+                if (legacyFlags[i] != 0)
+                {
+                    Logging.KeyMessage("found remainng legacy flags of ", legacyFlags[i], " for zone block ", i);
+                }
+            }
+        }
+
+        /// <summary>
         /// Populates block data with default depth setting - used when deserializing legacy data.
         /// </summary>
         internal void DefaultDepths()
@@ -234,6 +301,29 @@ namespace ZoningAdjuster
                 {
                     Logging.Message("adding default depth flags to zone block ", i);
                     _zoneBlockFlags[i] |= (byte)(ZoningAdjusterFlags.DepthFour | ZoningAdjusterFlags.Created);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Converts legacy block data to segment data.
+        /// </summary>
+        /// <param name="segmentID">Network segment ID.</param>
+        /// <param name="blockID">ZoneBlock ID.</param>
+        /// <param name="legacyFlags">Legacy zone flag array.</param>
+        /// <param name="zoneBlocks">ZoneBlock data array.</param>
+        private void ConvertToSegment(ushort segmentID, ushort blockID, byte[] legacyFlags, ZoneBlock[] zoneBlocks)
+        {
+            // Check if there's a valid legacy entry.
+            if (blockID != 0 && legacyFlags[blockID] != 0)
+            {
+                // Legacy entry found - apply to owning segment.
+                _zoneBlockFlags[segmentID] = legacyFlags[blockID];
+
+                // Update zone block record to point to segment if no segmentID is already present.
+                if (zoneBlocks[blockID].m_segment == 0)
+                {
+                    zoneBlocks[blockID].m_segment = segmentID;
                 }
             }
         }

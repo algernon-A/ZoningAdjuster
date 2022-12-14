@@ -19,6 +19,8 @@ namespace ZoningAdjuster
     /// </summary>
     public class ZoningTool : DefaultTool
     {
+        private static ZoningTool s_instance;
+
         // UI thread to simulation thread communication.
         private readonly object _simulationLock = new object();
         private ushort _segmentID = 0;
@@ -39,6 +41,23 @@ namespace ZoningAdjuster
         /// Gets a value indicating whether the tool is currently active (true) or inactive (false).
         /// </summary>
         public static bool IsActiveTool => Instance != null && ToolsModifierControl.toolController.CurrentTool == Instance;
+
+        /// <summary>
+        /// Gets the currently selected segment, if any.
+        /// </summary>
+        internal static ushort CurrentSegment
+        {
+            get
+            {
+                if (s_instance != null)
+                {
+                    return s_instance._segmentID;
+                }
+
+                // If we got here, the tool isn't ready; return 0.
+                return 0;
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating whether terrain is ignored by the tool (always returns true, i.e. terrain is ignored by the tool).
@@ -313,6 +332,9 @@ namespace ZoningAdjuster
             }
 
             Logging.Message("tool enabled");
+
+            // Set instance.
+            s_instance = this;
 
             // Create zoning settings panel if it isn't already created, and in any case make sure it's visible.
             ZoningSettingsPanel.Create();

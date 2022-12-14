@@ -16,11 +16,11 @@ namespace ZoningAdjuster
         /// <summary>
         /// Harmony Postifx patch for ZoneManager.CreateBlock to record current mod settings in effect when the block is created.
         /// </summary>
-        /// <param name="block">Zone block ID.</param>
-        public static void Postfix(ref ushort block)
+        /// <param name="segmentID">Network segment ID.</param>
+        public static void Postfix(ushort segmentID)
         {
-            // Record current mod settings against this zone block ID.
-            ZoneBlockData.Instance.SetCurrentMode(block);
+            // Record current mod settings against this network segment ID.
+            ZoneBlockData.Instance.SetCurrentMode(segmentID);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 namespace ZoningAdjuster
 {
+    using ColossalFramework;
     using ColossalFramework.Math;
     using HarmonyLib;
     using UnityEngine;
@@ -93,6 +94,12 @@ namespace ZoningAdjuster
             {
                 return false;
             }
+
+            // Mod insert - segments.
+            NetManager netManger = Singleton<NetManager>.instance;
+            NetSegment[] segments = netManger.m_segments.m_buffer;
+            ref NetSegment thisSegment = ref segments[__instance.m_segment];
+            ref NetSegment otherSegment = ref segments[other.m_segment];
 
             // Iterate through each row in this block.
             for (int row = 0; row < rowCount; ++row)
@@ -206,14 +213,14 @@ namespace ZoningAdjuster
                                                     if ((otherColumn >= 4 && column >= 4) || (otherColumn < 4 && column < 4))
                                                     {
                                                         // Mod insert: checking for age precedence.
-                                                        bool preserveOldZones = ZoneBlockData.Instance.PreserveOlder(blockID);
-                                                        bool preserveNewZones = ZoneBlockData.Instance.PreserveNewer(blockID);
+                                                        bool preserveOldZones = ZoneBlockData.Instance.PreserveOlder(__instance.m_segment);
+                                                        bool preserveNewZones = ZoneBlockData.Instance.PreserveNewer(__instance.m_segment);
 
-                                                        if ((preserveOldZones && __instance.m_buildIndex > other.m_buildIndex) || (preserveNewZones && __instance.m_buildIndex < other.m_buildIndex))
+                                                        if ((preserveOldZones && thisSegment.m_buildIndex > otherSegment.m_buildIndex) || (preserveNewZones && thisSegment.m_buildIndex < otherSegment.m_buildIndex))
                                                         {
                                                             cellIsValid = false;
                                                         }
-                                                        else if ((preserveOldZones && __instance.m_buildIndex < other.m_buildIndex) || (preserveNewZones && __instance.m_buildIndex > other.m_buildIndex))
+                                                        else if ((preserveOldZones && thisSegment.m_buildIndex < otherSegment.m_buildIndex) || (preserveNewZones && thisSegment.m_buildIndex > otherSegment.m_buildIndex))
                                                         {
                                                             other.m_valid &= (ulong)~(1L << (otherRow << 3 | otherColumn));
                                                         }
