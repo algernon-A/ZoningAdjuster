@@ -123,8 +123,8 @@ namespace ZoningAdjuster
             this.width = Mathf.Max(this.width, _forceCheck.width + (Margin * 2f), _disableCheck.width + (Margin * 2f));
 
             // Priority checkboxes.
-            _priorityChecks = new UICheckBox[(int)ZoneBlockData.PriorityIndexes.NumPriorities];
-            int currentPriority = ZoneBlockData.Instance.GetCurrentPriority();
+            _priorityChecks = new UICheckBox[(int)SegmentData.PriorityIndexes.NumPriorities];
+            int currentPriority = SegmentData.Instance.GetCurrentPriority();
             for (int i = 0; i < _priorityChecks.Length; ++i)
             {
                 _priorityChecks[i] = UICheckBoxes.AddLabelledCheckBox(this, Margin, _priorityCheckY[i], Translations.Translate(_priorityNames[i]), tooltip: Translations.Translate(_priorityNames[i] + "_TIP"));
@@ -256,7 +256,7 @@ namespace ZoningAdjuster
                 if (isChecked)
                 {
                     // Iterate through all checkboxes.
-                    for (int i = 0; i < (int)ZoneBlockData.PriorityIndexes.NumPriorities; ++i)
+                    for (int i = 0; i < (int)SegmentData.PriorityIndexes.NumPriorities; ++i)
                     {
                         // If it's not this checkbox, uncheck it.
                         if (i != index)
@@ -266,13 +266,13 @@ namespace ZoningAdjuster
                     }
 
                     // Set current priority.
-                    ZoneBlockData.Instance.SetCurrentPriority(index);
+                    SegmentData.Instance.SetCurrentPriority(index);
                 }
                 else
                 {
                     // Checkbox has been deselected; make sure that at least one other is still selected, otherwise we re-select this one.
                     // Iterate through all checkboxes.
-                    for (int i = 0; i < (int)ZoneBlockData.PriorityIndexes.NumPriorities; ++i)
+                    for (int i = 0; i < (int)SegmentData.PriorityIndexes.NumPriorities; ++i)
                     {
                         // If any are checked, we're done here; return.
                         if (_priorityChecks[i].isChecked)

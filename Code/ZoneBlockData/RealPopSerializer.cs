@@ -40,13 +40,13 @@ namespace ZoningAdjuster
                 // Make sure we have a matching data version.
                 if (dataVersion <= Serializer.CurrentDataVersion)
                 {
-                    ZoneBlockData.Instance.ReadLegacyData(serializer.ReadByteArray());
+                    SegmentData.Instance.ReadLegacyData(serializer.ReadByteArray());
                 }
 
                 // If data version is 0, then populate existing zone block depths with default (4).
                 if (dataVersion == 0)
                 {
-                    ZoneBlockData.Instance.DefaultDepths();
+                    SegmentData.Instance.DefaultDepths();
                 }
             }
             catch (Exception e)

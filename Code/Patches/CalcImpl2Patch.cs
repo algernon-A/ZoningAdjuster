@@ -213,8 +213,8 @@ namespace ZoningAdjuster
                                                     if ((otherColumn >= 4 && column >= 4) || (otherColumn < 4 && column < 4))
                                                     {
                                                         // Mod insert: checking for age precedence.
-                                                        bool preserveOldZones = ZoneBlockData.Instance.PreserveOlder(__instance.m_segment);
-                                                        bool preserveNewZones = ZoneBlockData.Instance.PreserveNewer(__instance.m_segment);
+                                                        bool preserveOldZones = SegmentData.Instance.PreserveOlder(__instance.m_segment);
+                                                        bool preserveNewZones = SegmentData.Instance.PreserveNewer(__instance.m_segment);
 
                                                         if ((preserveOldZones && thisSegment.m_buildIndex > otherSegment.m_buildIndex) || (preserveNewZones && thisSegment.m_buildIndex < otherSegment.m_buildIndex))
                                                         {

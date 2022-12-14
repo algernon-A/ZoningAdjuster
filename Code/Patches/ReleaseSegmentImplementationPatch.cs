@@ -21,7 +21,7 @@ namespace ZoningAdjuster
         public static void Postfix(ushort segment)
         {
             // Clear recorded data for this segment ID.
-            ZoneBlockData.Instance.ClearEntry(segment);
+            SegmentData.Instance.ClearEntry(segment);
         }
     }
 }

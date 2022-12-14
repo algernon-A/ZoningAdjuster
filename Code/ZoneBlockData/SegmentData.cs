@@ -1,4 +1,4 @@
-﻿// <copyright file="ZoneBlockData.cs" company="algernon (K. Algernon A. Sheppard)">
+﻿// <copyright file="SegmentData.cs" company="algernon (K. Algernon A. Sheppard)">
 // Copyright (c) algernon (K. Algernon A. Sheppard). All rights reserved.
 // Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -11,10 +11,10 @@ namespace ZoningAdjuster
     /// <summary>
     /// Zone block stat class.
     /// </summary>
-    internal class ZoneBlockData
+    internal class SegmentData
     {
         // Instance reference.
-        private static ZoneBlockData s_instance;
+        private static SegmentData s_instance;
 
         // Zone block flag array.
         private readonly byte[] _zoneBlockFlags;
@@ -24,9 +24,9 @@ namespace ZoningAdjuster
         private bool preserveNewZones = false;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ZoneBlockData"/> class.
+        /// Initializes a new instance of the <see cref="SegmentData"/> class.
         /// </summary>
-        internal ZoneBlockData()
+        internal SegmentData()
         {
             // Set instance reference.
             s_instance = this;
@@ -81,7 +81,7 @@ namespace ZoningAdjuster
         /// <summary>
         /// Gets the active instance.
         /// </summary>
-        internal static ZoneBlockData Instance => s_instance;
+        internal static SegmentData Instance => s_instance;
 
         /// <summary>
         /// Gets the active zone block flags array.

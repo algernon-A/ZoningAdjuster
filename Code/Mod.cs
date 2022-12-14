@@ -41,7 +41,7 @@ namespace ZoningAdjuster
         public override void OnEnabled()
         {
             // Initialize zoning block data.
-            new ZoneBlockData();
+            new SegmentData();
 
             base.OnEnabled();
         }

@@ -26,7 +26,7 @@ namespace ZoningAdjuster
             serializer.WriteInt32(Serializer.CurrentDataVersion);
 
             // Write block data.
-            serializer.WriteByteArray(ZoneBlockData.Instance.ZoneBlockFlags);
+            serializer.WriteByteArray(SegmentData.Instance.ZoneBlockFlags);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace ZoningAdjuster
                     return;
                 }
 
-                ZoneBlockData.Instance.ReadData(serializer.ReadByteArray());
+                SegmentData.Instance.ReadData(serializer.ReadByteArray());
             }
             catch (Exception e)
             {

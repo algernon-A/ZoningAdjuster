@@ -20,7 +20,7 @@ namespace ZoningAdjuster
         public static void Postfix(ushort segmentID)
         {
             // Record current mod settings against this network segment ID.
-            ZoneBlockData.Instance.SetCurrentMode(segmentID);
+            SegmentData.Instance.SetCurrentMode(segmentID);
         }
     }
 }
