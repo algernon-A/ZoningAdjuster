@@ -1,4 +1,6 @@
-﻿- MAJOR CHANGE: convert from block- to segment-based properties (made possible by 1.15 game update)
+﻿1.6 -
+
+- MAJOR CHANGE: convert from block- to segment-based properties (made possible by 1.15 game update)
 - Adjust priority calculations when one segment has no priority setting
 - Implement core translations
 

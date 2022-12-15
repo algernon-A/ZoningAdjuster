@@ -20,6 +20,16 @@ namespace ZoningAdjuster
         {
             new WhatsNewMessage
             {
+                Version = new Version("1.6.0"),
+                MessagesAreKeys = true,
+                Messages = new string[]
+                {
+                    "ZMD_160_0",
+                    "ZMD_160_1",
+                },
+            },
+            new WhatsNewMessage
+            {
                 Version = new Version("1.5.5.0"),
                 MessagesAreKeys = true,
                 Messages = new string[]
