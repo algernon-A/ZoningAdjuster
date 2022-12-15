@@ -189,8 +189,6 @@ namespace ZoningAdjuster
                 // Check for formal created flag.
                 if ((blockFlags & ZoningAdjusterFlags.Created) != 0)
                 {
-                    Logging.KeyMessage("found effective depth ", (byte)blockFlags >> 5);
-
                     // We retrieved a valid record; return it.
                     return (byte)blockFlags >> 5;
                 }
@@ -198,8 +196,6 @@ namespace ZoningAdjuster
                 // Not created - is this the current segment selected by the tool?
                 if (segmentID != 0 & ZoningTool.CurrentSegment == segmentID)
                 {
-                    Logging.KeyMessage("found current segment: using current depth ", ZoneDepthPatches.ZoneDepth);
-
                     // Yes - return current depth setting.
                     return ZoneDepthPatches.ZoneDepth;
                 }
