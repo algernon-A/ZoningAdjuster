@@ -274,13 +274,13 @@ namespace ZoningAdjuster
                 }
             }
 
-            Logging.KeyMessage("allocated ", assignedCount, " new segment records");
+            Logging.Message("allocated ", assignedCount, " new segment records");
 
             for (int i = 0; i < legacyFlags.Length; ++i)
             {
                 if (legacyFlags[i] != 0)
                 {
-                    Logging.KeyMessage("found remainng legacy flags of ", legacyFlags[i], " for zone block ", i);
+                    Logging.Message("found legacy flags of ", legacyFlags[i], " for zone block ", i);
                 }
             }
         }
