@@ -218,32 +218,56 @@ namespace ZoningAdjuster
 
                                                         if ((preserveOldZones && thisSegment.m_buildIndex > otherSegment.m_buildIndex) || (preserveNewZones && thisSegment.m_buildIndex < otherSegment.m_buildIndex))
                                                         {
+                                                            // This cell yields to the other segement.
                                                             cellIsValid = false;
+                                                            other.m_valid |= (ulong)(1L << (otherRow << 3 | otherColumn));
                                                         }
                                                         else if ((preserveOldZones && thisSegment.m_buildIndex < otherSegment.m_buildIndex) || (preserveNewZones && thisSegment.m_buildIndex > otherSegment.m_buildIndex))
                                                         {
+                                                            // This cell takes priority over the other segement.
+                                                            cellIsValid = true;
                                                             other.m_valid &= (ulong)~(1L << (otherRow << 3 | otherColumn));
-                                                        }
-                                                        else if ((otherColumn >= 2 && column >= 2) || (otherColumn < 2 && column < 2))
-                                                        {
-                                                            // By default, the cell within the first two rows of its block takes precesence over cells that aren't.
-                                                            if (__instance.m_buildIndex < other.m_buildIndex)
-                                                            {
-                                                                other.m_valid &= (ulong)~(1L << (otherRow << 3 | otherColumn));
-                                                            }
-                                                            else
-                                                            {
-                                                                cellIsValid = false;
-                                                            }
-                                                        }
-                                                        else if (otherColumn < 2)
-                                                        {
-                                                            // By default, the cell within the first two rows of its block takes precesence over cells that aren't.
-                                                            cellIsValid = false;
                                                         }
                                                         else
                                                         {
-                                                            other.m_valid &= (ulong)~(1L << (otherRow << 3 | otherColumn));
+                                                            // No priority set for this segment - check the other one.
+                                                            bool otherPreserveOldZones = SegmentData.Instance.PreserveOlder(other.m_segment);
+                                                            bool otherPreserveNewZones = SegmentData.Instance.PreserveNewer(other.m_segment);
+                                                            if ((otherPreserveOldZones && thisSegment.m_buildIndex > otherSegment.m_buildIndex) || (otherPreserveNewZones && thisSegment.m_buildIndex < otherSegment.m_buildIndex))
+                                                            {
+                                                                // This cell yields to the other segement.
+                                                                cellIsValid = false;
+                                                                other.m_valid |= (ulong)(1L << (otherRow << 3 | otherColumn));
+                                                            }
+                                                            else if ((otherPreserveOldZones && thisSegment.m_buildIndex < otherSegment.m_buildIndex) || (otherPreserveNewZones && thisSegment.m_buildIndex > otherSegment.m_buildIndex))
+                                                            {
+                                                                // This cell takes priority over the other segement.
+                                                                cellIsValid = true;
+                                                                other.m_valid &= (ulong)~(1L << (otherRow << 3 | otherColumn));
+                                                            }
+
+                                                            // No priority found in either segment - revert to game behaviour.
+                                                            else if ((otherColumn >= 2 && column >= 2) || (otherColumn < 2 && column < 2))
+                                                            {
+                                                                // By default, the cell within the first two rows of its block takes precesence over cells that aren't.
+                                                                if (__instance.m_buildIndex < other.m_buildIndex)
+                                                                {
+                                                                    other.m_valid &= (ulong)~(1L << (otherRow << 3 | otherColumn));
+                                                                }
+                                                                else
+                                                                {
+                                                                    cellIsValid = false;
+                                                                }
+                                                            }
+                                                            else if (otherColumn < 2)
+                                                            {
+                                                                // By default, the cell within the first two rows of its block takes precesence over cells that aren't.
+                                                                cellIsValid = false;
+                                                            }
+                                                            else
+                                                            {
+                                                                other.m_valid &= (ulong)~(1L << (otherRow << 3 | otherColumn));
+                                                            }
                                                         }
                                                     }
                                                     else if (otherColumn < 4)
