@@ -5,6 +5,7 @@
 
 namespace ZoningAdjuster
 {
+    using AlgernonCommons;
     using AlgernonCommons.Keybinding;
     using AlgernonCommons.Translation;
     using AlgernonCommons.UI;
@@ -61,6 +62,10 @@ namespace ZoningAdjuster
                 ModSettings.ButtonX = -1;
                 ZoningAdjusterButton.Instance?.SetPosition();
             });
+
+            // Logging checkbox.
+            UIHelperBase debugGroup = helper.AddGroup(Translations.Translate("DETAIL_LOGGING"));
+            debugGroup.AddCheckbox(Translations.Translate("DETAIL_LOGGING"), Logging.DetailLogging, (isChecked) => Logging.DetailLogging = isChecked);
         }
     }
 }
