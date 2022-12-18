@@ -181,8 +181,6 @@ namespace ZoningAdjuster
             // Zone blocks created before 1.15 won't have linked segment IDs - any with ZA settings should have had IDs added by the legacy deserializer.
             if (segmentID != 0)
             {
-                Logging.KeyMessage("getting effective depth for segment ", segmentID);
-
                 // Get current flags setting.
                 ZoningAdjusterFlags blockFlags = (ZoningAdjusterFlags)_zoneBlockFlags[segmentID];
 
