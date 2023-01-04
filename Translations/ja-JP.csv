@@ -45,5 +45,5 @@
 "ZMD_130_0","調整可能なゾーンの列数を追加"
 "ZMD_140_0","パネルボタンを無効にするオプションを追加(Unified UIのボタンは常に利用可能)"
 "ZMD_155_0","ゲームバージョン1.15との互換性 (Plazas & Promenades)"
-"ZMD_160_0","MAJOR CHANGE: attach zoning settings directly to road segments (made possible by recent game updates)"
-"ZMD_160_1","Improve handling of zoning overlaps between roads where one has a priority setting and the other does not"
+"ZMD_160_0","主要な変更: 道路のゾーニング設定をセグメントに直接介入します (最近のゲームアップデートで可能)"
+"ZMD_160_1","一方はゾーニングの優先が設定されて、他で優先が未設定の場合は重複時の処理を改善"

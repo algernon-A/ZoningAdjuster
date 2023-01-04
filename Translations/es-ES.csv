@@ -45,5 +45,5 @@
 "ZMD_130_0","Agregar profundidad de zona ajustable"
 "ZMD_140_0","Añadir opción para desactivar el botón del panel (el botón de ""Unified UI"" está siempre disponible)"
 "ZMD_155_0","Compatibilidad con la versión 1.15 del juego (Plazas & Promenades)"
-"ZMD_160_0","MAJOR CHANGE: attach zoning settings directly to road segments (made possible by recent game updates)"
-"ZMD_160_1","Improve handling of zoning overlaps between roads where one has a priority setting and the other does not"
+"ZMD_160_0","CAMBIO MAYOR: Agregada configuración de zonas directamente al segmento (posible debido a la actualización reciente del juego)"
+"ZMD_160_1","Mejora en el manejo de la zonificación entre vías donde una tiene prioridad y la otra no"

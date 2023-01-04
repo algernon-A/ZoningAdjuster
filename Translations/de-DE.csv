@@ -45,5 +45,5 @@
 "ZMD_130_0","Einstellung für die maximale Gebiets-Tiefe hinzugefügt"
 "ZMD_140_0","Funktion hinzugefügt, um den Button auszublenden (Der Unified UI Button wird immer angezeigt)"
 "ZMD_155_0","Kompatibilität mit der Spielversion 1.15 (Plazas & Promenades)"
-"ZMD_160_0","MAJOR CHANGE: attach zoning settings directly to road segments (made possible by recent game updates)"
-"ZMD_160_1","Improve handling of zoning overlaps between roads where one has a priority setting and the other does not"
+"ZMD_160_0","GROẞE ÄNDERUNG: Zoneneinstellungen werden nun direkt an die Straßensegmente angefügt (wurde möglich durch aktuelle Spielaktualisierungen)"
+"ZMD_160_1","Verbesserte Handhabung von Zonenüberlappungen zwischen Straßen, bei denen eine eine Priorität hat und die andere nicht"

@@ -45,5 +45,5 @@
 "ZMD_130_0","Mogelijkheid toegevoegd voor aanpasbare diepte van de zone"
 "ZMD_140_0","Mogelijkheid toegevoegd om menuknop uit te zetten (de knop in Unified UI is altijd zichtbaar)"
 "ZMD_155_0","Compatibiliteit met spelversie 1.15 (Plazas & Promenades)"
-"ZMD_160_0","MAJOR CHANGE: attach zoning settings directly to road segments (made possible by recent game updates)"
-"ZMD_160_1","Improve handling of zoning overlaps between roads where one has a priority setting and the other does not"
+"ZMD_160_0","GROTE WIJZIGING: Zone-instellingen zijn nu direct gekoppeld aan de wegsegmenten (werd mogelijk door recente spelupdates)"
+"ZMD_160_1","Verbeterde behandeling van zoneoverlappingen tussen wegen waarvan de ene prioriteit heeft en de andere niet"
