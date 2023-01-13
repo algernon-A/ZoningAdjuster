@@ -146,7 +146,19 @@ namespace ZoningAdjuster
         internal bool PreserveNewer(ushort segmentID) => (_zoneBlockFlags[segmentID] & (ushort)ZoningAdjusterFlags.PreserveNewer) != 0;
 
         /// <summary>
-        /// Records the current zoning settings for the specified network segment.
+        /// Records the current zoning settings for the specified network segment, if there are no existing active settings.
+        /// </summary>
+        /// <param name="segmentID">Network segment ID.</param>
+        internal void UpdateCurrentMode(ushort segmentID)
+        {
+            if ((_zoneBlockFlags[segmentID] & (ushort)ZoningAdjusterFlags.Created) == 0)
+            {
+                SetCurrentMode(segmentID);
+            }
+        }
+
+        /// <summary>
+        /// Records the current zoning settings for the specified network segment, overwriting any existing settings.
         /// </summary>
         /// <param name="segmentID">Network segment ID.</param>
         internal void SetCurrentMode(ushort segmentID)
@@ -168,6 +180,8 @@ namespace ZoningAdjuster
 
             // Set created flag.
             _zoneBlockFlags[segmentID] = (byte)newFlags;
+
+            Logging.KeyMessage("recorded data for segment ", segmentID);
         }
 
         /// <summary>

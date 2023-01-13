@@ -213,12 +213,15 @@ namespace ZoningAdjuster
                         bool hasRight = segment.m_blockStartRight != 0 || segment.m_blockEndRight != 0;
 
                         // Remove any attached zone blocks.
-                        RemoveLeftZoneBlocks(_segmentID, ref segment);
-                        RemoveRightZoneBlocks(_segmentID, ref segment);
+                        RemoveLeftZoneBlocks(ref segment);
+                        RemoveRightZoneBlocks(ref segment);
 
                         // Replace with new zone blocks if the button click was with the primary mouse button.
                         if (_buttonZero)
                         {
+                            // Record current settings on selected segment, overwriting any existing settings.
+                            SegmentData.Instance.SetCurrentMode(_segmentID);
+
                             // Create zone block via road AI, if this is a road AI - allow for any other mods with patches attached.
                             if (roadAI != null)
                             {
@@ -239,12 +242,12 @@ namespace ZoningAdjuster
                                     if (hasRight)
                                     {
                                         // Both->left.
-                                        RemoveRightZoneBlocks(_segmentID, ref segment);
+                                        RemoveRightZoneBlocks(ref segment);
                                     }
                                     else
                                     {
                                         // Left->right.
-                                        RemoveLeftZoneBlocks(_segmentID, ref segment);
+                                        RemoveLeftZoneBlocks(ref segment);
                                     }
                                 }
                             }
@@ -413,9 +416,8 @@ namespace ZoningAdjuster
         /// <summary>
         /// Removes the left-side zoning blocks from a segment.
         /// </summary>
-        /// <param name="segmentID">Segment ID.</param>
         /// <param name="segment">Segment data reference.</param>
-        private void RemoveLeftZoneBlocks(ushort segmentID, ref NetSegment segment)
+        private void RemoveLeftZoneBlocks(ref NetSegment segment)
         {
             // Release blocks.
             ZoneManager zoneManager = Singleton<ZoneManager>.instance;
@@ -435,9 +437,8 @@ namespace ZoningAdjuster
         /// <summary>
         /// Removes the right-side zoning blocks from a segment.
         /// </summary>
-        /// <param name="segmentID">Segment ID.</param>
         /// <param name="segment">Segment data reference.</param>
-        private void RemoveRightZoneBlocks(ushort segmentID, ref NetSegment segment)
+        private void RemoveRightZoneBlocks(ref NetSegment segment)
         {
             // Release blocks.
             ZoneManager zoneManager = Singleton<ZoneManager>.instance;

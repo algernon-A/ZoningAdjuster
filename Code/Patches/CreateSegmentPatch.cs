@@ -14,7 +14,7 @@ namespace ZoningAdjuster
     public static class CreateSegmentPatch
     {
         /// <summary>
-        /// Harmony Postfix patch to RoadAI.CreateSegment, to force any zoning creation.
+        /// Harmony Postfix patch to RoadAI.CreateSegment, to force any zoning creation and record setttings at the time of creation.
         /// </summary>
         /// <param name="__instance">Road AI calling instance.</param>
         /// <param name="segmentID">Segment ID.</param>
@@ -27,6 +27,9 @@ namespace ZoningAdjuster
             {
                 __instance.CreateZoneBlocks(segmentID, ref data);
             }
+
+            // Record current settings against this segment.
+            SegmentData.Instance.UpdateCurrentMode(segmentID);
         }
     }
 }
