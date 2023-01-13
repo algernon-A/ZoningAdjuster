@@ -151,7 +151,7 @@ namespace ZoningAdjuster
             UISlider zoneDepthSlider = AddSlider("ZMD_PNL_DEP", ZoneDepthSliderY, "ZMD_PNL_DEP_TIP", true);
             zoneDepthSlider.eventValueChanged += (control, value) =>
             {
-                ZoneDepthPatches.ZoneDepth = (byte)Mathf.Clamp(value - 1, 0f, 3f);
+                CalcBlock1Patch.ZoneDepth = (byte)Mathf.Clamp(value - 1, 0f, 3f);
             };
 
             // Bring to front.
@@ -340,7 +340,7 @@ namespace ZoningAdjuster
                 newSlider.maxValue = 4;
 
                 // +1 to account for zero-basing.
-                int initialValue = ZoneDepthPatches.ZoneDepth + 1;
+                int initialValue = CalcBlock1Patch.ZoneDepth + 1;
                 newSlider.value = initialValue;
                 valueLabel.text = initialValue.ToString();
             }

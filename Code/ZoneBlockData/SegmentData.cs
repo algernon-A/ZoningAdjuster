@@ -164,7 +164,7 @@ namespace ZoningAdjuster
             }
 
             // Record zone depth setting.
-            newFlags |= (ZoningAdjusterFlags)(ZoneDepthPatches.ZoneDepth << 5);
+            newFlags |= (ZoningAdjusterFlags)(CalcBlock1Patch.ZoneDepth << 5);
 
             // Set created flag.
             _zoneBlockFlags[segmentID] = (byte)newFlags;
@@ -195,7 +195,7 @@ namespace ZoningAdjuster
                 if (ZoningTool.CurrentSegment == segmentID)
                 {
                     // Yes - return current depth setting.
-                    return ZoneDepthPatches.ZoneDepth;
+                    return CalcBlock1Patch.ZoneDepth;
                 }
             }
 

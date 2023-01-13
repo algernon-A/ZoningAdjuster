@@ -1,4 +1,4 @@
-﻿// <copyright file="ZoneDepthPatches.cs" company="algernon (K. Algernon A. Sheppard)">
+﻿// <copyright file="CalcBlock1Patch.cs" company="algernon (K. Algernon A. Sheppard)">
 // Copyright (c) algernon (K. Algernon A. Sheppard). All rights reserved.
 // Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -11,10 +11,10 @@ namespace ZoningAdjuster
     using HarmonyLib;
 
     /// <summary>
-    ///  Harmony patches to implement variable zone depth.
+    ///  Harmony patch to implement variable zone depth.
     /// </summary>
-    [HarmonyPatch(typeof(ZoneBlock))]
-    public static class ZoneDepthPatches
+    [HarmonyPatch(typeof(ZoneBlock), nameof(ZoneBlock.CalculateBlock1))]
+    public static class CalcBlock1Patch
     {
         /// <summary>
         /// Number of columns per zone block (always 4).
@@ -31,8 +31,6 @@ namespace ZoningAdjuster
         /// </summary>
         /// <param name="instructions">Original ILCode.</param>
         /// <returns>Patched ILCode.</returns>
-        [HarmonyPatch("CalculateBlock1")]
-        [HarmonyTranspiler]
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             // Local field indexes.
@@ -58,7 +56,7 @@ namespace ZoningAdjuster
                     yield return new CodeInstruction(OpCodes.Ldloc_S, ValidIndex);
                     yield return new CodeInstruction(OpCodes.Ldloc_S, RowIndex);
                     yield return new CodeInstruction(OpCodes.Ldloc_S, ColumnIndex);
-                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(ZoneDepthPatches), nameof(CheckZoneDepth)));
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(CalcBlock1Patch), nameof(CheckZoneDepth)));
                     yield return new CodeInstruction(OpCodes.Stloc_S, ValidIndex);
 
                     continue;
