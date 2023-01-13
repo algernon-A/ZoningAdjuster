@@ -23,7 +23,7 @@ namespace ZoningAdjuster
         public static void Postfix(RoadAI __instance, ushort segmentID, ref NetSegment data)
         {
             // If road is set to not have zoning but we're set to force zoning, just manually call CreateZoneBlocks (bypassed in base game method).
-            if (!__instance.m_enableZoning && ModSettings.ForceZoning)
+            if (!__instance.m_enableZoning && SegmentData.Instance.ForceZoning(segmentID))
             {
                 __instance.CreateZoneBlocks(segmentID, ref data);
             }

@@ -33,8 +33,8 @@ namespace ZoningAdjuster
         /// <returns>False (always).</returns>
         public static bool Prefix(ushort segment, ref NetSegment data)
         {
-            // Don't do anything if zoning is disabled.
-            if (!ModSettings.DisableZoning)
+            // Don't do anything if zoning is disabled, or if the settings for the current segment prevent zoning.
+            if (!SegmentData.Instance.NoZoning(segment))
             {
                 // Local references.
                 NetManager netManager = Singleton<NetManager>.instance;

@@ -72,6 +72,8 @@ namespace ZoningAdjuster
 
             // Below added in verison 2 data - legacy data will only have the above flags.  Don't rely just on created.
             Created = 0x04,
+            NoZone = 0x08,
+            ForceZone = 0x10,
             DepthOne = 0x00,
             DepthTwo = 0x20,
             DepthThree = 0x40,
@@ -146,6 +148,44 @@ namespace ZoningAdjuster
         internal bool PreserveNewer(ushort segmentID) => (_zoneBlockFlags[segmentID] & (ushort)ZoningAdjusterFlags.PreserveNewer) != 0;
 
         /// <summary>
+        /// Returns whether or not the given network segment is set to not have zoning.
+        /// </summary>
+        /// <param name="segmentID">Network segment ID.</param>
+        /// <returns>True if zoning is blocked for this segment, false otherwise.</returns>
+        internal bool NoZoning(ushort segmentID)
+        {
+            // Check for current record.
+            byte flags = _zoneBlockFlags[segmentID];
+            if ((flags & (byte)ZoningAdjusterFlags.Created) != 0)
+            {
+                // Current record found; return it.
+                return (_zoneBlockFlags[segmentID] & (ushort)ZoningAdjusterFlags.NoZone) != 0;
+            }
+
+            // No current record found; return current settings.
+            return ModSettings.DisableZoning;
+        }
+
+        /// <summary>
+        /// Returns whether or not the given network segment is set to force zoning.
+        /// </summary>
+        /// <param name="segmentID">Network segment ID.</param>
+        /// <returns>True if zoning is forced for this segment, false otherwise.</returns>
+        internal bool ForceZoning(ushort segmentID)
+        {
+            // Check for current record.
+            byte flags = _zoneBlockFlags[segmentID];
+            if ((flags & (byte)ZoningAdjusterFlags.Created) != 0)
+            {
+                // Current record found; return it.
+                return (_zoneBlockFlags[segmentID] & (ushort)ZoningAdjusterFlags.ForceZone) != 0;
+            }
+
+            // No current record found; return current settings.
+            return ModSettings.ForceZoning;
+        }
+
+        /// <summary>
         /// Records the current zoning settings for the specified network segment, if there are no existing active settings.
         /// </summary>
         /// <param name="segmentID">Network segment ID.</param>
@@ -175,10 +215,22 @@ namespace ZoningAdjuster
                 newFlags |= ZoningAdjusterFlags.PreserveNewer;
             }
 
+            // Record no-zoning status.
+            if (ModSettings.DisableZoning)
+            {
+                newFlags |= ZoningAdjusterFlags.NoZone;
+            }
+
+            // Record forced zoning status.
+            if (ModSettings.ForceZoning)
+            {
+                newFlags |= ZoningAdjusterFlags.ForceZone;
+            }
+
             // Record zone depth setting.
             newFlags |= (ZoningAdjusterFlags)(CalcBlock1Patch.ZoneDepth << 5);
 
-            // Set created flag.
+            // Record new flags.
             _zoneBlockFlags[segmentID] = (byte)newFlags;
 
             Logging.KeyMessage("recorded data for segment ", segmentID);
