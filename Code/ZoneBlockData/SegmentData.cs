@@ -192,7 +192,7 @@ namespace ZoningAdjuster
                 }
 
                 // Not created - is this the current segment selected by the tool?
-                if (segmentID != 0 & ZoningTool.CurrentSegment == segmentID)
+                if (ZoningTool.CurrentSegment == segmentID)
                 {
                     // Yes - return current depth setting.
                     return ZoneDepthPatches.ZoneDepth;
@@ -200,7 +200,7 @@ namespace ZoningAdjuster
             }
 
             // If we got here, vanilla zone block depth should be used (no custom settings or not currently selected segment).
-            return 4;
+            return 3;
         }
 
         /// <summary>

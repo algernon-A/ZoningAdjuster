@@ -5,12 +5,10 @@
 
 namespace ZoningAdjuster
 {
-    using System.Runtime.CompilerServices;
+    using System.Collections.Generic;
+    using System.Reflection.Emit;
     using AlgernonCommons;
-    using ColossalFramework;
-    using ColossalFramework.Math;
     using HarmonyLib;
-    using UnityEngine;
 
     /// <summary>
     ///  Harmony patches to implement variable zone depth.
@@ -28,6 +26,69 @@ namespace ZoningAdjuster
         /// </summary>
         internal static byte ZoneDepth { get; set; } = 3;
 
+        /// <summary>
+        /// Harmony Transpiler for ZoneBlock.CalculateBlock1 to implement zone depth limiting.
+        /// </summary>
+        /// <param name="instructions">Original ILCode.</param>
+        /// <returns>Patched ILCode.</returns>
+        [HarmonyPatch("CalculateBlock1")]
+        [HarmonyTranspiler]
+        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+            // Local field indexes.
+            const int ValidIndex = 12;
+            const int RowIndex = 14;
+            const int ColumnIndex = 20;
+            const int TargetIndex = 24;
+
+            Logging.Message("transpiling CalculateBlock1");
+
+            foreach (CodeInstruction instruction in instructions)
+            {
+                // Looking for stloc.s 24 as our target to insert call to custom method immediately afterwards.
+                if (instruction.opcode == OpCodes.Stloc_S && instruction.operand is LocalBuilder localBuilder && localBuilder.LocalIndex == TargetIndex)
+                {
+                    Logging.KeyMessage("found stloc.s 24");
+
+                    yield return instruction;
+
+                    // Insert call to our custom method.
+                    yield return new CodeInstruction(OpCodes.Ldarg, 0);
+                    yield return new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(typeof(ZoneBlock), nameof(ZoneBlock.m_segment)));
+                    yield return new CodeInstruction(OpCodes.Ldloc_S, ValidIndex);
+                    yield return new CodeInstruction(OpCodes.Ldloc_S, RowIndex);
+                    yield return new CodeInstruction(OpCodes.Ldloc_S, ColumnIndex);
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(ZoneDepthPatches), nameof(CheckZoneDepth)));
+                    yield return new CodeInstruction(OpCodes.Stloc_S, ValidIndex);
+
+                    continue;
+                }
+
+                yield return instruction;
+            }
+        }
+
+        /// <summary>
+        /// Applies custom zone depth maximum to the given ZoneBlock valid mask for the given cell.
+        /// </summary>
+        /// <param name="segment">Network segment ID.</param>
+        /// <param name="valid">ZoneBlock valid mask.</param>
+        /// <param name="row">Cell row.</param>
+        /// <param name="column">Cell column.</param>
+        /// <returns>Updated valid mask.</returns>
+        public static ulong CheckZoneDepth(ushort segment, ulong valid, int row, int column)
+        {
+            // Invalidate this cell if the column is beyond the maximum permitted zone depth.
+            if (column > SegmentData.Instance.GetEffectiveDepth(segment))
+            {
+                return valid &= (ulong)~(1L << (row << 3 | column));
+            }
+
+            // If we got here, this column is valid; just return the unaltered mask.
+            return valid;
+        }
+
+        /*
         /// <summary>
         /// Pre-emptive Harmony patch for ZoneManager.CalculateBlock1.
         /// Updates the "valid" bitmask for a zoning block; called by ZoneManager when blocks are created.
@@ -111,6 +172,18 @@ namespace ZoningAdjuster
                     // Calculate terrain height of the cell (row middle, side away from road).
                     float cellHeight = Singleton<TerrainManager>.instance.SampleRawHeightSmooth(VectorUtils.X_Y(positionXZ + rowMiddleLength + columnNearNextLength));
 
+                    */
+                    /*--- Start insert here ---*/
+                    /*
+                    // Mark any cells in columns above our set maxmimum zoning depth as invalid.
+                    if (column > SegmentData.Instance.GetEffectiveDepth(__instance.m_segment))
+                    {
+                        valid &= (ulong)~(1L << (row << 3 | column));
+                    }
+                    */
+                    /*--- Finish insert here ---*/
+                    /*
+                     *
                     // If the height difference between road and cell is greater than 8m, mark the cell as invalid.
                     if ((double)Mathf.Abs(cellHeight - height) > 8.0)
                     {
@@ -131,16 +204,6 @@ namespace ZoningAdjuster
                             valid &= (ulong)~(1L << (row << 3 | column));
                         }
                     }
-
-                    /*--- Start insert here ---*/
-
-                    // Mark any cells in columns above our set maxmimum zoning depth as invalid.
-                    if (column > SegmentData.Instance.GetEffectiveDepth(__instance.m_segment))
-                    {
-                        valid &= (ulong)~(1L << (row << 3 | column));
-                    }
-
-                    /*--- Finish insert here ---*/
                 }
             }
 
@@ -200,25 +263,6 @@ namespace ZoningAdjuster
             // Never execute original method.
             return false;
         }
-
-        /// <summary>
-        /// Harmony reverse patch to access private method ZoneBlock.CalculateImplementation1.
-        /// </summary>
-        /// <param name="instance">Zone block instance reference.</param>
-        /// <param name="blockID">Zone block ID.</param>
-        /// <param name="segmentID">Net segment ID.</param>
-        /// <param name="data">Net segment data.</param>
-        /// <param name="valid">Zone block valid flags.</param>
-        /// <param name="minX">Zone block minimum X position.</param>
-        /// <param name="minZ">Zone block minimum Z position.</param>
-        /// <param name="maxX">Zone block maximum X position.</param>
-        /// <param name="maxZ">Zone block maximum Z position.</param>
-        [HarmonyReversePatch]
-        [HarmonyPatch("CalculateImplementation1")]
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public static void CalculateImplementation1(ref ZoneBlock instance, ushort blockID, ushort segmentID, ref NetSegment data, ref ulong valid, float minX, float minZ, float maxX, float maxZ)
-        {
-            Logging.Error("CalculateImplementation1 reverse Harmony patch wasn't applied", instance, blockID, segmentID, data, valid, minX, minZ, maxX, maxZ);
-        }
+        */
     }
 }
