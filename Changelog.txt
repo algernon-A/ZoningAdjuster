@@ -1,4 +1,6 @@
-﻿- Overhaul segment memory recording for improved and consistent persistance (no more segment settings from being reset when manipulating with Move It)
+﻿1.6.1 -
+
+- Overhaul segment memory recording for improved and consistent persistance (no more segment settings from being reset when manipulating with Move It)
 
 
 1.6 -
