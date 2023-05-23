@@ -82,6 +82,11 @@ namespace ZoningAdjuster
             Vector3 startDirection = segment.m_startDirection;
             Vector3 endDirection = segment.m_endDirection;
 
+            // Vanilla zoning setting.
+            bool zoneRightEnabled = (NetTool.m_zoneGridFlags & NetSegment.Flags2.ZoneRight) != 0;
+            bool zoneLeftEnabled = (NetTool.m_zoneGridFlags & NetSegment.Flags2.ZoneLeft) != 0;
+            bool invertEnabled = (segment.m_flags & NetSegment.Flags.Invert) != 0;
+
             float num = (startDirection.x * endDirection.x) + (startDirection.z * endDirection.z);
 
             // Distance of zoning block extent from edge of road.
@@ -89,10 +94,10 @@ namespace ZoningAdjuster
             float blockEndDistance = 32f + s_setback; // num3;
             int distance = Mathf.RoundToInt(halfWidth);
 
-            float num4 = VectorUtils.LengthXZ(endPosition - startPosition);
-            bool flag2 = (startDirection.x * endDirection.z) - (startDirection.z * endDirection.x) > 0f;
-            bool flag3 = num < -0.8f || num4 > 50f;
-            if (flag2)
+            float length = VectorUtils.LengthXZ(endPosition - startPosition);
+            bool isRightSide = (startDirection.x * endDirection.z) - (startDirection.z * endDirection.x) > 0f;
+            bool flag3 = num < -0.8f || length > 50f;
+            if (isRightSide)
             {
                 halfWidth = -halfWidth;
                 blockEndDistance = -blockEndDistance;
@@ -128,27 +133,32 @@ namespace ZoningAdjuster
             float num7;
             Vector3 vector5 = VectorUtils.NormalizeXZ(vector3 - vector, out num7);
             int insideBlockRows = Mathf.FloorToInt((num7 / 8f) + 0.01f);
-            float num9 = (num7 * 0.5f) + ((float)(insideBlockRows - 8) * ((!flag2) ? -4f : 4f));
+            float num9 = (num7 * 0.5f) + ((float)(insideBlockRows - 8) * ((!isRightSide) ? -4f : 4f));
             if (insideBlockRows != 0)
             {
                 // TODO: Limit group width here
-                float angle = (!flag2) ? Mathf.Atan2(vector5.x, -vector5.z) : Mathf.Atan2(-vector5.x, vector5.z);
+                float angle = (!isRightSide) ? Mathf.Atan2(vector5.x, -vector5.z) : Mathf.Atan2(-vector5.x, vector5.z);
                 Vector3 position3 = vector + new Vector3((vector5.x * num9) - (vector5.z * blockEndDistance), 0f, (vector5.z * num9) + (vector5.x * blockEndDistance));
-                if (flag2)
+                if (isRightSide)
                 {
-                    Singleton<ZoneManager>.instance.CreateBlock(
-                        out segment.m_blockStartRight,
-                        ref randomizer,
-                        segmentID,
-                        position3,
-                        angle,
-                        insideBlockRows,
-                        distance,
-                        segment.m_buildIndex);
+                    if ((zoneRightEnabled && !invertEnabled) || (zoneLeftEnabled && invertEnabled))
+                    {
+                        Singleton<ZoneManager>.instance.CreateBlock(
+                            out segment.m_blockStartRight,
+                            ref randomizer,
+                            segmentID,
+                            position3,
+                            angle,
+                            insideBlockRows,
+                            distance,
+                            segment.m_buildIndex);
+                    }
                 }
                 else
                 {
-                    Singleton<ZoneManager>.instance.CreateBlock(
+                    if ((zoneLeftEnabled && !invertEnabled) || (zoneRightEnabled && invertEnabled))
+                    {
+                        Singleton<ZoneManager>.instance.CreateBlock(
                         out segment.m_blockStartLeft,
                         ref randomizer,
                         segmentID,
@@ -157,6 +167,7 @@ namespace ZoningAdjuster
                         insideBlockRows,
                         distance,
                         segment.m_buildIndex);
+                    }
                 }
             }
 
@@ -164,13 +175,13 @@ namespace ZoningAdjuster
             {
                 vector5 = VectorUtils.NormalizeXZ(vector2 - vector4, out num7);
                 insideBlockRows = Mathf.FloorToInt((num7 / 8f) + 0.01f);
-                num9 = (num7 * 0.5f) + ((float)(insideBlockRows - 8) * ((!flag2) ? -4f : 4f));
+                num9 = (num7 * 0.5f) + ((float)(insideBlockRows - 8) * ((!isRightSide) ? -4f : 4f));
                 if (insideBlockRows != 0)
                 {
                     // TODO: Limit group width here
-                    float angle2 = (!flag2) ? Mathf.Atan2(vector5.x, -vector5.z) : Mathf.Atan2(-vector5.x, vector5.z);
+                    float angle2 = (!isRightSide) ? Mathf.Atan2(vector5.x, -vector5.z) : Mathf.Atan2(-vector5.x, vector5.z);
                     Vector3 position4 = vector4 + new Vector3((vector5.x * num9) - (vector5.z * blockEndDistance), 0f, (vector5.z * num9) + (vector5.x * blockEndDistance));
-                    if (flag2)
+                    if (isRightSide)
                     {
                         Singleton<ZoneManager>.instance.CreateBlock(
                             out segment.m_blockEndRight,
@@ -232,13 +243,13 @@ namespace ZoningAdjuster
             float num11;
             Vector3 vector12 = VectorUtils.NormalizeXZ(vector8 - vector6, out num11);
             int outsideBlockRows = Mathf.FloorToInt((num11 / 8f) + 0.01f);
-            float num13 = (num11 * 0.5f) + ((float)(outsideBlockRows - 8) * ((!flag2) ? 4f : -4f));
+            float num13 = (num11 * 0.5f) + ((float)(outsideBlockRows - 8) * ((!isRightSide) ? 4f : -4f));
             if (outsideBlockRows != 0)
             {
                 // TODO: Limit group width here
-                float angle3 = (!flag2) ? Mathf.Atan2(-vector12.x, vector12.z) : Mathf.Atan2(vector12.x, -vector12.z);
+                float angle3 = (!isRightSide) ? Mathf.Atan2(-vector12.x, vector12.z) : Mathf.Atan2(vector12.x, -vector12.z);
                 Vector3 position5 = vector6 + new Vector3((vector12.x * num13) + (vector12.z * blockEndDistance), 0f, (vector12.z * num13) - (vector12.x * blockEndDistance));
-                if (flag2)
+                if (isRightSide)
                 {
                     Singleton<ZoneManager>.instance.CreateBlock(
                         out segment.m_blockStartLeft,
@@ -266,13 +277,13 @@ namespace ZoningAdjuster
 
             vector12 = VectorUtils.NormalizeXZ(vector7 - vector8, out num11);
             outsideBlockRows = Mathf.FloorToInt((num11 / 8f) + 0.01f);
-            num13 = (num11 * 0.5f) + ((float)(outsideBlockRows - 8) * ((!flag2) ? 4f : -4f));
+            num13 = (num11 * 0.5f) + ((float)(outsideBlockRows - 8) * ((!isRightSide) ? 4f : -4f));
             if (outsideBlockRows != 0)
             {
                 // TODO: Limit group width here
-                float angle4 = (!flag2) ? Mathf.Atan2(-vector12.x, vector12.z) : Mathf.Atan2(vector12.x, -vector12.z);
+                float angle4 = (!isRightSide) ? Mathf.Atan2(-vector12.x, vector12.z) : Mathf.Atan2(vector12.x, -vector12.z);
                 Vector3 position6 = vector8 + new Vector3((vector12.x * num13) + (vector12.z * blockEndDistance), 0f, (vector12.z * num13) - (vector12.x * blockEndDistance));
-                if (flag2)
+                if (isRightSide)
                 {
                     Singleton<ZoneManager>.instance.CreateBlock(
                         out segment.m_blockEndLeft,
@@ -339,6 +350,11 @@ namespace ZoningAdjuster
             // Local reference.
             ZoneManager zoneManager = Singleton<ZoneManager>.instance;
 
+            // Vanilla zoning setting.
+            bool zoneRightEnabled = (NetTool.m_zoneGridFlags & NetSegment.Flags2.ZoneRight) != 0;
+            bool zoneLeftEnabled = (NetTool.m_zoneGridFlags & NetSegment.Flags2.ZoneLeft) != 0;
+            bool invertEnabled = (segment.m_flags & NetSegment.Flags.Invert) != 0;
+
             // Distance of zoning block extent from centre of road.
             float maxDistance = minHalfWidth + MaxExtent + s_setback;
             int distance = Mathf.RoundToInt(maxDistance);
@@ -390,14 +406,20 @@ namespace ZoningAdjuster
             if (segmentStartRows > 0)
             {
                 // Left side of road.
-                Vector3 leftOffset = new Vector3((startDirection.x * MaxExtent) - (startDirection.z * maxDistance), 0f, (startDirection.z * MaxExtent) + (startDirection.x * maxDistance));
-                Vector3 position = startPosition + leftOffset;
-                zoneManager.CreateBlock(out segment.m_blockStartLeft, ref randomizer, segmentID, position, startAngle, segmentStartRows, distance, segment.m_buildIndex);
+                if ((zoneLeftEnabled && !invertEnabled) || (zoneRightEnabled && invertEnabled))
+                {
+                    Vector3 leftOffset = new Vector3((startDirection.x * MaxExtent) - (startDirection.z * maxDistance), 0f, (startDirection.z * MaxExtent) + (startDirection.x * maxDistance));
+                    Vector3 position = startPosition + leftOffset;
+                    zoneManager.CreateBlock(out segment.m_blockStartLeft, ref randomizer, segmentID, position, startAngle, segmentStartRows, distance, segment.m_buildIndex);
+                }
 
                 // Right side of road.
-                Vector3 rightOffset = new Vector3((startDirection.x * (float)(segmentStartRows - 4) * CellSize) + (startDirection.z * maxDistance), 0f, (startDirection.z * (float)(segmentStartRows - 4) * CellSize) - (startDirection.x * maxDistance));
-                position = startPosition + rightOffset;
-                zoneManager.CreateBlock(out segment.m_blockStartRight, ref randomizer, segmentID, position, startAngle + 3.14159274f, segmentStartRows, distance, segment.m_buildIndex);
+                if ((zoneRightEnabled && !invertEnabled) || (zoneLeftEnabled && invertEnabled))
+                {
+                    Vector3 rightOffset = new Vector3((startDirection.x * (float)(segmentStartRows - 4) * CellSize) + (startDirection.z * maxDistance), 0f, (startDirection.z * (float)(segmentStartRows - 4) * CellSize) - (startDirection.x * maxDistance));
+                    Vector3 position = startPosition + rightOffset;
+                    zoneManager.CreateBlock(out segment.m_blockStartRight, ref randomizer, segmentID, position, startAngle + 3.14159274f, segmentStartRows, distance, segment.m_buildIndex);
+                }
             }
 
             // Add second group of eight (if any).
@@ -406,14 +428,20 @@ namespace ZoningAdjuster
                 float endOffset = magnitude - ((float)rows * CellSize);
 
                 // Left side of road.
-                Vector3 leftOffset = new Vector3((endDirection.x * (((float)(segmentEndRows - 4) * CellSize) + endOffset)) + (endDirection.z * maxDistance), 0f, (endDirection.z * (((float)(segmentEndRows - 4) * CellSize) + endOffset)) - (endDirection.x * maxDistance));
-                Vector3 position = endPosition + leftOffset;
-                zoneManager.CreateBlock(out segment.m_blockEndLeft, ref randomizer, segmentID, position, endAngle + 3.14159274f, segmentEndRows, distance, segment.m_buildIndex + 1u);
+                if ((zoneLeftEnabled && !invertEnabled) || (zoneRightEnabled && invertEnabled))
+                {
+                    Vector3 leftOffset = new Vector3((endDirection.x * (((float)(segmentEndRows - 4) * CellSize) + endOffset)) + (endDirection.z * maxDistance), 0f, (endDirection.z * (((float)(segmentEndRows - 4) * CellSize) + endOffset)) - (endDirection.x * maxDistance));
+                    Vector3 position = endPosition + leftOffset;
+                    zoneManager.CreateBlock(out segment.m_blockEndLeft, ref randomizer, segmentID, position, endAngle + 3.14159274f, segmentEndRows, distance, segment.m_buildIndex + 1u);
+                }
 
                 // Right side of road.
-                Vector3 rightOffset = new Vector3((endDirection.x * (MaxExtent + endOffset)) - (endDirection.z * maxDistance), 0f, (endDirection.z * (MaxExtent + endOffset)) + (endDirection.x * maxDistance));
-                position = endPosition + rightOffset;
-                zoneManager.CreateBlock(out segment.m_blockEndRight, ref randomizer, segmentID, position, endAngle, segmentEndRows, distance, segment.m_buildIndex + 1u);
+                if ((zoneRightEnabled && !invertEnabled) || (zoneLeftEnabled && invertEnabled))
+                {
+                    Vector3 rightOffset = new Vector3((endDirection.x * (MaxExtent + endOffset)) - (endDirection.z * maxDistance), 0f, (endDirection.z * (MaxExtent + endOffset)) + (endDirection.x * maxDistance));
+                    Vector3 position = endPosition + rightOffset;
+                    zoneManager.CreateBlock(out segment.m_blockEndRight, ref randomizer, segmentID, position, endAngle, segmentEndRows, distance, segment.m_buildIndex + 1u);
+                }
             }
         }
     }
